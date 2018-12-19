@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<DialogPane fx:id="dialogPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restCheque.CreateTableController">
+   <content>
+      <HBox spacing="10.0">
+         <children>
+            <VBox>
+               <children>
+                  <Label text="Table Tag" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_RIGHT" layoutX="23.0" layoutY="23.0" spacing="5.0">
+               <children>
+                  <TextField fx:id="tfTableTag" />
+                  <Button fx:id="btnCreate" mnemonicParsing="false" onAction="#callCreateNewTable" text="Create" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </content>
+</DialogPane>
