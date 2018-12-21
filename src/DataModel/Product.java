@@ -4,7 +4,7 @@ public class Product {
     private int productID;
     private String productName;
     private double productCost;
-    private double productAmount;
+    private int productAmount;
 
     public int getProductID() {
         return productID;
@@ -34,7 +34,7 @@ public class Product {
         return productAmount;
     }
 
-    public void setProductAmount(double productAmount) {
+    public void setProductAmount(int productAmount) {
         this.productAmount = productAmount;
     }
 }

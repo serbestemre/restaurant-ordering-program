@@ -1,6 +1,7 @@
 package DataSource;
 
 import DataModel.Desk;
+import DataModel.Product;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class DataSource {
 
     private static final String TABLE_PRODUCT = "Product";
     private static final String COLUMN_PRODUCTID= "productID";
+    private static final String COLUMN_PRODUCT_NAME= "productName";
     private static final String COLUMN_PRODUCT_COST="productCost";
     private static final String COLUMN_PRODUCT_AMOUNT="productAmount";
 
@@ -126,4 +128,50 @@ public class DataSource {
             return false;
         }
     }
+
+    public Boolean createNewProduct(Product myNewProduct) throws SQLException {
+            StringBuilder sb = new StringBuilder("INSERT INTO ");
+            sb.append(TABLE_PRODUCT);
+            sb.append(" ( ");
+            sb.append(COLUMN_PRODUCT_NAME);
+            sb.append(", ");
+            sb.append(COLUMN_PRODUCT_COST);
+            sb.append(", ");
+            sb.append(COLUMN_PRODUCT_AMOUNT);
+            sb.append(" ) ");
+            sb.append("VALUES ");
+            sb.append(" ( '");
+            sb.append(myNewProduct.getProductName());
+            sb.append("' , ");
+            sb.append(myNewProduct.getProductCost());
+            sb.append(", ");
+            sb.append(myNewProduct.getProductAmount());
+            sb.append(" );");
+            Statement statement = connection.createStatement();
+            statement.execute(sb.toString());
+            return true;
+    }
+
+    public ArrayList<Product> getAllProducts() throws SQLException {
+
+        StringBuilder sb = new StringBuilder("Select * FROM ");
+        sb.append(TABLE_PRODUCT);
+
+        ArrayList<Product> allProducts = new ArrayList<>();
+
+
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sb.toString());
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductID(rs.getInt(COLUMN_PRODUCTID));
+                product.setProductName(rs.getString(COLUMN_PRODUCT_NAME));
+                product.setProductCost(rs.getDouble(COLUMN_PRODUCT_COST));
+                product.setProductAmount(rs.getInt(COLUMN_PRODUCT_AMOUNT));
+                allProducts.add(product);
+            }
+            return allProducts;
+
+    }
+
 }

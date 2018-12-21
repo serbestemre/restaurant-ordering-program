@@ -206,24 +206,13 @@ public class Controller {
             dialog2.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
             //sonuc nesnesini gönderir
             Optional<ButtonType> result =dialog2.showAndWait();
-            if(result.get()==ButtonType.OK) {
 
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation");
-                alert.setHeaderText("It looks like risky attemption!");
-                alert.setContentText("Do you really want to delete '" + DeleteTableController.selectedItem.getTag().toString() + "' table ?");
+                if (result.get() == ButtonType.OK){
 
-                Stage stage2 = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage2.getIcons().add(new Image(this.getClass().getResource("/icons/confirmation.png").toString()));
 
-                Optional<ButtonType> result2 = alert.showAndWait();
-                if (result2.get() == ButtonType.OK){
-
-                    DataSource.getInstance().deleteSelectedTable(DeleteTableController.selectedItem.getTag().toString());
-                    getTables();
-                } else {
                 }
-            }
+
+
         }
         catch (IOException e) {
             e.printStackTrace();
