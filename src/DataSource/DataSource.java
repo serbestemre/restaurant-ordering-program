@@ -16,6 +16,12 @@ public class DataSource {
     private static final String COLUMN_DESKID = "deskId";
     private static final String COLUMN_TAG = "tag";
 
+    private static final String TABLE_PRODUCT = "Product";
+    private static final String COLUMN_PRODUCTID= "productID";
+    private static final String COLUMN_PRODUCT_COST="productCost";
+    private static final String COLUMN_PRODUCT_AMOUNT="productAmount";
+
+
 
     private static DataSource instance = new DataSource();
 
@@ -60,9 +66,6 @@ public class DataSource {
         sb.append("('");
         sb.append(tag);
         sb.append("');");
-
-
-        System.out.println("QUERY => " + sb.toString());
         try {
 
             Statement statement = connection.createStatement();

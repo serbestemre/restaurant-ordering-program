@@ -95,8 +95,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Products" />
-                        <MenuItem mnemonicParsing="false" text="Raw Material" />
+                        <MenuItem fx:id="menuItemProdcuts" mnemonicParsing="false" onAction="#showProductDialogPane" text="Products" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
