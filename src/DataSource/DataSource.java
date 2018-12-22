@@ -23,6 +23,13 @@ public class DataSource {
     private static final String COLUMN_PRODUCT_COST="productCost";
     private static final String COLUMN_PRODUCT_AMOUNT="productAmount";
 
+    private static final String TABLE_MENU="Menu";
+    private static final String COLUMN_MENUID="menuID";
+    private static final String COLUMN_MENU_PRICE="menuPrice";
+    private static final String COLUMN_MENU_COST="menuCost";
+    private static final String COLUMN_MENU_VAT="menuVat";
+
+
 
 
     private static DataSource instance = new DataSource();

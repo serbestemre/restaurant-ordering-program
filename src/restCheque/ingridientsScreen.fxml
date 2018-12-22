@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<DialogPane prefHeight="449.0" prefWidth="327.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restCheque.IngridientsController">
+   <content>
+      <BorderPane prefHeight="444.0" prefWidth="327.0">
+         <left>
+            <VBox spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TableView fx:id="tableViewProduct" minHeight="400.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="ID">
+                           <cellValueFactory>
+                          <PropertyValueFactory property="productID" />
+                      </cellValueFactory>
+                      </TableColumn>
+                      <TableColumn prefWidth="75.0" text="NAME">
+                           <cellValueFactory>
+                          <PropertyValueFactory property="productName" />
+                      </cellValueFactory>
+                      </TableColumn>
+                        <TableColumn prefWidth="75.0" text="COST">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="productCost" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="75.0" text="AMOUNT">
+                           <cellValueFactory>
+                            <PropertyValueFactory property="productAmount" />
+                        </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                     <tooltip>
+                        <Tooltip text="Product List" />
+                     </tooltip>
+                  </TableView>
+                  <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" progress="0.0" visible="false" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
+         </left>
+      </BorderPane>
+   </content>
+</DialogPane>

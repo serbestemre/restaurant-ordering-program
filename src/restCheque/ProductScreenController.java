@@ -50,7 +50,7 @@ public class ProductScreenController {
     @FXML
     private ProgressBar progressBar;
 
-    @FXML
+
     ObservableList<Product> listofProducts =FXCollections.observableArrayList();
 
 
