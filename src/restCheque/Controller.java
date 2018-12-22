@@ -87,7 +87,13 @@ public class Controller {
             e.printStackTrace();
         }
         catch (IllegalStateException target){
-            System.out.println("SAYFA BULUNAMADI !!!!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("PAGE NOT FOUND!!!");
+            alert.setContentText("Ooops, There was something wrong!");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            alert.showAndWait();
         }
     }
 
@@ -96,7 +102,6 @@ public class Controller {
         vBox.getChildren().clear();
 
         deskDBreturnlist=DataSource.getInstance().getAllDeskInfo();
-
 
         int columnNumber=11;
         int hBoxCounter = (deskDBreturnlist.size()/6)+2;  //+2 çünkü j[0] boş ve 6'nın bölümünden kalanları yeni satıra eklemesi için
@@ -108,7 +113,7 @@ public class Controller {
         //  hBoxes[j].setSpacing(5);
       //  System.out.println("**hbox[j="+j+"]**  ilk HBOX");
         Button buttons[]=new Button[deskDBreturnlist.size()+1];
-        System.out.println("buttons.length/4= " + buttons.length/4);
+      //  System.out.println("buttons.length/4= " + buttons.length/4);
 
         for (int i =0; i<buttons.length-1; i++){
 
@@ -186,10 +191,15 @@ public class Controller {
         e.printStackTrace();
     }
     catch (IllegalStateException target){
-        System.out.println("SAYFA BULUNAMADI !!!!");
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setHeaderText("PAGE NOT FOUND!!!");
+        alert.setContentText("Ooops, There was something wrong!");
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+        alert.showAndWait();
     }
     }
-
 
     @FXML
     public void showProductDialogPane(){
@@ -202,6 +212,7 @@ public class Controller {
             Parent dialogContent = null;
             dialogContent = fxmlLoader.load();
             dialog2.getDialogPane().setContent(dialogContent);
+            dialog2.setTitle("Products");
             dialog2.getDialogPane().getButtonTypes().add(ButtonType.OK);
             dialog2.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
             //sonuc nesnesini gönderir
@@ -219,6 +230,47 @@ public class Controller {
         }
         catch (IllegalStateException target){
             System.out.println("SAYFA BULUNAMADI !!!!");
+        }
+
+
+
+
+
+
+    }
+
+    @FXML
+    public void showMenuDialogPane(){
+
+        try {
+            Dialog<ButtonType> dialog2 = new Dialog<ButtonType>();
+            dialog2.initOwner(mainScreen.getScene().getWindow());
+            FXMLLoader fxmlLoader=new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("menuScreen.fxml"));
+            Parent dialogContent = null;
+            dialogContent = fxmlLoader.load();
+            dialog2.getDialogPane().setContent(dialogContent);
+            dialog2.setTitle("Create New Menu");
+            dialog2.getDialogPane().getButtonTypes().add(ButtonType.OK);
+            dialog2.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+            //sonuc nesnesini gönderir
+            Optional<ButtonType> result =dialog2.showAndWait();
+            if (result.get() == ButtonType.OK){
+            }
+
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (IllegalStateException target){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("PAGE NOT FOUND!!!");
+            alert.setContentText("Ooops, There was something wrong!");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            alert.showAndWait();
         }
 
 

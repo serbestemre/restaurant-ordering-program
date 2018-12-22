@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -24,6 +25,8 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("mainScreen.fxml"));
         primaryStage.setTitle("RestCheque");
         primaryStage.setScene(new Scene(root, 900, 600));
+        Image image = new Image("/icons/icon.png");
+        primaryStage.getIcons().add(image);
         primaryStage.show();
     }
 
