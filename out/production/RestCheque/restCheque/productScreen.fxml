@@ -74,22 +74,43 @@
                            </tooltip></TextField>
                      </children>
                   </HBox>
-                  <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="154.0" spacing="5.0">
+                  <VBox spacing="5.0">
                      <children>
-                        <Button fx:id="btnCreate" mnemonicParsing="false" onAction="#createNewProduct" text="Create">
-                           <tooltip>
-                              <Tooltip text="Create New Product" />
-                           </tooltip></Button>
-                        <Button fx:id="btrnEdit" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Edit">
-                           <tooltip>
-                              <Tooltip text="Edit Selected Product" />
-                           </tooltip></Button>
-                        <Button fx:id="btnDelete" layoutX="78.0" layoutY="10.0" mnemonicParsing="false" text="Delete">
-                           <tooltip>
-                              <Tooltip text="Delete Selected Product" />
-                           </tooltip></Button>
+                        <HBox alignment="TOP_RIGHT" spacing="5.0">
+                           <children>
+                              <Button fx:id="btnCreate" mnemonicParsing="false" onAction="#createNewProduct" prefWidth="70.0" text="Create">
+                                 <tooltip>
+                                    <Tooltip text="Create New Product" />
+                                 </tooltip>
+                              </Button>
+                              <Button fx:id="btnEdit" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#editProduct" prefWidth="70.0" text="Edit">
+                                 <tooltip>
+                                    <Tooltip text="Edit Selected Product" />
+                                 </tooltip>
+                              </Button>
+                              <Button fx:id="btnDelete" layoutX="78.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteProduct" prefWidth="70.0" text="Delete">
+                                 <tooltip>
+                                    <Tooltip text="Delete Selected Product" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" spacing="5.0">
+                           <children>
+                              <Button fx:id="btnUpdate" onAction="#btnUpdate" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="70.0" text="Update" visible="false">
+                                 <tooltip>
+                                    <Tooltip text="Edit Selected Product" />
+                                 </tooltip>
+                              </Button>
+                              <Button fx:id="btnCancel" onAction="#btnCancel" layoutX="78.0" layoutY="10.0" mnemonicParsing="false" prefWidth="70.0" text="Cancel" visible="false">
+                                 <tooltip>
+                                    <Tooltip text="Delete Selected Product" />
+                                 </tooltip>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
+                  </VBox>
                </children>
             </VBox>
          </left>

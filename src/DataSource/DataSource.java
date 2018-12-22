@@ -32,7 +32,6 @@ public class DataSource {
 
     }
 
-
     public boolean openDatabase() {
 
         try {
@@ -44,7 +43,6 @@ public class DataSource {
         }
     }
 
-
     public void closeDatabase() {
         try {
             if (connection != null) {
@@ -55,7 +53,6 @@ public class DataSource {
 
         }
     }
-
 
     public boolean createNewTable(String tag) throws Exception {
 
@@ -87,7 +84,6 @@ public class DataSource {
 
     }
 
-
     public ArrayList<Desk> getAllDeskInfo() {
 
         StringBuilder sb = new StringBuilder("Select * FROM ");
@@ -114,7 +110,6 @@ public class DataSource {
         }
 
     }
-
 
     public boolean deleteSelectedTable(String tableTag) {
 
@@ -171,6 +166,27 @@ public class DataSource {
                 allProducts.add(product);
             }
             return allProducts;
+
+    }
+
+    public Boolean deleteProduct(int productID){
+        try {
+            Statement statement = connection.createStatement();
+            statement.execute("DELETE FROM " + TABLE_PRODUCT + " WHERE " + COLUMN_PRODUCTID + "=" + productID +" ;");
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public Boolean updateProduct(Product editingProduct) throws SQLException {
+
+            Statement statement = connection.createStatement();
+            int updatedRows=statement.executeUpdate("UPDATE " + TABLE_PRODUCT + " SET "+  COLUMN_PRODUCT_NAME+"='"+editingProduct.getProductName()+"', "+  COLUMN_PRODUCT_COST+"="+editingProduct.getProductCost()+", "+COLUMN_PRODUCT_AMOUNT+"="+editingProduct.getProductAmount()+" WHERE "+ COLUMN_PRODUCTID+"="+editingProduct.getProductID());
+            return true;
 
     }
 
