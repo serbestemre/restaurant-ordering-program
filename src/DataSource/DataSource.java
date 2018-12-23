@@ -2,6 +2,7 @@ package DataSource;
 
 import DataModel.Desk;
 import DataModel.Menu;
+import DataModel.MenuIngredient;
 import DataModel.Product;
 import javafx.collections.ObservableList;
 
@@ -37,6 +38,7 @@ public class DataSource {
     private static final String COLUMN_ING_MENUID="MenuID";
     private static final String COLUMN_ING_COST="ingCost";
     private static final String COLUMN_ING_PRODUCTID="ingProductID";
+    private static final String COLUMN_ING_PRODUCT_NAME="ingName";
     private static final String COLUMN_ING_AMOUNT="ingAmount";
 
 
@@ -220,7 +222,7 @@ public class DataSource {
     public Boolean insertMenuIngredient(Product ingredient,int id) throws SQLException {
 
             Statement statement=connection.createStatement();
-            statement.execute("INSERT INTO " + TABLE_MENU_INGREDIENTS + "("+COLUMN_MENUID+","+COLUMN_ING_COST+","+COLUMN_ING_PRODUCTID+","+COLUMN_ING_AMOUNT+") VALUES ("+ id + ", " + ingredient.getProductCost() + ", " +  ingredient.getProductID() + ", "+ ingredient.getProductAmount()+ ")");
+            statement.execute("INSERT INTO " + TABLE_MENU_INGREDIENTS + "("+COLUMN_MENUID+","+COLUMN_ING_COST+","+COLUMN_ING_PRODUCTID+","+COLUMN_ING_PRODUCT_NAME+","+COLUMN_ING_AMOUNT+") VALUES ("+ id + ", " + ingredient.getProductCost() + ", " +  ingredient.getProductID() + ", '"+ingredient.getProductName()+"', "+ ingredient.getProductAmount()+ ")");
             System.out.println(ingredient.getProductName() + " inserted into menu Ingredients Table **");
 
             return true;
@@ -301,5 +303,38 @@ public class DataSource {
         return allMenu;
 
     }
+
+
+    public ArrayList<MenuIngredient> getIngredientsOfSelectedMenu(Menu selectedMenu) throws SQLException {
+
+        StringBuilder sb = new StringBuilder("Select * FROM ");
+        sb.append(TABLE_MENU_INGREDIENTS);
+        sb.append(" WHERE ");
+        sb.append(COLUMN_ING_MENUID);
+        sb.append(" = ");
+        sb.append(selectedMenu.getMenuID());
+        sb.append(";");
+
+        ArrayList<MenuIngredient> allIngredientsOfSelectedProduct = new ArrayList<>();
+
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(sb.toString());
+        while (rs.next()) {
+            MenuIngredient ingredient = new MenuIngredient();
+            ingredient.setIngName(rs.getString(COLUMN_ING_PRODUCT_NAME));
+            ingredient.setIngCost(rs.getDouble(COLUMN_ING_COST));
+            ingredient.setIngAmount(rs.getInt(COLUMN_ING_AMOUNT));
+            ingredient.setMenuID(rs.getInt(COLUMN_ING_MENUID));
+
+            allIngredientsOfSelectedProduct.add(ingredient);
+        }
+        return allIngredientsOfSelectedProduct;
+
+    }
+
+
+
+
+
 
 }

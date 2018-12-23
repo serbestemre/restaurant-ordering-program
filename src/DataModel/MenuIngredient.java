@@ -5,7 +5,16 @@ public class MenuIngredient {
     private int menuID;
     private double ingCost;
     private int ingProduct;
+    private String ingName;
     private int ingAmount;
+
+    public String getIngName() {
+        return ingName;
+    }
+
+    public void setIngName(String ingName) {
+        this.ingName = ingName;
+    }
 
     public int getRowID() {
         return rowID;

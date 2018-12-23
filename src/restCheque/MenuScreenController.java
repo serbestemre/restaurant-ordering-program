@@ -1,6 +1,7 @@
 package restCheque;
 
 import DataModel.Menu;
+import DataModel.MenuIngredient;
 import DataModel.Product;
 import DataSource.DataSource;
 import javafx.beans.value.ChangeListener;
@@ -60,12 +61,19 @@ public class MenuScreenController {
     private TableView<Product> tableViewIngridients;
 
     @FXML
+    private TableView<MenuIngredient> tableViewExistingIngredients;
+
+
+    @FXML
     private TableView<Menu> tableViewMenu;
+
+    public Menu selectedMenu=new Menu();
 
 
 
     ObservableList<Product> listInredients= FXCollections.observableArrayList();
     ObservableList<Menu> listMenu= FXCollections.observableArrayList();
+    ObservableList<MenuIngredient> existingIngredientsList= FXCollections.observableArrayList();
     private double totalCost=0;
 
     public double getTotalCost() {
@@ -95,6 +103,15 @@ public class MenuScreenController {
 
            }
        });
+
+        tableViewMenu.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+
+                selectedMenu=newSelection;
+                getSelectedMenuIngredients(newSelection);
+
+            }
+        });
 
     }
 
@@ -221,97 +238,101 @@ public class MenuScreenController {
 
    @FXML
     public void createNewMenu(){
-        try {
-            Menu menu = new Menu();
-            double price = Double.parseDouble(tfPrice.getText());
-            double cost = Double.parseDouble(tfCost.getText());
-            if(!tfVat.getText().trim().isEmpty()) {
-                double vat = Double.parseDouble(tfVat.getText());
-            }else{
-                menu.setMenuVat(0);
-            }
-            if(!tfMenuName.getText().trim().isEmpty()){
-                menu.setMenuName(tfMenuName.getText().trim().toUpperCase(Locale.ENGLISH));
-                menu.setMenuCost(cost);
-                menu.setMenuPrice(price);
+
+        if(listInredients.size()!=0) {
+            try {
+                Menu menu = new Menu();
+                double price = Double.parseDouble(tfPrice.getText());
+                double cost = Double.parseDouble(tfCost.getText());
+                double vat=0;
+                if (!tfVat.getText().trim().isEmpty()) {
+                    vat=Double.parseDouble(tfVat.getText());
+                } else {
+                    menu.setMenuVat(0);
+                }
+                if (!tfMenuName.getText().trim().isEmpty()) {
+                    menu.setMenuName(tfMenuName.getText().trim().toUpperCase(Locale.ENGLISH));
+                    menu.setMenuCost(cost);
+                    menu.setMenuPrice(price);
+                    menu.setMenuVat(vat);
 
 
-                System.out.println("menu name: " + menu.getMenuName());
-                System.out.println("menu cost: " + menu.getMenuCost());
-                System.out.println("menu price: " +menu.getMenuPrice());
-                System.out.println("menu vat: " +menu.getMenuVat());
+                    System.out.println("menu name: " + menu.getMenuName());
+                    System.out.println("menu cost: " + menu.getMenuCost());
+                    System.out.println("menu price: " + menu.getMenuPrice());
+                    System.out.println("menu vat: " + menu.getMenuVat());
 
 
-                Task<Boolean> taskCreateNewMenu = new Task() {
-                    @Override
-                    protected Object call() throws Exception {
+
+                    Task<Boolean> taskCreateNewMenu = new Task() {
+                        @Override
+                        protected Object call() throws Exception {
 
 
-                        return DataSource.getInstance().createNewMenuInsertIngredients(menu,listInredients);
+                            return DataSource.getInstance().createNewMenuInsertIngredients(menu, listInredients);
 
+                        }
+                    };
+                    new Thread(taskCreateNewMenu).start();
+                    taskCreateNewMenu.setOnFailed(new EventHandler<WorkerStateEvent>() {
+                        @Override
+                        public void handle(WorkerStateEvent event) {
+                            progressBar.setVisible(false);
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error Dialog");
+                            alert.setHeaderText("Process Failed!!!");
+                            alert.setContentText("Ooops, There was something wrong!\nThe new menu couldn't created !");
+                            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                            alert.showAndWait();
+                        }
+                    });
+
+
+                    taskCreateNewMenu.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                        @Override
+                        public void handle(WorkerStateEvent event) {
+                            System.out.println("başarılı şekilde eklendi");
+                            progressBar.setVisible(false);
+
+                            listMenu.add(menu);
+                            tfMenuName.clear();
+                            tfCost.clear();
+                            tfPrice.clear();
+                            tfVat.clear();
+                            listInredients.clear();
+                        }
+                    });
+
+                    taskCreateNewMenu.setOnRunning(new EventHandler<WorkerStateEvent>() {
+                        @Override
+                        public void handle(WorkerStateEvent event) {
+                            progressBar.setProgress(taskCreateNewMenu.getProgress());
+                            progressBar.setVisible(true);
+
+                        }
+                    });
+                    System.out.println("____Ingredients____");
+                    for (int i = 0; i < listInredients.size(); i++) {
+                        System.out.println("ingredients: " + listInredients.get(i).getProductName());
                     }
-                };
-                new Thread(taskCreateNewMenu).start();
-                taskCreateNewMenu.setOnFailed(new EventHandler<WorkerStateEvent>() {
-                    @Override
-                    public void handle(WorkerStateEvent event) {
-                        progressBar.setVisible(false);
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error Dialog");
-                        alert.setHeaderText("Process Failed!!!");
-                        alert.setContentText("Ooops, There was something wrong!\nThe new menu couldn't created !");
-                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                        stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
-                        alert.showAndWait();
-                    }
-                });
 
 
-                taskCreateNewMenu.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-                    @Override
-                    public void handle(WorkerStateEvent event) {
-                        System.out.println("başarılı şekilde eklendi");
-                        progressBar.setVisible(false);
-
-                        listMenu.add(menu);
-                        tfMenuName.clear();
-                        tfCost.clear();
-                        tfPrice.clear();
-                        tfVat.clear();
-                        listInredients.clear();
-                    }
-                });
-
-                taskCreateNewMenu.setOnRunning(new EventHandler<WorkerStateEvent>() {
-                    @Override
-                    public void handle(WorkerStateEvent event) {
-                        progressBar.setProgress(taskCreateNewMenu.getProgress());
-                        progressBar.setVisible(true);
-
-                    }
-                });
-
-                System.out.println("____Ingredients____");
-                for (int i = 0; i<listInredients.size();i++){
-                    System.out.println("ingredients: " + listInredients.get(i).getProductName());
+                } else {
+                    System.out.println("menü ismi boş bırakılamaz!");
                 }
 
 
+            } catch (NumberFormatException e) {
 
-            }else{
-                System.out.println("menü ismi boş bırakılamaz!");
+
+                System.out.println("sayı format hatası");
+
+
             }
-
-
-
-        }catch (NumberFormatException e){
-
-
-            System.out.println("sayı format hatası");
-
-
+        }else{
+            System.out.println("MENU TANIMLAMA BAŞARISIZ EN AZ BİR INGREDIENTS GIRIN!");
         }
-
    }
 
     private double calculateMenuCost(int stock, double cost) {
@@ -375,6 +396,51 @@ public class MenuScreenController {
         }
     }
 
+    @FXML
+    public void getSelectedMenuIngredients(Menu selectedMenu){
+        Task<ObservableList<Product>> taskGetSelectedMenuIngredients = new GetSelectedMenuIngredients();
+        try {
+
+            existingIngredientsList=FXCollections.observableArrayList(DataSource.getInstance().getIngredientsOfSelectedMenu(selectedMenu));
+            tableViewExistingIngredients.setItems(existingIngredientsList);
+        } catch (SQLException e) {
+            System.out.println("tabloya ingredientslar get edilemedi");
+        }
+        new Thread(taskGetSelectedMenuIngredients).start();
+
+        taskGetSelectedMenuIngredients.setOnRunning(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                progressBar.setVisible(true);
+                progressBar.setProgress(taskGetSelectedMenuIngredients.getProgress());
+            }
+        });
+
+        taskGetSelectedMenuIngredients.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                progressBar.setVisible(false);
+                tableViewMenu.refresh();
+            }
+        });
+
+        taskGetSelectedMenuIngredients.setOnFailed(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                progressBar.setVisible(false);
+            }
+        });
+
+
+    }
+
+    class GetSelectedMenuIngredients extends Task{
+
+        @Override
+        protected Object call() throws Exception {
+            return FXCollections.observableArrayList(DataSource.getInstance().getIngredientsOfSelectedMenu(selectedMenu));
+        }
+    }
 
 }
 
