@@ -30,11 +30,21 @@ public class Product {
         this.productCost = productCost;
     }
 
-    public double getProductAmount() {
+    public int getProductAmount() {
         return productAmount;
     }
 
     public void setProductAmount(int productAmount) {
         this.productAmount = productAmount;
     }
+
+
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Product)) return false;
+        Product product = (Product) obj;
+        return this.getProductID() == product.getProductID();   }
 }

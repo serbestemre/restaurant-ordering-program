@@ -9,19 +9,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<DialogPane prefHeight="449.0" prefWidth="327.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restCheque.IngridientsController">
+<DialogPane prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restCheque.IngredientsController">
    <content>
       <BorderPane prefHeight="444.0" prefWidth="327.0">
          <left>
-            <VBox spacing="5.0" BorderPane.alignment="CENTER">
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="600.0" spacing="5.0" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="tableViewProduct" minHeight="400.0">
+                  <TableView fx:id="tableViewProduct" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="ID">
-                           <cellValueFactory>
-                          <PropertyValueFactory property="productID" />
-                      </cellValueFactory>
-                      </TableColumn>
                       <TableColumn prefWidth="75.0" text="NAME">
                            <cellValueFactory>
                           <PropertyValueFactory property="productName" />
@@ -32,7 +27,7 @@
                                 <PropertyValueFactory property="productCost" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="75.0" text="AMOUNT">
+                        <TableColumn prefWidth="75.0" text="STOCK AMOUNT">
                            <cellValueFactory>
                             <PropertyValueFactory property="productAmount" />
                         </cellValueFactory>

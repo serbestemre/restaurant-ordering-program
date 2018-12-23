@@ -11,17 +11,14 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Optional;
-public class Controller {
+public class MainScreenController {
     public ArrayList<Desk> deskDBreturnlist = new ArrayList<Desk>();
 
     @FXML
@@ -170,7 +167,8 @@ public class Controller {
     }
 
     @FXML
-    public void addNewTable() { try {
+    public void addNewTable() {
+        try {
         Dialog<ButtonType> dialog2 = new Dialog<ButtonType>();
         dialog2.initOwner(mainScreen.getScene().getWindow());
         FXMLLoader fxmlLoader = new FXMLLoader();

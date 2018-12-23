@@ -1,8 +1,9 @@
 package restCheque;
 
-import DataModel.Menu;
 import DataModel.Product;
 import DataSource.DataSource;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -14,7 +15,7 @@ import javafx.scene.control.TableView;
 
 import java.sql.SQLException;
 
-public class IngridientsController {
+public class IngredientsController {
 
     @FXML
     private TableView<Product> tableViewProduct;
@@ -23,12 +24,29 @@ public class IngridientsController {
     private ProgressBar progressBar;
 
     ObservableList<Product> listofProducts =FXCollections.observableArrayList();
+    private static Product selectedProduct = new Product();
 
+
+    public static Product getSelectedProduct() {
+        return selectedProduct;
+    }
+
+    public static void setSelectedProduct(Product selectedProduct) {
+        IngredientsController.selectedProduct = selectedProduct;
+    }
 
     @FXML
     public void initialize(){
-
         getAllProducts();
+
+        tableViewProduct.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                // Your action here
+                setSelectedProduct(tableViewProduct.getSelectionModel().getSelectedItem());
+            }
+        });
     }
 
     @FXML

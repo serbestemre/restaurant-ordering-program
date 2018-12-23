@@ -53,7 +53,6 @@ public class ProductScreenController {
 
     ObservableList<Product> listofProducts =FXCollections.observableArrayList();
 
-
     public Product selectedProduct= new Product();
 @FXML
     public void initialize(){
@@ -66,9 +65,7 @@ public class ProductScreenController {
             // Your action here
             if(tableViewProduct.getSelectionModel().getSelectedItem()!=null) {
                 selectedProduct = (Product) newValue;
-                int i =tableViewProduct.getItems().indexOf(selectedProduct);
-                System.out.println("table index" +i);
-                System.out.println("liste index " +listofProducts.indexOf(selectedProduct));
+
             }
         }
     });
@@ -92,54 +89,57 @@ public class ProductScreenController {
             myNewProduct.setProductCost(cost);
             myNewProduct.setProductAmount(amount);
 
-            Task<Boolean> taskAddNewCustomer = new Task() {
-                @Override
-                protected Object call() throws Exception {
+
+                Task<Boolean> taskAddNewCustomer = new Task() {
+                    @Override
+                    protected Object call() throws Exception {
 
 
-                    return DataSource.getInstance().createNewProduct(myNewProduct);
+                        return DataSource.getInstance().createNewProduct(myNewProduct);
 
-                }
-            };
-            new Thread(taskAddNewCustomer).start();
-            taskAddNewCustomer.setOnFailed(new EventHandler<WorkerStateEvent>() {
-                @Override
-                public void handle(WorkerStateEvent event) {
-                    progressBar.setVisible(false);
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Dialog");
-                    alert.setHeaderText("Process Failed!!!");
-                    alert.setContentText("Ooops, There was something wrong!\nThe new product did not add into product database!");
-                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                    stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
-                    alert.showAndWait();
-                }
-            });
-
-
-            taskAddNewCustomer.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-                @Override
-                public void handle(WorkerStateEvent event) {
-                    System.out.println("başarılı şekilde eklendi");
-                    listofProducts.add(myNewProduct);
-                    tableViewProduct.refresh();
-                    progressBar.setVisible(false);
+                    }
+                };
+                new Thread(taskAddNewCustomer).start();
+                taskAddNewCustomer.setOnFailed(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent event) {
+                        progressBar.setVisible(false);
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error Dialog");
+                        alert.setHeaderText("Process Failed!!!");
+                        alert.setContentText("Ooops, There was something wrong!\nThe new product did not add into product database!");
+                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                        stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                        alert.showAndWait();
+                    }
+                });
 
 
-                    tfName.clear();
-                    tfCost.clear();
-                    tfAmount.clear();
-                }
-            });
+                taskAddNewCustomer.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent event) {
+                        System.out.println("başarılı şekilde eklendi");
+                        listofProducts.add(myNewProduct);
+                        tableViewProduct.refresh();
+                        progressBar.setVisible(false);
 
-            taskAddNewCustomer.setOnRunning(new EventHandler<WorkerStateEvent>() {
-                @Override
-                public void handle(WorkerStateEvent event) {
-                    progressBar.setProgress(taskAddNewCustomer.getProgress());
-                    progressBar.setVisible(true);
 
-                }
-            });
+                        tfName.clear();
+                        tfCost.clear();
+                        tfAmount.clear();
+
+
+                    }
+                });
+
+                taskAddNewCustomer.setOnRunning(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent event) {
+                        progressBar.setProgress(taskAddNewCustomer.getProgress());
+                        progressBar.setVisible(true);
+
+                    }
+                });
 
 
 
@@ -163,8 +163,8 @@ public class ProductScreenController {
         alert.setTitle("Error");
         alert.setHeaderText("Wrong or Invalid Attempt!");
         alert.setContentText("Ooops, It Looks Like You Did not Enter Valid Number!\n" +
-                "Careful with decimal format\n" +
-                "You must use '.' Example: 21.35 ");
+                "Careful with decimal format for COST\n" +
+                "You must use '.'\nExample:COST=21.35\nExample:STOCK=2500 ");
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
         alert.showAndWait();
@@ -268,6 +268,13 @@ public class ProductScreenController {
                     listofProducts.add(index,editingProduct);
                     tableViewProduct.refresh();
                     progressBar.setVisible(false);
+
+                    btnCancel.setVisible(false);
+                    btnUpdate.setVisible(false);
+
+                    btnCreate.setDisable(false);
+                    btnEdit.setDisable(false);
+                    btnDelete.setDisable(false);
 
                     tfName.clear();
                     tfCost.clear();

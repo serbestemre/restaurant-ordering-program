@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.VBox?>
+
+<DialogPane fx:id="amountDialogPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restCheque.AmountDialogPane">
+   <content>
+      <VBox alignment="TOP_CENTER">
+         <children>
+            <TextField fx:id="tfAmount" alignment="TOP_LEFT" promptText="Amount gr/unit">
+               <tooltip>
+                  <Tooltip text="Enter Integer Amount Format Exp: 250" />
+               </tooltip></TextField>
+         </children>
+      </VBox>
+   </content>
+</DialogPane>

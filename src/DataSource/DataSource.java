@@ -1,7 +1,9 @@
 package DataSource;
 
 import DataModel.Desk;
+import DataModel.Menu;
 import DataModel.Product;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,9 +27,18 @@ public class DataSource {
 
     private static final String TABLE_MENU="Menu";
     private static final String COLUMN_MENUID="menuID";
+    private static final String COLUMN_MENU_NAME="menuName";
     private static final String COLUMN_MENU_PRICE="menuPrice";
     private static final String COLUMN_MENU_COST="menuCost";
     private static final String COLUMN_MENU_VAT="menuVat";
+
+    private static final String TABLE_MENU_INGREDIENTS="MenuIngredient";
+    private static final String COLUMN_ROWID="rowID";
+    private static final String COLUMN_ING_MENUID="MenuID";
+    private static final String COLUMN_ING_COST="ingCost";
+    private static final String COLUMN_ING_PRODUCTID="ingProductID";
+    private static final String COLUMN_ING_AMOUNT="ingAmount";
+
 
 
 
@@ -132,6 +143,10 @@ public class DataSource {
     }
 
     public Boolean createNewProduct(Product myNewProduct) throws SQLException {
+
+        try {
+
+
             StringBuilder sb = new StringBuilder("INSERT INTO ");
             sb.append(TABLE_PRODUCT);
             sb.append(" ( ");
@@ -152,6 +167,11 @@ public class DataSource {
             Statement statement = connection.createStatement();
             statement.execute(sb.toString());
             return true;
+        }catch (SQLException e){
+
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public ArrayList<Product> getAllProducts() throws SQLException {
@@ -194,6 +214,71 @@ public class DataSource {
             Statement statement = connection.createStatement();
             int updatedRows=statement.executeUpdate("UPDATE " + TABLE_PRODUCT + " SET "+  COLUMN_PRODUCT_NAME+"='"+editingProduct.getProductName()+"', "+  COLUMN_PRODUCT_COST+"="+editingProduct.getProductCost()+", "+COLUMN_PRODUCT_AMOUNT+"="+editingProduct.getProductAmount()+" WHERE "+ COLUMN_PRODUCTID+"="+editingProduct.getProductID());
             return true;
+
+    }
+
+    public Boolean insertMenuIngredient(Product ingredient,int id) throws SQLException {
+
+            Statement statement=connection.createStatement();
+            statement.execute("INSERT INTO " + TABLE_MENU_INGREDIENTS + "("+COLUMN_MENUID+","+COLUMN_ING_COST+","+COLUMN_ING_PRODUCTID+","+COLUMN_ING_AMOUNT+") VALUES ("+ id + ", " + ingredient.getProductCost() + ", " +  ingredient.getProductID() + ", "+ ingredient.getProductAmount()+ ")");
+            System.out.println(ingredient.getProductName() + " inserted into menu Ingredients Table **");
+
+            return true;
+
+
+
+
+    }
+
+
+
+
+    public Boolean createNewMenuInsertIngredients(Menu menu, ObservableList<Product> ingredientsList) throws SQLException {
+
+        try {
+
+
+        StringBuilder sb = new StringBuilder("INSERT INTO ");
+        sb.append(TABLE_MENU);
+        sb.append(" (");
+        sb.append(COLUMN_MENU_NAME);
+        sb.append(",");
+        sb.append(COLUMN_MENU_COST);
+        sb.append(",");
+        sb.append(COLUMN_MENU_PRICE);
+        sb.append(",");
+        sb.append(COLUMN_MENU_VAT);
+        sb.append(") ");
+        sb.append("VALUES ");
+        sb.append("('");
+        sb.append(menu.getMenuName());
+        sb.append("', ");
+        sb.append(menu.getMenuCost());
+        sb.append(", ");
+        sb.append(menu.getMenuPrice());
+        sb.append(", ");
+        sb.append(menu.getMenuVat());
+        sb.append(");");
+
+        Statement statement = connection.createStatement();
+
+            System.out.println("ing sql " + sb.toString());
+         statement.execute(sb.toString());
+         int id =statement.getGeneratedKeys().getInt(1);
+        System.out.println("dönen id = " + id);
+
+        for (int i=0;i<ingredientsList.size();i++){
+            insertMenuIngredient(ingredientsList.get(i),id);
+        }
+
+
+
+        return true;
+        }catch (SQLException e){
+
+            e.printStackTrace();
+            return false;
+        }
 
     }
 

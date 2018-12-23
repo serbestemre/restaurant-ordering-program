@@ -4,10 +4,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -19,14 +21,15 @@
    <content>
       <BorderPane>
          <left>
-            <VBox prefWidth="170.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <VBox prefWidth="175.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
                   <TextField fx:id="tfMenuName" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="31.0" prefWidth="150.0" promptText="Menu Name" />
                   <TextField fx:id="tfPrice" layoutX="23.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="31.0" prefWidth="150.0" promptText="Price" />
+                  <TextField fx:id="tfCost" layoutX="10.0" layoutY="51.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="31.0" prefWidth="150.0" promptText="Cost" />
                   <TextField fx:id="tfVat" layoutX="23.0" layoutY="54.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="31.0" prefWidth="150.0" promptText="Vat" />
                   <VBox spacing="5.0">
                      <children>
-                        <Button fx:id="btnDefineIngridients" onAction="#showIngridientsDialogPane" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="    Add Ingridients" wrapText="true">
+                        <Button fx:id="btnAddIngredients" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showIngredientsDialogPane" text="  Add Ingredients" wrapText="true">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -38,7 +41,7 @@
                               <Tooltip text="Add New Ingridients" />
                            </tooltip>
                         </Button>
-                        <Button fx:id="btnDeleteIngridients" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Delete Ingridients">
+                        <Button fx:id="btnDeleteIngredients" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteIngredients" text="Delete Ingredients">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -50,7 +53,7 @@
                               <Tooltip text="Delete Selected Ingridients" />
                            </tooltip>
                         </Button>
-                        <Button fx:id="btnCreateMenu" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="31.0" prefWidth="168.0" text="       Create Menu">
+                        <Button fx:id="btnCreateMenu" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createNewMenu" prefHeight="31.0" prefWidth="168.0" text="       Create Menu">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -70,24 +73,42 @@
                </BorderPane.margin>
                <children>
                   <HBox alignment="BOTTOM_RIGHT" spacing="5.0" />
-                  <Label text="Ingridients Table" textFill="#ff1231">
+                  <Label text="Ingredients Table" textFill="#ff1231">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="tableViewIngridients">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="Product Name" />
-                      <TableColumn prefWidth="75.0" text="Amount" />
-                        <TableColumn prefWidth="75.0" text="Cost of Amount" />
-                    </columns>
+                  <TableView fx:id="tableViewIngridients" minHeight="400.0">
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="ID">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="productID" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="75.0" text="NAME">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="productName" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="75.0" text="COST">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="productCost" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="75.0" text="AMOUNT">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="productAmount" />
+                           </cellValueFactory>
+                        </TableColumn>
+                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                      <tooltip>
-                        <Tooltip text="Ingridients" />
+                        <Tooltip text="Product List" />
                      </tooltip>
                   </TableView>
+                  <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" progress="0.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="TOP_RIGHT" spacing="5.0">
                      <children>
                         <Label alignment="TOP_RIGHT" text="Total Cost" textAlignment="RIGHT" HBox.hgrow="ALWAYS">
@@ -95,7 +116,7 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label alignment="TOP_RIGHT" layoutX="531.0" layoutY="10.0" text="00.00" textAlignment="RIGHT" textFill="RED" HBox.hgrow="ALWAYS">
+                        <Label fx:id="labelTotalCost" alignment="TOP_RIGHT" layoutX="531.0" layoutY="10.0" text="00.00" textAlignment="RIGHT" textFill="RED" HBox.hgrow="ALWAYS">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
