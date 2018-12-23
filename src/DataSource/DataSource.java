@@ -230,9 +230,6 @@ public class DataSource {
 
     }
 
-
-
-
     public Boolean createNewMenuInsertIngredients(Menu menu, ObservableList<Product> ingredientsList) throws SQLException {
 
         try {
@@ -279,6 +276,29 @@ public class DataSource {
             e.printStackTrace();
             return false;
         }
+
+    }
+
+    public ArrayList<Menu> getAllMenus() throws SQLException {
+
+        StringBuilder sb = new StringBuilder("Select * FROM ");
+        sb.append(TABLE_MENU);
+
+        ArrayList<Menu> allMenu = new ArrayList<>();
+
+
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(sb.toString());
+        while (rs.next()) {
+            Menu menu = new Menu();
+            menu.setMenuID(rs.getInt(COLUMN_MENUID));
+            menu.setMenuName(rs.getString(COLUMN_MENU_NAME));
+            menu.setMenuCost(rs.getDouble(COLUMN_MENU_COST));
+            menu.setMenuPrice(rs.getDouble(COLUMN_MENU_PRICE));
+            menu.setMenuVat(rs.getDouble(COLUMN_MENU_VAT));
+            allMenu.add(menu);
+        }
+        return allMenu;
 
     }
 

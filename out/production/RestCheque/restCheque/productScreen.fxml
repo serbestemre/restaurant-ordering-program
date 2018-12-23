@@ -38,7 +38,7 @@
                                       <PropertyValueFactory property="productCost" />
                                   </cellValueFactory>
                               </TableColumn>
-                              <TableColumn prefWidth="75.0" text="AMOUNT">
+                              <TableColumn prefWidth="75.0" text="STOCK AMOUNT">
                                  <cellValueFactory>
                                   <PropertyValueFactory property="productAmount" />
                               </cellValueFactory>
@@ -97,12 +97,12 @@
                         </HBox>
                         <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" spacing="5.0">
                            <children>
-                              <Button fx:id="btnUpdate" onAction="#btnUpdate" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="70.0" text="Update" visible="false">
+                              <Button fx:id="btnUpdate" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnUpdate" prefWidth="70.0" text="Update" visible="false">
                                  <tooltip>
                                     <Tooltip text="Edit Selected Product" />
                                  </tooltip>
                               </Button>
-                              <Button fx:id="btnCancel" onAction="#btnCancel" layoutX="78.0" layoutY="10.0" mnemonicParsing="false" prefWidth="70.0" text="Cancel" visible="false">
+                              <Button fx:id="btnCancel" layoutX="78.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnCancel" prefWidth="70.0" text="Cancel" visible="false">
                                  <tooltip>
                                     <Tooltip text="Delete Selected Product" />
                                  </tooltip>
