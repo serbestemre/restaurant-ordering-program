@@ -59,8 +59,13 @@ public class MenuScreenController {
     @FXML
     private TableView<Product> tableViewIngridients;
 
+    @FXML
+    private TableView<Menu> tableViewMenu;
+
+
 
     ObservableList<Product> listInredients= FXCollections.observableArrayList();
+    ObservableList<Menu> listMenu= FXCollections.observableArrayList();
     private double totalCost=0;
 
     public double getTotalCost() {
@@ -73,8 +78,10 @@ public class MenuScreenController {
 
     @FXML
     public void initialize(){
+        getAllMenus();
     tableViewIngridients.setItems(listInredients);
 
+    tableViewMenu.setItems(listMenu);
 
        listInredients.addListener(new ListChangeListener<Product>() {
            @Override
@@ -266,6 +273,7 @@ public class MenuScreenController {
                         System.out.println("başarılı şekilde eklendi");
                         progressBar.setVisible(false);
 
+                        listMenu.add(menu);
                         tfMenuName.clear();
                         tfCost.clear();
                         tfPrice.clear();
@@ -282,24 +290,6 @@ public class MenuScreenController {
 
                     }
                 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                 System.out.println("____Ingredients____");
                 for (int i = 0; i<listInredients.size();i++){
@@ -322,18 +312,6 @@ public class MenuScreenController {
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
    }
 
     private double calculateMenuCost(int stock, double cost) {
@@ -351,8 +329,56 @@ public class MenuScreenController {
 
    }
 
+    @FXML
+    public void getAllMenus(){
+        Task<ObservableList<Product>> taskGetAllMenu = new GetAllMenu();
+        try {
+
+            listMenu=FXCollections.observableArrayList(DataSource.getInstance().getAllMenus());
+            tableViewMenu.setItems(listMenu);
+        } catch (SQLException e) {
+            System.out.println("tabloya productlar get edilemedi");
+        }
+        new Thread(taskGetAllMenu).start();
+
+        taskGetAllMenu.setOnRunning(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                progressBar.setVisible(true);
+                progressBar.setProgress(taskGetAllMenu.getProgress());
+            }
+        });
+
+        taskGetAllMenu.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                progressBar.setVisible(false);
+                tableViewMenu.refresh();
+            }
+        });
+
+        taskGetAllMenu.setOnFailed(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                progressBar.setVisible(false);
+            }
+        });
+
 
     }
+
+    class GetAllMenu extends Task{
+
+        @Override
+        protected Object call() throws Exception {
+            return FXCollections.observableArrayList(DataSource.getInstance().getAllMenus());
+        }
+    }
+
+
+}
+
+
 
 
 
