@@ -2,10 +2,9 @@ package restCheque;
 
 import DataSource.DataSource;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 public class CreateTableController {
 
@@ -27,13 +26,19 @@ public class CreateTableController {
 
     @FXML
     public void callCreateNewTable(){
-
-
         try {
             DataSource.getInstance().createNewTable(tfTableTag.getText().toString().toUpperCase().trim());
+
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("insert tag başarısız");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Insert tag error!!!");
+            alert.setContentText("Ooops, There was something wrong!");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            alert.showAndWait();
+
         }
 
     }

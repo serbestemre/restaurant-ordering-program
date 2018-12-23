@@ -194,6 +194,13 @@ public class ProductScreenController {
 
     }else{
         System.out.println("ürün seçilmedi");
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setHeaderText("Choose an item!!!");
+        alert.setContentText("Ooops, There was something wrong!");
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+        alert.showAndWait();
     }
 
 
@@ -219,6 +226,13 @@ public class ProductScreenController {
         listofProducts.remove(deletingProduct);
         tableViewProduct.refresh();
     }
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Error Dialog");
+    alert.setHeaderText("Select an item to delete!!!");
+    alert.setContentText("Ooops, There was something wrong!");
+    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+    stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+    alert.showAndWait();
 }
 
 @FXML
@@ -318,7 +332,7 @@ public class ProductScreenController {
     }
     }
 
-@FXML
+    @FXML
     public void getAllProducts(){
     Task<ObservableList<Product>> taskGetAllProduct = new GetAllProducts();
     try {
@@ -327,6 +341,14 @@ public class ProductScreenController {
         tableViewProduct.setItems(listofProducts);
     } catch (SQLException e) {
         System.out.println("tabloya productlar get edilemedi");
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setHeaderText("Could not get product to the table!!!");
+        alert.setContentText("Ooops, There was something wrong!");
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+        alert.showAndWait();
+
     }
     new Thread(taskGetAllProduct).start();
 
@@ -356,7 +378,7 @@ public class ProductScreenController {
 
 }
 
-class GetAllProducts extends Task{
+    class GetAllProducts extends Task{
 
     @Override
     protected Object call() throws Exception {

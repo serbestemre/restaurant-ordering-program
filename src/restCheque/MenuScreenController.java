@@ -229,11 +229,6 @@ public class MenuScreenController {
             alert.showAndWait();
         }
 
-
-
-
-
-
     }
 
 
@@ -321,18 +316,37 @@ public class MenuScreenController {
 
                 } else {
                     System.out.println("menü ismi boş bırakılamaz!");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Dialog");
+                    alert.setHeaderText("Menu name can not be empty!!!");
+                    alert.setContentText("Ooops, There was something wrong!");
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                    alert.showAndWait();
                 }
 
 
             } catch (NumberFormatException e) {
+                System.out.println("sayı format hatası"); Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setHeaderText("Number format error!!!");
+                alert.setContentText("Ooops, There was something wrong!");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                alert.showAndWait();
 
-
-                System.out.println("sayı format hatası");
 
 
             }
         }else{
             System.out.println("MENU TANIMLAMA BAŞARISIZ EN AZ BİR INGREDIENTS GIRIN!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Could not create menu. Select at least one ingredients!!!");
+            alert.setContentText("Ooops, There was something wrong!");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            alert.showAndWait();
         }
    }
 
@@ -348,7 +362,15 @@ public class MenuScreenController {
         if(tableViewIngridients.getSelectionModel().getSelectedItem()!=null){
             listInredients.remove(tableViewIngridients.getSelectionModel().getSelectedItem());
         }
-
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Select an item to delete!!!");
+            alert.setContentText("Ooops, There was something wrong!");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            alert.showAndWait();
+        }
    }
 
     @FXML
@@ -358,8 +380,17 @@ public class MenuScreenController {
 
             listMenu=FXCollections.observableArrayList(DataSource.getInstance().getAllMenus());
             tableViewMenu.setItems(listMenu);
+
         } catch (SQLException e) {
+
             System.out.println("tabloya productlar get edilemedi");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Products could not loaded!!!");
+            alert.setContentText("Ooops, There was something wrong!");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            alert.showAndWait();
         }
         new Thread(taskGetAllMenu).start();
 
@@ -406,6 +437,14 @@ public class MenuScreenController {
             tableViewExistingIngredients.setItems(existingIngredientsList);
         } catch (SQLException e) {
             System.out.println("tabloya ingredientslar get edilemedi");
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Database");
+            alert.setHeaderText("Ingredients could not load!!!");
+            alert.setContentText("Ooops, There was something wrong!");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            alert.showAndWait();
         }
         new Thread(taskGetSelectedMenuIngredients).start();
 

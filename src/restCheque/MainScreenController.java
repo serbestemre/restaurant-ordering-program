@@ -186,7 +186,14 @@ public class MainScreenController {
 
     }
     catch (IOException e) {
-        e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setHeaderText("CREATE TABLE PAGE ERROR!!!");
+        alert.setContentText("Ooops, Something went wrong!");
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+        alert.showAndWait();
+
     }
     catch (IllegalStateException target){
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -227,7 +234,13 @@ public class MainScreenController {
             e.printStackTrace();
         }
         catch (IllegalStateException target){
-            System.out.println("SAYFA BULUNAMADI !!!!");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("PAGE NOT FOUND!!!");
+            alert.setContentText("Ooops, There was something wrong!");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            alert.showAndWait();
         }
 
 
@@ -259,7 +272,13 @@ public class MainScreenController {
 
         }
         catch (IOException e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("MENU PAGE COULD NOT LOADED!!!");
+            alert.setContentText("Ooops, There was something wrong!");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            alert.showAndWait();
         }
         catch (IllegalStateException target){
             Alert alert = new Alert(Alert.AlertType.ERROR);

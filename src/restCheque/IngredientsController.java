@@ -10,8 +10,11 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
@@ -57,7 +60,14 @@ public class IngredientsController {
             listofProducts= FXCollections.observableArrayList(DataSource.getInstance().getAllProducts());
             tableViewProduct.setItems(listofProducts);
         } catch (SQLException e) {
-            System.out.println("tabloya ingridientslar get edilemedi");
+//            System.out.println("tabloya ingridientslar get edilemedi");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Could not get ingredients to the table!!!");
+            alert.setContentText("Ooops, There was something wrong!");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            alert.showAndWait();
         }
         new Thread(taskGetAllProduct).start();
 
