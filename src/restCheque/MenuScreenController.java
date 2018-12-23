@@ -87,6 +87,7 @@ public class MenuScreenController {
     @FXML
     public void initialize(){
         getAllMenus();
+        System.out.println("deneme");
     tableViewIngridients.setItems(listInredients);
 
     tableViewMenu.setItems(listMenu);
