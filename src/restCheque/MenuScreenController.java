@@ -137,15 +137,7 @@ public class MenuScreenController {
         tableViewMenu.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 selectedMenu=newSelection;
-                System.out.println("selectedMenu.name= "+ selectedMenu.getMenuName());
-                System.out.println("selectedITEM MENU ID = " +selectedMenu.getMenuID());
                 getSelectedMenuIngredients(newSelection);
-
-
-                System.out.println("index of selected item from tableView MENU ****  >>>  " +tableViewMenu.getItems().indexOf(selectedMenu));
-                System.out.println("intex of listMENU OBSERVABLE >>>> " + listMenu.indexOf(selectedMenu));
-                System.out.println("_____________________________");
-
             }
         });
     }

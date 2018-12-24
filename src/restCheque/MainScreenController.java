@@ -2,7 +2,10 @@ package restCheque;
 
 
 import DataModel.Desk;
+import DataModel.Menu;
 import DataSource.DataSource;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +22,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Optional;
 public class MainScreenController {
-    public ArrayList<Desk> deskDBreturnlist = new ArrayList<Desk>();
+    public static ArrayList<Desk> deskDBreturnlist = new ArrayList<Desk>();
+    public static Desk selectedDesk = new Desk();
+    public static int tableIndex =0; // it provides to connect with
+    public static ObservableList<ObservableList<Menu>> tablesMenus = FXCollections.observableArrayList();
 
     @FXML
     private BorderPane mainScreen;
@@ -38,10 +44,17 @@ public class MainScreenController {
 
 
 
+
     @FXML
     public void initialize(){
         vBox.setPadding(new Insets(5));
+        System.out.println("deskDB Returnlist size = " +deskDBreturnlist.size());
         getTables();
+        if(deskDBreturnlist.size()!=0){
+            buildTables();
+        }
+
+        final String name="deneme";
 
         btnEkle.setTooltip(new Tooltip("Masa Ekle"));
 
@@ -95,10 +108,20 @@ public class MainScreenController {
     }
 
     public void getTables(){
+        deskDBreturnlist=DataSource.getInstance().getAllDeskInfo();
+    }
+
+    public void buildTables(){
 
         vBox.getChildren().clear();
 
-        deskDBreturnlist=DataSource.getInstance().getAllDeskInfo();
+
+
+        for (int i =0;i<deskDBreturnlist.size();i++){
+            ObservableList<Menu> deskMenu = FXCollections.observableArrayList();
+            tablesMenus.add(deskMenu);
+            System.out.println(i+". menuListesi yaratıldı");
+        }
 
         int columnNumber=11;
         int hBoxCounter = (deskDBreturnlist.size()/6)+2;  //+2 çünkü j[0] boş ve 6'nın bölümünden kalanları yeni satıra eklemesi için
@@ -128,6 +151,21 @@ public class MainScreenController {
 
             }
             buttons[i]=new Button(deskDBreturnlist.get(i).getTag().toUpperCase().toString());
+            ObservableList tempDeskMenu = FXCollections.observableArrayList();
+            Menu menu = new Menu();
+            Menu menu1 = new Menu();
+            Menu menu2 = new Menu();
+            Menu menu3 = new Menu();
+
+            menu.setMenuName("tavuk sote");
+            menu1.setMenuName("Tiramusu");
+            menu1.setMenuPrice(8.50);
+            menu2.setMenuName("Coca Cola 1litre");
+            menu3.setMenuName("çay");
+            tempDeskMenu.addAll(menu,menu1,menu2,menu3);
+            tablesMenus.add(tempDeskMenu);
+
+
             imageViews[i]=new ImageView("icons/emptyTable.png");
             buttons[i].setGraphic(imageViews[i]);
             buttons[i].contentDisplayProperty().setValue(ContentDisplay.BOTTOM);
@@ -144,7 +182,7 @@ public class MainScreenController {
         }
         for (int i =0; i<buttons.length-1; i++) {
 
-            final String tag= deskDBreturnlist.get(i).getTag().toUpperCase().toString();
+           // final String tag= deskDBreturnlist.get(i).getTag().toUpperCase().toString();
 
             final int id=i;
 
@@ -158,6 +196,42 @@ public class MainScreenController {
                     newPic.setFitHeight(70);
                     newPic.setFitWidth(70);
                     buttons[id].contentDisplayProperty().setValue(ContentDisplay.BOTTOM);
+                    selectedDesk=deskDBreturnlist.get(id);
+
+
+                    try {
+                        Dialog<ButtonType> dialog2 = new Dialog<ButtonType>();
+                        dialog2.initOwner(mainScreen.getScene().getWindow());
+                        FXMLLoader fxmlLoader=new FXMLLoader();
+                        fxmlLoader.setLocation(getClass().getResource("tableScreen.fxml"));
+                        Parent dialogContent = null;
+                        dialogContent = fxmlLoader.load();
+                        dialog2.setTitle(selectedDesk.getTag()+"Table's Cheque");
+                        dialog2.getDialogPane().setContent(dialogContent);
+                        dialog2.getDialogPane().getButtonTypes().add(ButtonType.OK);
+                        dialog2.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+                        //sonuc nesnesini gönderir
+                        Optional<ButtonType> result =dialog2.showAndWait();
+                        if(result.get()==ButtonType.OK) {
+
+
+                        }
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    catch (IllegalStateException target){
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error Dialog");
+                        alert.setHeaderText("PAGE NOT FOUND!!!");
+                        alert.setContentText("Ooops, There was something wrong!");
+                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                        stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                        alert.showAndWait();
+                    }
+
+
+
 
 
                     //   System.out.println(tag);
