@@ -6,7 +6,7 @@ public class Menu {
     private String menuName;
     private double menuPrice;
     private double menuCost;
-    private double menuVat;
+
     private int menuIngredientsID;
 
     public int getMenuID() {
@@ -39,14 +39,6 @@ public class Menu {
 
     public void setMenuCost(double menuCost) {
         this.menuCost = menuCost;
-    }
-
-    public double getMenuVat() {
-        return menuVat;
-    }
-
-    public void setMenuVat(double menuVat) {
-        this.menuVat = menuVat;
     }
 
     public int getMenuIngridientsID() {

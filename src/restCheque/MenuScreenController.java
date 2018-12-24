@@ -37,9 +37,6 @@ public class MenuScreenController {
     private TextField tfPrice;
 
     @FXML
-    private TextField tfVat;
-
-    @FXML
     private TextField tfCost;
 
     @FXML
@@ -269,22 +266,16 @@ public class MenuScreenController {
                 double price = Double.parseDouble(tfPrice.getText());
                 double cost = Double.parseDouble(tfCost.getText());
                 double vat=0;
-                if (!tfVat.getText().trim().isEmpty()) {
-                    vat=Double.parseDouble(tfVat.getText());
-                } else {
-                    menu.setMenuVat(0);
-                }
+
                 if (!tfMenuName.getText().trim().isEmpty()) {
                     menu.setMenuName(tfMenuName.getText().trim().toUpperCase(Locale.ENGLISH));
                     menu.setMenuCost(cost);
                     menu.setMenuPrice(price);
-                    menu.setMenuVat(vat);
 
 
                     System.out.println("menu name: " + menu.getMenuName());
                     System.out.println("menu cost: " + menu.getMenuCost());
                     System.out.println("menu price: " + menu.getMenuPrice());
-                    System.out.println("menu vat: " + menu.getMenuVat());
 
 
 
@@ -323,7 +314,6 @@ public class MenuScreenController {
                             tfMenuName.clear();
                             tfCost.clear();
                             tfPrice.clear();
-                            tfVat.clear();
                             listIngredients.clear();
                         }
                     });
@@ -532,7 +522,6 @@ public class MenuScreenController {
             tfMenuName.setText(tableViewMenu.getSelectionModel().getSelectedItem().getMenuName());
             tfCost.setText(String.valueOf(tableViewMenu.getSelectionModel().getSelectedItem().getMenuCost()));
             tfPrice.setText(String.valueOf(tableViewMenu.getSelectionModel().getSelectedItem().getMenuPrice()));
-            tfVat.setText(String.valueOf(tableViewMenu.getSelectionModel().getSelectedItem().getMenuVat()));
 
             listIngredients.setAll(existingIngredientsList);
 
@@ -592,7 +581,6 @@ public class MenuScreenController {
                 try {
                     editingMenu.setMenuCost(Double.parseDouble(tfCost.getText()));
                     editingMenu.setMenuPrice(Double.parseDouble(tfPrice.getText()));
-                    editingMenu.setMenuVat(Double.parseDouble(tfVat.getText()));
 
                     if (!tfMenuName.getText().trim().isEmpty()) {
                         editingMenu.setMenuName(tfMenuName.getText().trim().toUpperCase(Locale.ENGLISH));
@@ -703,7 +691,6 @@ public class MenuScreenController {
                                         tfMenuName.clear();
                                         tfCost.clear();
                                         tfPrice.clear();
-                                        tfVat.clear();
                                         listIngredients.clear();
 
                                         tableViewExistingIngredients.setDisable(false);
@@ -781,7 +768,6 @@ public class MenuScreenController {
         tfMenuName.clear();
         tfPrice.clear();
         tfCost.clear();
-        tfVat.clear();
         labelLeftTitle.setText("CREATE NEW MENU");
         tableViewExistingIngredients.setDisable(false);
 

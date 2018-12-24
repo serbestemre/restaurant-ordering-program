@@ -31,7 +31,6 @@ public class DataSource {
     private static final String COLUMN_MENU_NAME="menuName";
     private static final String COLUMN_MENU_PRICE="menuPrice";
     private static final String COLUMN_MENU_COST="menuCost";
-    private static final String COLUMN_MENU_VAT="menuVat";
 
     private static final String TABLE_MENU_INGREDIENTS="MenuIngredient";
     private static final String COLUMN_ROWID="rowID";
@@ -249,8 +248,6 @@ public class DataSource {
         sb.append(COLUMN_MENU_COST);
         sb.append(",");
         sb.append(COLUMN_MENU_PRICE);
-        sb.append(",");
-        sb.append(COLUMN_MENU_VAT);
         sb.append(") ");
         sb.append("VALUES ");
         sb.append("('");
@@ -259,10 +256,9 @@ public class DataSource {
         sb.append(menu.getMenuCost());
         sb.append(", ");
         sb.append(menu.getMenuPrice());
-        sb.append(", ");
-        sb.append(menu.getMenuVat());
         sb.append(");");
 
+        System.out.println("SQL değiştirildi :" +sb.toString());
         Statement statement = connection.createStatement();
 
             System.out.println("ing sql " + sb.toString());
@@ -301,7 +297,6 @@ public class DataSource {
             menu.setMenuName(rs.getString(COLUMN_MENU_NAME));
             menu.setMenuCost(rs.getDouble(COLUMN_MENU_COST));
             menu.setMenuPrice(rs.getDouble(COLUMN_MENU_PRICE));
-            menu.setMenuVat(rs.getDouble(COLUMN_MENU_VAT));
             allMenu.add(menu);
         }
         return allMenu;
