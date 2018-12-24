@@ -140,6 +140,12 @@ public class MenuScreenController {
                 System.out.println("selectedMenu.name= "+ selectedMenu.getMenuName());
                 System.out.println("selectedITEM MENU ID = " +selectedMenu.getMenuID());
                 getSelectedMenuIngredients(newSelection);
+
+
+                System.out.println("index of selected item from tableView MENU ****  >>>  " +tableViewMenu.getItems().indexOf(selectedMenu));
+                System.out.println("intex of listMENU OBSERVABLE >>>> " + listMenu.indexOf(selectedMenu));
+                System.out.println("_____________________________");
+
             }
         });
     }
@@ -161,6 +167,7 @@ public class MenuScreenController {
             Optional<ButtonType> result =dialog2.showAndWait();
             if (result.get() == ButtonType.OK){
 /////////////////////////amount start
+
                 boolean dialogLoop=true;
                 while (dialogLoop){
                 try {
@@ -578,156 +585,199 @@ public class MenuScreenController {
          *----------->if there is an error while inserting Ingredients of menu! -> then we delete new updated menu on MENU Table and then
          *-----------------> show an alert dialog to warn the user "while updating menu something went wrong and the menu deleted, please create that menu again!"
          *----->if no error then update process completed successfully **/
-        if(listIngredients.size()!=0) {
-            try {
-                editingMenu.setMenuCost(Double.parseDouble(tfCost.getText()));
-                editingMenu.setMenuPrice(Double.parseDouble(tfPrice.getText()));
-                editingMenu.setMenuVat(Double.parseDouble(tfVat.getText()));
+        if (listIngredients.size() != 0) {
 
-                if (!tfMenuName.getText().trim().isEmpty()) {
-                    editingMenu.setMenuName(tfMenuName.getText().trim().toUpperCase(Locale.ENGLISH));
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Would you like to update " +editingMenu.getMenuName());
+            alert.setContentText("Are you sure?");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/confirmation.png").toString()));
 
-                    Task<Boolean> taskUpdateMenu = new Task() {
-                        @Override
-                        protected Object call() throws Exception {
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
 
+                try {
+                    editingMenu.setMenuCost(Double.parseDouble(tfCost.getText()));
+                    editingMenu.setMenuPrice(Double.parseDouble(tfPrice.getText()));
+                    editingMenu.setMenuVat(Double.parseDouble(tfVat.getText()));
 
-                            return DataSource.getInstance().updateSelectedMenu(editingMenu);
+                    if (!tfMenuName.getText().trim().isEmpty()) {
+                        editingMenu.setMenuName(tfMenuName.getText().trim().toUpperCase(Locale.ENGLISH));
 
-                        }
-                    };
-                    new Thread(taskUpdateMenu).start();
-                    taskUpdateMenu.setOnFailed(new EventHandler<WorkerStateEvent>() {
-                        @Override
-                        public void handle(WorkerStateEvent event) {
-                            progressBar.setVisible(false);
-                            editingMode = false;
-
-                            tableViewExistingIngredients.setDisable(false);
-                            tableViewMenu.setDisable(false);
-                            btnEditMenu.setDisable(false);
-                            btnDeleteMenu.setDisable(false);
-                            btnCreateMenu.setDisable(false);
-                            btnUpdate.setVisible(false);
-                            btnCancel.setVisible(false);
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("Error Dialog");
-                            alert.setHeaderText("Process Failed!!!");
-                            alert.setContentText("Ooops, There was something wrong!\nThe new menu couldn't updated !!");
-                            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
-                            alert.showAndWait();
-                        }
-                    });
-                    taskUpdateMenu.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-                        @Override
-                        public void handle(WorkerStateEvent event) {
-                        //    System.out.println("menütable başarılı bir şekilde güncellendi");
-                            /**child process starts **/
-                            Task<Boolean> taskRE_InsertIngredients = new Task() {
-                                @Override
-                                protected Object call() throws Exception {
+                        Task<Boolean> taskUpdateMenu = new Task() {
+                            @Override
+                            protected Object call() throws Exception {
 
 
-                                    return DataSource.getInstance().insertMenuIngredientList(listIngredients, editingMenu.getMenuID());
+                                return DataSource.getInstance().updateSelectedMenu(editingMenu);
 
-                                }
-                            };
-                            new Thread(taskRE_InsertIngredients).start();
-                            taskRE_InsertIngredients.setOnFailed(new EventHandler<WorkerStateEvent>() {
-                                @Override
-                                public void handle(WorkerStateEvent event) {
-                                    progressBar.setVisible(false);
-                                    editingMode = false;
+                            }
+                        };
+                        new Thread(taskUpdateMenu).start();
+                        taskUpdateMenu.setOnFailed(new EventHandler<WorkerStateEvent>() {
+                            @Override
+                            public void handle(WorkerStateEvent event) {
+                                progressBar.setVisible(false);
+                                editingMode = false;
+                                labelLeftTitle.setText("CREATE NEW MENU");
+                                tableViewExistingIngredients.setDisable(false);
+                                tableViewMenu.setDisable(false);
+                                btnEditMenu.setDisable(false);
+                                btnDeleteMenu.setDisable(false);
+                                btnCreateMenu.setDisable(false);
+                                btnUpdate.setVisible(false);
+                                btnCancel.setVisible(false);
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Error Dialog");
+                                alert.setHeaderText("Process Failed!!!");
+                                alert.setContentText("Ooops, There was something wrong!\nThe new menu couldn't updated !!");
+                                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                                stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                                alert.showAndWait();
+                            }
+                        });
+                        taskUpdateMenu.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                            @Override
+                            public void handle(WorkerStateEvent event) {
+                                //    System.out.println("menütable başarılı bir şekilde güncellendi");
+                                /**child process starts **/
+                                Task<Boolean> taskRE_InsertIngredients = new Task() {
+                                    @Override
+                                    protected Object call() throws Exception {
 
-                                    tableViewExistingIngredients.setDisable(false);
-                                    tableViewMenu.setDisable(false);
-                                    btnEditMenu.setDisable(false);
-                                    btnDeleteMenu.setDisable(false);
-                                    btnCreateMenu.setDisable(false);
 
-                                    btnUpdate.setVisible(false);
-                                    btnCancel.setVisible(false);
+                                        return DataSource.getInstance().insertMenuIngredientList(listIngredients, editingMenu.getMenuID());
 
-                                    /** after menu created successfully if there went something wrong while inserting ingredients of new created menu
-                                     * then delete new created menu! **/
+                                    }
+                                };
+                                new Thread(taskRE_InsertIngredients).start();
+                                taskRE_InsertIngredients.setOnFailed(new EventHandler<WorkerStateEvent>() {
+                                    @Override
+                                    public void handle(WorkerStateEvent event) {
+                                        progressBar.setVisible(false);
+                                        editingMode = false;
+                                        labelLeftTitle.setText("CREATE NEW MENU");
+                                        tableViewExistingIngredients.setDisable(false);
+                                        tableViewMenu.setDisable(false);
+                                        btnEditMenu.setDisable(false);
+                                        btnDeleteMenu.setDisable(false);
+                                        btnCreateMenu.setDisable(false);
 
-                                    /********* ALERT MESSAGE !! TO INFORM THE USER UPDATING MENU DELETED BC SOMETHING WENT WRONG! ************/
+                                        btnUpdate.setVisible(false);
+                                        btnCancel.setVisible(false);
 
-                                    deleteSelectedMenu(editingMenu);// bir hata oluştuğu için yeni yaratılmaya çalışılan menüyü sil!
+                                        /** after menu created successfully if there went something wrong while inserting ingredients of new created menu
+                                         * then delete new created menu! **/
 
-                                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                                    alert.setTitle("Error Dialog");
-                                    alert.setHeaderText("Process Failed!!!");
-                                    alert.setContentText("Ooops, There was something wrong!\nThe new product did not add into product database!");
-                                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                                    stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
-                                    alert.showAndWait();
-                                }
-                            });
+                                        /********* ALERT MESSAGE !! TO INFORM THE USER UPDATING MENU DELETED BC SOMETHING WENT WRONG! ************/
+
+                                        deleteSelectedMenu(editingMenu);// bir hata oluştuğu için yeni yaratılmaya çalışılan menüyü sil!
+
+                                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                                        alert.setTitle("Error Dialog");
+                                        alert.setHeaderText("Failed. Try again!");
+                                        alert.setContentText("Ooops, There was something wrong!\nThe new product did not add into product database!");
+                                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                                        stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                                        alert.showAndWait();
+                                    }
+                                });
 
 
-                            taskRE_InsertIngredients.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-                                @Override
-                                public void handle(WorkerStateEvent event) {
-                             //       System.out.println("başarılı şekilde eklendi");
+                                taskRE_InsertIngredients.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                                    @Override
+                                    public void handle(WorkerStateEvent event) {
+                                        //       System.out.println("başarılı şekilde eklendi");
 
-                                    /** button yönetimlerini yap**/
-                                    progressBar.setVisible(false);
-                                    editingMode = false;
+                                        Alert alertMenuUpdate = new Alert(Alert.AlertType.INFORMATION);
+                                        alertMenuUpdate.setTitle("Information Dialog");
+                                        alertMenuUpdate.setHeaderText("Menu updated successfully!");
+                                        alertMenuUpdate.setContentText("Successful!");
+                                        Stage stageMenuUpdate = (Stage) alertMenuUpdate.getDialogPane().getScene().getWindow();
+                                        stageMenuUpdate.getIcons().add(new Image(this.getClass().getResource("/icons/checked.png").toString()));
+                                        alertMenuUpdate.showAndWait();
 
-                                    tfMenuName.clear();
-                                    tfCost.clear();
-                                    tfPrice.clear();
-                                    tfVat.clear();
-                                    listIngredients.clear();
+                                        //gui update
+                                        int index = listMenu.indexOf(selectedMenu);
+                                        listMenu.remove(index);
+                                        listMenu.add(index, editingMenu);
+                                        //gui update
 
-                                    tableViewExistingIngredients.setDisable(false);
-                                    tableViewMenu.setDisable(false);
-                                    btnEditMenu.setDisable(false);
-                                    btnDeleteMenu.setDisable(false);
-                                    btnCreateMenu.setDisable(false);
+                                        /** button yönetimlerini yap**/
+                                        progressBar.setVisible(false);
+                                        editingMode = false;
+                                        labelLeftTitle.setText("CREATE NEW MENU");
+                                        tfMenuName.clear();
+                                        tfCost.clear();
+                                        tfPrice.clear();
+                                        tfVat.clear();
+                                        listIngredients.clear();
 
-                                    btnUpdate.setVisible(false);
-                                    btnCancel.setVisible(false);
+                                        tableViewExistingIngredients.setDisable(false);
+                                        tableViewMenu.setDisable(false);
+                                        btnEditMenu.setDisable(false);
+                                        btnDeleteMenu.setDisable(false);
+                                        btnCreateMenu.setDisable(false);
+
+                                        btnUpdate.setVisible(false);
+                                        btnCancel.setVisible(false);
 
 /** bütün update işlemi başarılı **/
-                                }
-                            });
+                                    }
+                                });
 
-                            taskRE_InsertIngredients.setOnRunning(new EventHandler<WorkerStateEvent>() {
-                                @Override
-                                public void handle(WorkerStateEvent event) {
-                                    progressBar.setProgress(taskRE_InsertIngredients.getProgress() + taskUpdateMenu.getProgress());
-                                    progressBar.setVisible(true);
-                                }
-                            });
-                            /**child process end **/
-                        }
-                    });
+                                taskRE_InsertIngredients.setOnRunning(new EventHandler<WorkerStateEvent>() {
+                                    @Override
+                                    public void handle(WorkerStateEvent event) {
+                                        progressBar.setProgress(taskRE_InsertIngredients.getProgress() + taskUpdateMenu.getProgress());
+                                        progressBar.setVisible(true);
+                                    }
+                                });
+                                /**child process end **/
+                            }
+                        });
 
 
-                } else {
-                    System.out.println("menü ismi girilmedi!!!");
+                    } else {
+                        //System.out.println("menü ismi girilmedi!!!");
+                        Alert menuName = new Alert(Alert.AlertType.ERROR);
+                        menuName.setTitle("Error Dialog");
+                        menuName.setHeaderText("Fill the menu name!");
+                        menuName.setContentText("Ooops, There was something wrong!");
+                        Stage stageMenu = (Stage) menuName.getDialogPane().getScene().getWindow();
+                        stageMenu.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                        menuName.showAndWait();
+
+                    }
+
+
+                } catch (NumberFormatException n) {
+                   // System.out.println("menü cost, price veya vat doğru formatta girilmedi!!");
+                    Alert numberFormat = new Alert(Alert.AlertType.ERROR);
+                    numberFormat.setTitle("Error Dialog");
+                    numberFormat.setHeaderText("Menu cost, price or vat is not valid. Check Again!!!");
+                    numberFormat.setContentText("Ooops, There was something wrong!");
+                    Stage stageForNumber = (Stage) numberFormat.getDialogPane().getScene().getWindow();
+                    stageForNumber.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                    numberFormat.showAndWait();
+
                 }
-
-
-                /** Editing Mode setting True!**/
-
-                System.out.println("menü update edildi ****  ?");
-
-                System.out.println("edited menü's ingredients inserted again  ?");
-
-
-            } catch (NumberFormatException n) {
-                System.out.println("menü cost, price veya vat doğru formatta girilmedi!!");
-
+            } else {
+                //System.out.println("boş menü yaratamazsınız.!!! en az bir ingredients ekleyin!");
+                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                alert2.setTitle("Error Dialog");
+                alert2.setHeaderText("Can't create empty menu. Add at least one ingredients!!!");
+                alert2.setContentText("Ooops, There was something wrong!");
+                Stage stage2 = (Stage) alert2.getDialogPane().getScene().getWindow();
+                stage2.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                alert2.showAndWait();
             }
-        }else{
-            System.out.println("boş menü yaratamazsınız.!!! en az bir ingredients ekleyin!");
         }
+        else {
+            //Cancel pressed for updating item
     }
-
+    }
     @FXML
     public void cancelButton(){
         editingMode=false;
@@ -758,7 +808,10 @@ public class MenuScreenController {
             //ask question are u sure?
             deleteSelectedMenu(tableViewMenu.getSelectionModel().getSelectedItem());
             //ask question are u sure?
+
+
         }else{
+            //seçim yapılmadı
 
         }
 
@@ -766,9 +819,6 @@ public class MenuScreenController {
 
 
     public void deleteSelectedMenu(Menu Selected){
-
-
-
             Task<Boolean> taskDeleteSelectedMenu = new Task() {
                     @Override
                     protected Object call() throws Exception {
@@ -793,7 +843,7 @@ public class MenuScreenController {
                 taskDeleteSelectedMenu.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
                     @Override
                     public void handle(WorkerStateEvent event) {
-                        System.out.println("menu başarılı şekilde silindi");
+                       // System.out.println("menu başarılı şekilde silindi");
                         progressBar.setVisible(false);
 
                         if(editingMode){ // if editing mode is on/true
@@ -801,19 +851,14 @@ public class MenuScreenController {
                             int index = listMenu.indexOf(selectedMenu);
                             listMenu.remove(index);
                             listMenu.add(index,editingMenu);
-
-
                             tableViewExistingIngredients.setDisable(false);
                             tableViewMenu.setDisable(false);
                             btnEditMenu.setDisable(false);
                             btnDeleteMenu.setDisable(false);
                             btnCreateMenu.setDisable(false);
-
                             btnUpdate.setVisible(false);
                             btnCancel.setVisible(false);
                             listIngredients.clear();
-
-
                         }else{
                             listMenu.remove(selectedMenu); //deleted in gui from tableview
                             System.out.println("delete setOnSucceed editing mode off konumda");

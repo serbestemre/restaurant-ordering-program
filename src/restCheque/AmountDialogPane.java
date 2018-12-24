@@ -12,7 +12,7 @@ public class AmountDialogPane {
     private DialogPane amountDialogPane;
 
     @FXML
-    private TextField tfAmount;
+    private   TextField tfAmount;
 
     private static String amountIngredients;
 
@@ -26,6 +26,8 @@ public class AmountDialogPane {
 
     @FXML
     public void initialize(){
+
+            tfAmount.requestFocus();
 
         tfAmount.textProperty().addListener(new ChangeListener<String>() {
             @Override

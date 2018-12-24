@@ -56,4 +56,12 @@ public class Menu {
     public void setMenuIngridientsID(int menuIngridientsID) {
         this.menuIngredientsID = menuIngridientsID;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Menu)) return false;
+        Menu menu = (Menu) obj;
+        return this.getMenuID() == menu.getMenuID();
+    }
 }
