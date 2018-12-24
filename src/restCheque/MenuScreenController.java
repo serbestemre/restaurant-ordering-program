@@ -55,10 +55,30 @@ public class MenuScreenController {
     private Button btnCreateMenu;
 
     @FXML
-    private Label labelTotalCost;
+    private Button btnDeleteMenu;
 
     @FXML
-    private TableView<Product> tableViewIngridients;
+    private Button btnEditMenu;
+
+    @FXML
+    private Button btnUpdate;
+
+    @FXML
+    private Button btnCancel;
+
+    @FXML
+    private Button btnAddExistingIngredienets;
+
+    @FXML
+    private Button btndeleteExistingIngredients;
+
+    @FXML
+    private Label labelTotalCost;
+
+    @FXML Label labelLeftTitle;
+
+    @FXML
+    private TableView<MenuIngredient> tableViewIngridients;
 
     @FXML
     private TableView<MenuIngredient> tableViewExistingIngredients;
@@ -69,9 +89,12 @@ public class MenuScreenController {
 
     public Menu selectedMenu=new Menu();
 
+    Menu editingMenu=new Menu();
+    boolean editingMode=false;
 
 
-    ObservableList<Product> listInredients= FXCollections.observableArrayList();
+
+    ObservableList<MenuIngredient> listIngredients= FXCollections.observableArrayList();
     ObservableList<Menu> listMenu= FXCollections.observableArrayList();
     ObservableList<MenuIngredient> existingIngredientsList= FXCollections.observableArrayList();
     private double totalCost=0;
@@ -86,18 +109,24 @@ public class MenuScreenController {
 
     @FXML
     public void initialize(){
-        getAllMenus();
-        System.out.println("deneme");
-    tableViewIngridients.setItems(listInredients);
+
+    getAllMenus();
+    tableViewIngridients.setItems(listIngredients);
+
+    if(listMenu.size()!=0){
+        tableViewMenu.getSelectionModel().selectFirst();
+        Menu tempMenu = tableViewMenu.getSelectionModel().getSelectedItem();
+        getSelectedMenuIngredients(tempMenu);
+    }
 
     tableViewMenu.setItems(listMenu);
 
-       listInredients.addListener(new ListChangeListener<Product>() {
+        listIngredients.addListener(new ListChangeListener<MenuIngredient>() {
            @Override
-           public void onChanged(Change<? extends Product> c) {
+           public void onChanged(Change<? extends MenuIngredient> c) {
                totalCost=0;
-               for(int i =0;i<listInredients.size();i++){
-                totalCost+=listInredients.get(i).getProductCost();
+               for(int i =0;i<listIngredients.size();i++){
+                totalCost+=listIngredients.get(i).getIngCost();
                }
                labelTotalCost.setText(String.valueOf(totalCost));
                tfCost.setText(String.valueOf(totalCost));
@@ -107,13 +136,12 @@ public class MenuScreenController {
 
         tableViewMenu.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-
                 selectedMenu=newSelection;
+                System.out.println("selectedMenu.name= "+ selectedMenu.getMenuName());
+                System.out.println("selectedITEM MENU ID = " +selectedMenu.getMenuID());
                 getSelectedMenuIngredients(newSelection);
-
             }
         });
-
     }
 
     @FXML
@@ -132,9 +160,6 @@ public class MenuScreenController {
             //sonuc nesnesini gönderir
             Optional<ButtonType> result =dialog2.showAndWait();
             if (result.get() == ButtonType.OK){
-                System.out.println("seçilen ing = " + IngredientsController.getSelectedProduct().getProductName());
-
-
 /////////////////////////amount start
                 boolean dialogLoop=true;
                 while (dialogLoop){
@@ -158,22 +183,26 @@ public class MenuScreenController {
                         try {
                            int amount =Integer.parseInt(AmountDialogPane.getAmountIngredients());
                             dialogLoop=false;
-                            System.out.println( "returned amount = " + AmountDialogPane.getAmountIngredients()
-                            );
                            // stock * cost / new amount
 
-                            Product ingredient=IngredientsController.getSelectedProduct();
-                            int stock = ingredient.getProductAmount();
-                            double cost = ingredient.getProductCost();
+                            Product product=IngredientsController.getSelectedProduct();
+                            MenuIngredient ingredient= new MenuIngredient();
+
+                            int stock = product.getProductAmount();
+                            double cost = product.getProductCost();
 /**
  * UNIT COST CALCULATION
  */
                             double unitCost =(amount*cost)/stock;
-                            ingredient.setProductAmount(amount);
-                            ingredient.setProductCost(unitCost);
 
-                            if(!listInredients.contains(ingredient)){
-                            listInredients.add(ingredient);
+                            ingredient.setIngAmount(amount);
+                            ingredient.setIngCost(unitCost);
+                            product.setProductAmount(amount);
+                            product.setProductCost(unitCost);
+                            ingredient.setIngName(product.getProductName());
+                            ingredient.setIngProduct(product.getProductID());
+                            if(!listIngredients.contains(ingredient)){
+                                listIngredients.add(ingredient);
                             }else{
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                 alert.setTitle("Information");
@@ -235,7 +264,7 @@ public class MenuScreenController {
    @FXML
     public void createNewMenu(){
 
-        if(listInredients.size()!=0) {
+        if(listIngredients.size()!=0) {
             try {
                 Menu menu = new Menu();
                 double price = Double.parseDouble(tfPrice.getText());
@@ -265,7 +294,7 @@ public class MenuScreenController {
                         protected Object call() throws Exception {
 
 
-                            return DataSource.getInstance().createNewMenuInsertIngredients(menu, listInredients);
+                            return DataSource.getInstance().createNewMenuInsertIngredients(menu, listIngredients);
 
                         }
                     };
@@ -296,7 +325,7 @@ public class MenuScreenController {
                             tfCost.clear();
                             tfPrice.clear();
                             tfVat.clear();
-                            listInredients.clear();
+                            listIngredients.clear();
                         }
                     });
 
@@ -309,8 +338,8 @@ public class MenuScreenController {
                         }
                     });
                     System.out.println("____Ingredients____");
-                    for (int i = 0; i < listInredients.size(); i++) {
-                        System.out.println("ingredients: " + listInredients.get(i).getProductName());
+                    for (int i = 0; i < listIngredients.size(); i++) {
+                        System.out.println("ingredients: " + listIngredients.get(i).getIngName());
                     }
 
 
@@ -350,17 +379,10 @@ public class MenuScreenController {
         }
    }
 
-    private double calculateMenuCost(int stock, double cost) {
-
-            double unitCost= stock/cost;
-
-        return unitCost;
-    }
-
     @FXML
     public void deleteIngredients(){
         if(tableViewIngridients.getSelectionModel().getSelectedItem()!=null){
-            listInredients.remove(tableViewIngridients.getSelectionModel().getSelectedItem());
+            listIngredients.remove(tableViewIngridients.getSelectionModel().getSelectedItem());
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -430,7 +452,7 @@ public class MenuScreenController {
 
     @FXML
     public void getSelectedMenuIngredients(Menu selectedMenu){
-        Task<ObservableList<Product>> taskGetSelectedMenuIngredients = new GetSelectedMenuIngredients();
+        Task<ObservableList<MenuIngredient>> taskGetSelectedMenuIngredients = new GetSelectedMenuIngredients();
         try {
 
             existingIngredientsList=FXCollections.observableArrayList(DataSource.getInstance().getIngredientsOfSelectedMenu(selectedMenu));
@@ -481,6 +503,335 @@ public class MenuScreenController {
             return FXCollections.observableArrayList(DataSource.getInstance().getIngredientsOfSelectedMenu(selectedMenu));
         }
     }
+
+    @FXML
+    public void editSelectedMenu(){
+        /**
+         * HOW TO WORK editing/updating menu and its ingredients !
+         * when the user click on edit button.
+         * checking validation end then buttons controlling (disable/visible)
+         * after doing need edition
+         * the user click on Update Button
+         * there are two TASKS one of them taskUpdateMenu and the other one is taskRE_InsertIngredients
+         * taskUpdateMenu > we call sql method to update selected Menu according with menuID key in database table
+         * THERE IS TWO TRIGGER ON DATABASE
+         * 1-AFTER UPDATE ON MENU TABLE -> delete updated menu's ingredients from MenuIngredient Table
+         * CREATE TRIGGER deleteIngredientsOfUpdatedMenuITEM AFTER UPDATE ON Menu begin DELETE FROM MenuIngredient where MenuIngredient.menuID=old.menuID; end
+         *2-AFTER DELETE ON MENU TABLE -> THE SAME TRIGGER
+         * ---->then if there is no error ! another task is starting
+         * ----->taskRE_InsertIngredients> we call insert sql method to insert ingredients of updated/edited Item
+         *----------->if there is an error while inserting Ingredients of menu! -> then we delete new updated menu on MENU Table and then
+         *-----------------> show an alert dialog to warn the user "while updating menu something went wrong and the menu deleted, please create that menu again!"
+         *----->if no error then update process completed successfully **/
+
+        if(tableViewMenu.getSelectionModel().getSelectedItem()!=null){
+            /** Editing Mode setting True!**/
+            editingMode=true;
+            editingMenu=tableViewMenu.getSelectionModel().getSelectedItem();
+
+            labelLeftTitle.setText("EDIT MENU");
+            tfMenuName.setText(tableViewMenu.getSelectionModel().getSelectedItem().getMenuName());
+            tfCost.setText(String.valueOf(tableViewMenu.getSelectionModel().getSelectedItem().getMenuCost()));
+            tfPrice.setText(String.valueOf(tableViewMenu.getSelectionModel().getSelectedItem().getMenuPrice()));
+            tfVat.setText(String.valueOf(tableViewMenu.getSelectionModel().getSelectedItem().getMenuVat()));
+
+            listIngredients.setAll(existingIngredientsList);
+
+            tableViewExistingIngredients.setDisable(true);
+            tableViewMenu.setDisable(true);
+            btnEditMenu.setDisable(true);
+            btnDeleteMenu.setDisable(true);
+            btnCreateMenu.setDisable(true);
+
+            btnUpdate.setVisible(true);
+            btnCancel.setVisible(true);
+         //   btndeleteExistingIngredients.setVisible(true);
+          //  btnAddExistingIngredienets.setVisible(true);
+
+
+
+
+
+
+        }else{
+            System.out.println("menu seçilmedi");
+        }
+
+    }
+
+    @FXML
+    public void updateMenu() {
+        /**
+         * HOW TO WORK editing/updating menu and its ingredients !
+         * when the user click on edit button.
+         * checking validation end then buttons controlling (disable/visible)
+         * after doing need edition
+         * the user click on Update Button
+         * there are two TASKS one of them taskUpdateMenu and the other one is taskRE_InsertIngredients
+         * taskUpdateMenu > we call sql method to update selected Menu according with menuID key in database table
+         * THERE IS TWO TRIGGER ON DATABASE
+         * 1-AFTER UPDATE ON MENU TABLE -> delete updated menu's ingredients from MenuIngredient Table
+         * CREATE TRIGGER deleteIngredientsOfUpdatedMenuITEM AFTER UPDATE ON Menu begin DELETE FROM MenuIngredient where MenuIngredient.menuID=old.menuID; end
+         *2-AFTER DELETE ON MENU TABLE -> THE SAME TRIGGER
+         * ---->then if there is no error ! another task is starting
+         * ----->taskRE_InsertIngredients> we call insert sql method to insert ingredients of updated/edited Item
+         *----------->if there is an error while inserting Ingredients of menu! -> then we delete new updated menu on MENU Table and then
+         *-----------------> show an alert dialog to warn the user "while updating menu something went wrong and the menu deleted, please create that menu again!"
+         *----->if no error then update process completed successfully **/
+        if(listIngredients.size()!=0) {
+            try {
+                editingMenu.setMenuCost(Double.parseDouble(tfCost.getText()));
+                editingMenu.setMenuPrice(Double.parseDouble(tfPrice.getText()));
+                editingMenu.setMenuVat(Double.parseDouble(tfVat.getText()));
+
+                if (!tfMenuName.getText().trim().isEmpty()) {
+                    editingMenu.setMenuName(tfMenuName.getText().trim().toUpperCase(Locale.ENGLISH));
+
+                    Task<Boolean> taskUpdateMenu = new Task() {
+                        @Override
+                        protected Object call() throws Exception {
+
+
+                            return DataSource.getInstance().updateSelectedMenu(editingMenu);
+
+                        }
+                    };
+                    new Thread(taskUpdateMenu).start();
+                    taskUpdateMenu.setOnFailed(new EventHandler<WorkerStateEvent>() {
+                        @Override
+                        public void handle(WorkerStateEvent event) {
+                            progressBar.setVisible(false);
+                            editingMode = false;
+
+                            tableViewExistingIngredients.setDisable(false);
+                            tableViewMenu.setDisable(false);
+                            btnEditMenu.setDisable(false);
+                            btnDeleteMenu.setDisable(false);
+                            btnCreateMenu.setDisable(false);
+                            btnUpdate.setVisible(false);
+                            btnCancel.setVisible(false);
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error Dialog");
+                            alert.setHeaderText("Process Failed!!!");
+                            alert.setContentText("Ooops, There was something wrong!\nThe new menu couldn't updated !!");
+                            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                            alert.showAndWait();
+                        }
+                    });
+                    taskUpdateMenu.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                        @Override
+                        public void handle(WorkerStateEvent event) {
+                        //    System.out.println("menütable başarılı bir şekilde güncellendi");
+                            /**child process starts **/
+                            Task<Boolean> taskRE_InsertIngredients = new Task() {
+                                @Override
+                                protected Object call() throws Exception {
+
+
+                                    return DataSource.getInstance().insertMenuIngredientList(listIngredients, editingMenu.getMenuID());
+
+                                }
+                            };
+                            new Thread(taskRE_InsertIngredients).start();
+                            taskRE_InsertIngredients.setOnFailed(new EventHandler<WorkerStateEvent>() {
+                                @Override
+                                public void handle(WorkerStateEvent event) {
+                                    progressBar.setVisible(false);
+                                    editingMode = false;
+
+                                    tableViewExistingIngredients.setDisable(false);
+                                    tableViewMenu.setDisable(false);
+                                    btnEditMenu.setDisable(false);
+                                    btnDeleteMenu.setDisable(false);
+                                    btnCreateMenu.setDisable(false);
+
+                                    btnUpdate.setVisible(false);
+                                    btnCancel.setVisible(false);
+
+                                    /** after menu created successfully if there went something wrong while inserting ingredients of new created menu
+                                     * then delete new created menu! **/
+
+                                    /********* ALERT MESSAGE !! TO INFORM THE USER UPDATING MENU DELETED BC SOMETHING WENT WRONG! ************/
+
+                                    deleteSelectedMenu(editingMenu);// bir hata oluştuğu için yeni yaratılmaya çalışılan menüyü sil!
+
+                                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                                    alert.setTitle("Error Dialog");
+                                    alert.setHeaderText("Process Failed!!!");
+                                    alert.setContentText("Ooops, There was something wrong!\nThe new product did not add into product database!");
+                                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                                    stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                                    alert.showAndWait();
+                                }
+                            });
+
+
+                            taskRE_InsertIngredients.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                                @Override
+                                public void handle(WorkerStateEvent event) {
+                             //       System.out.println("başarılı şekilde eklendi");
+
+                                    /** button yönetimlerini yap**/
+                                    progressBar.setVisible(false);
+                                    editingMode = false;
+
+                                    tfMenuName.clear();
+                                    tfCost.clear();
+                                    tfPrice.clear();
+                                    tfVat.clear();
+                                    listIngredients.clear();
+
+                                    tableViewExistingIngredients.setDisable(false);
+                                    tableViewMenu.setDisable(false);
+                                    btnEditMenu.setDisable(false);
+                                    btnDeleteMenu.setDisable(false);
+                                    btnCreateMenu.setDisable(false);
+
+                                    btnUpdate.setVisible(false);
+                                    btnCancel.setVisible(false);
+
+/** bütün update işlemi başarılı **/
+                                }
+                            });
+
+                            taskRE_InsertIngredients.setOnRunning(new EventHandler<WorkerStateEvent>() {
+                                @Override
+                                public void handle(WorkerStateEvent event) {
+                                    progressBar.setProgress(taskRE_InsertIngredients.getProgress() + taskUpdateMenu.getProgress());
+                                    progressBar.setVisible(true);
+                                }
+                            });
+                            /**child process end **/
+                        }
+                    });
+
+
+                } else {
+                    System.out.println("menü ismi girilmedi!!!");
+                }
+
+
+                /** Editing Mode setting True!**/
+
+                System.out.println("menü update edildi ****  ?");
+
+                System.out.println("edited menü's ingredients inserted again  ?");
+
+
+            } catch (NumberFormatException n) {
+                System.out.println("menü cost, price veya vat doğru formatta girilmedi!!");
+
+            }
+        }else{
+            System.out.println("boş menü yaratamazsınız.!!! en az bir ingredients ekleyin!");
+        }
+    }
+
+    @FXML
+    public void cancelButton(){
+        editingMode=false;
+        tableViewMenu.setDisable(false);
+        btnEditMenu.setDisable(false);
+        btnDeleteMenu.setDisable(false);
+        btnCreateMenu.setDisable(false);
+
+        tfMenuName.clear();
+        tfPrice.clear();
+        tfCost.clear();
+        tfVat.clear();
+        labelLeftTitle.setText("CREATE NEW MENU");
+        tableViewExistingIngredients.setDisable(false);
+
+        btnUpdate.setVisible(false);
+        btnCancel.setVisible(false);
+        listIngredients.clear();
+
+    }
+
+    @FXML
+    public void btnDeleteMenu(){
+
+
+
+        if(tableViewMenu.getSelectionModel().getSelectedItem()!=null){
+            //ask question are u sure?
+            deleteSelectedMenu(tableViewMenu.getSelectionModel().getSelectedItem());
+            //ask question are u sure?
+        }else{
+
+        }
+
+    }
+
+
+    public void deleteSelectedMenu(Menu Selected){
+
+
+
+            Task<Boolean> taskDeleteSelectedMenu = new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        return DataSource.getInstance().deleteSelectedMenu(tableViewMenu.getSelectionModel().getSelectedItem());
+                    }
+                };
+                new Thread(taskDeleteSelectedMenu).start();
+
+                taskDeleteSelectedMenu.setOnFailed(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent event) {
+                        progressBar.setVisible(false);
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error Dialog");
+                        alert.setHeaderText("Process Failed!!!");
+                        alert.setContentText("Ooops, There was something wrong!\nThe menu could not deleted !");
+                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                        stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                        alert.showAndWait();
+                    }
+                });
+                taskDeleteSelectedMenu.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent event) {
+                        System.out.println("menu başarılı şekilde silindi");
+                        progressBar.setVisible(false);
+
+                        if(editingMode){ // if editing mode is on/true
+                            System.out.println("delete setOnSucceed editing mode on konumda");
+                            int index = listMenu.indexOf(selectedMenu);
+                            listMenu.remove(index);
+                            listMenu.add(index,editingMenu);
+
+
+                            tableViewExistingIngredients.setDisable(false);
+                            tableViewMenu.setDisable(false);
+                            btnEditMenu.setDisable(false);
+                            btnDeleteMenu.setDisable(false);
+                            btnCreateMenu.setDisable(false);
+
+                            btnUpdate.setVisible(false);
+                            btnCancel.setVisible(false);
+                            listIngredients.clear();
+
+
+                        }else{
+                            listMenu.remove(selectedMenu); //deleted in gui from tableview
+                            System.out.println("delete setOnSucceed editing mode off konumda");
+                        }
+                    }
+                });
+                taskDeleteSelectedMenu.setOnRunning(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent event) {
+                        progressBar.setProgress(taskDeleteSelectedMenu.getProgress());
+                        progressBar.setVisible(true);
+
+                    }
+                });
+
+    }
+
+
 
 }
 

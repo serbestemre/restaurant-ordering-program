@@ -219,20 +219,24 @@ public class DataSource {
 
     }
 
-    public Boolean insertMenuIngredient(Product ingredient,int id) throws SQLException {
+    public Boolean insertMenuIngredient(MenuIngredient ingredient,int menuID) throws SQLException {
 
             Statement statement=connection.createStatement();
-            statement.execute("INSERT INTO " + TABLE_MENU_INGREDIENTS + "("+COLUMN_MENUID+","+COLUMN_ING_COST+","+COLUMN_ING_PRODUCTID+","+COLUMN_ING_PRODUCT_NAME+","+COLUMN_ING_AMOUNT+") VALUES ("+ id + ", " + ingredient.getProductCost() + ", " +  ingredient.getProductID() + ", '"+ingredient.getProductName()+"', "+ ingredient.getProductAmount()+ ")");
-            System.out.println(ingredient.getProductName() + " inserted into menu Ingredients Table **");
-
+            statement.execute("INSERT INTO " + TABLE_MENU_INGREDIENTS + "("+COLUMN_MENUID+","+COLUMN_ING_COST+","+COLUMN_ING_PRODUCTID+","+COLUMN_ING_PRODUCT_NAME+","+COLUMN_ING_AMOUNT+") VALUES ("+ menuID + ", " + ingredient.getIngCost() + ", " +  ingredient.getIngProduct() + ", '"+ingredient.getIngName()+"', "+ ingredient.getIngAmount()+ ")");
             return true;
+            }
 
 
+    public Boolean insertMenuIngredientList(ObservableList<MenuIngredient> ingredientsList,int menuID) throws SQLException {
+        for(int i =0; i<ingredientsList.size();i++){
+            MenuIngredient ingredient= ingredientsList.get(i);
+        Statement statement=connection.createStatement();
+        statement.execute("INSERT INTO " + TABLE_MENU_INGREDIENTS + "("+COLUMN_MENUID+","+COLUMN_ING_COST+","+COLUMN_ING_PRODUCTID+","+COLUMN_ING_PRODUCT_NAME+","+COLUMN_ING_AMOUNT+") VALUES ("+ menuID + ", " + ingredient.getIngCost() + ", " +  ingredient.getIngProduct() + ", '"+ingredient.getIngName()+"', "+ ingredient.getIngAmount()+ ")");
+        }
 
-
+        return true;
     }
-
-    public Boolean createNewMenuInsertIngredients(Menu menu, ObservableList<Product> ingredientsList) throws SQLException {
+    public Boolean createNewMenuInsertIngredients(Menu menu, ObservableList<MenuIngredient> ingredientsList) throws SQLException {
 
         try {
 
@@ -332,9 +336,49 @@ public class DataSource {
 
     }
 
+    public Boolean deleteSelectedMenu(Menu selectedMenu) throws SQLException {
+
+            StringBuilder sb = new StringBuilder("DELETE FROM ");
+            sb.append(TABLE_MENU);
+            sb.append(" WHERE ");
+            sb.append(COLUMN_ING_MENUID);
+            sb.append(" = ");
+            sb.append(selectedMenu.getMenuID());
+            sb.append(" ;");
+            Statement statement = connection.createStatement();
+            statement.execute(sb.toString());
+            return true;
+
+    }
 
 
+    public Boolean updateSelectedMenu(Menu editingMenu) throws SQLException {
+
+        StringBuilder sb = new StringBuilder("UPDATE ");
+        sb.append(TABLE_MENU);
+        sb.append(" SET ");
+        sb.append(COLUMN_MENU_NAME);
+        sb.append(" = ");
+        sb.append("'");
+        sb.append(editingMenu.getMenuName());
+        sb.append("', ");
+        sb.append(COLUMN_MENU_PRICE);
+        sb.append(" = ");
+        sb.append(editingMenu.getMenuPrice());
+        sb.append(", ");
+        sb.append(COLUMN_MENU_COST);
+        sb.append("= ");
+        sb.append(editingMenu.getMenuCost());
+        sb.append(" WHERE ");
+        sb.append(COLUMN_MENUID);
+        sb.append(" = ");
+        sb.append(editingMenu.getMenuID());
+        sb.append(" ;");
+
+        Statement statement = connection.createStatement();
+        statement.execute(sb.toString());
+        return true;
 
 
-
+    }
 }

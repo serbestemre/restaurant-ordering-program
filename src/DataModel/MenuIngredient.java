@@ -55,5 +55,15 @@ public class MenuIngredient {
     public void setIngAmount(int ingAmount) {
         this.ingAmount = ingAmount;
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof MenuIngredient)) return false;
+        MenuIngredient ingredient = (MenuIngredient) obj;
+        return this.getIngProduct() == ingredient.getIngProduct();
+    }
+
 }
 

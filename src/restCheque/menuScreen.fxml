@@ -17,13 +17,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane fx:id="menuDialogPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restCheque.MenuScreenController">
+<DialogPane fx:id="menuDialogPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restCheque.MenuScreenController">
    <content>
       <BorderPane>
          <left>
             <VBox alignment="CENTER" spacing="5.0" style="-fx-border-color: green;" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" text="Create New Menu" textAlignment="CENTER" textFill="GREEN">
+                  <Label fx:id="labelLeftTitle" alignment="CENTER" text="Create New Menu" textAlignment="CENTER" textFill="GREEN">
                      <font>
                         <Font name="Calibri Bold" size="24.0" />
                      </font>
@@ -69,9 +69,31 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
+                              <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <Button fx:id="btnUpdate" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updateMenu" text="Update" visible="false" HBox.hgrow="ALWAYS">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/update.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button fx:id="btnCancel" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelButton" text="Cancel" visible="false" HBox.hgrow="ALWAYS">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/cancel.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
-                        <Label text="Added Ingredients Table" textFill="GREEN">
+                        <Label text="NEW INGREDIENTS LIST" textFill="GREEN">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -80,17 +102,17 @@
                            <columns>
                               <TableColumn prefWidth="75.0" text="NAME">
                                  <cellValueFactory>
-                                    <PropertyValueFactory property="productName" />
+                                    <PropertyValueFactory property="ingName" />
                                  </cellValueFactory>
                               </TableColumn>
                               <TableColumn prefWidth="75.0" text="COST">
                                  <cellValueFactory>
-                                    <PropertyValueFactory property="productCost" />
+                                    <PropertyValueFactory property="ingCost" />
                                  </cellValueFactory>
                               </TableColumn>
                               <TableColumn prefWidth="75.0" text="AMOUNT">
                                  <cellValueFactory>
-                                    <PropertyValueFactory property="productAmount" />
+                                    <PropertyValueFactory property="ingAmount" />
                                  </cellValueFactory>
                               </TableColumn>
                            </columns>
@@ -101,6 +123,7 @@
                               <Tooltip text="Product List" />
                            </tooltip>
                         </TableView>
+                        <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" progress="0.0" visible="false" />
                         <HBox alignment="TOP_RIGHT" spacing="5.0">
                            <children>
                               <Label alignment="TOP_RIGHT" text="Total Cost" textAlignment="RIGHT" HBox.hgrow="ALWAYS">
@@ -139,24 +162,24 @@
                      <children>
                         <TableView fx:id="tableViewMenu" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="500.0">
                           <columns>
-                             <TableColumn prefWidth="75.0" text="Menu Name">
+                             <TableColumn prefWidth="75.0" text="MENU NAME">
                                 <cellValueFactory>
                                    <PropertyValueFactory property="menuName" />
                                 </cellValueFactory>
                              </TableColumn>
-                             <TableColumn prefWidth="75.0" text="Cost">
+                             <TableColumn prefWidth="75.0" text="COST">
                                 <cellValueFactory>
                                    <PropertyValueFactory property="menuCost" />
                                 </cellValueFactory>
                              </TableColumn>
       
-                              <TableColumn prefWidth="75.0" text="Price">
+                              <TableColumn prefWidth="75.0" text="PRICE">
                                  <cellValueFactory>
                                     <PropertyValueFactory property="menuPrice" />
                                  </cellValueFactory>
                               </TableColumn>
       
-                              <TableColumn prefWidth="75.0" text="Vat">
+                              <TableColumn prefWidth="75.0" text="VAT">
                                  <cellValueFactory>
                                     <PropertyValueFactory property="menuVat" />
                                  </cellValueFactory>
@@ -166,7 +189,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Button fx:id="btnDeleteMenu" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="31.0" prefWidth="168.0" text="Delete Menu">
+                        <Button fx:id="btnDeleteMenu" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnDeleteMenu" prefHeight="31.0" prefWidth="168.0" text="Delete Menu">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -175,7 +198,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="btnEditMenu" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="31.0" prefWidth="168.0" text="Edit Menu">
+                        <Button fx:id="btnEditMenu" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editSelectedMenu" prefHeight="31.0" prefWidth="168.0" text="Edit Menu">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -184,29 +207,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Button fx:id="btnEditMenu1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Update" visible="false" HBox.hgrow="ALWAYS">
-                                 <graphic>
-                                    <ImageView fitHeight="25.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icons/update.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                              <Button fx:id="btnEditMenu11" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Cancel" visible="false" HBox.hgrow="ALWAYS">
-                                 <graphic>
-                                    <ImageView fitHeight="25.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icons/cancel.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                           </children>
-                        </HBox>
-                        <Label text="INGREDIENTS" textFill="#ff1231">
+                        <Label text="INGREDIENTS" textFill="RED">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -236,35 +237,6 @@
                               <Tooltip text="Product List" />
                            </tooltip>
                         </TableView>
-                        <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" progress="0.0" visible="false" />
-                        <HBox alignment="CENTER" spacing="5.0">
-                           <children>
-                              <Button fx:id="btnAddExistingItem" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showIngredientsDialogPane" text="  Add Ingredients" visible="false" wrapText="true" HBox.hgrow="ALWAYS">
-                                 <graphic>
-                                    <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icons/shopping-basket.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <tooltip>
-                                    <Tooltip text="Add New Ingridients" />
-                                 </tooltip>
-                              </Button>
-                              <Button fx:id="btndeleteExistingIngredients" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Delete Ingredients" visible="false" HBox.hgrow="ALWAYS">
-                                 <graphic>
-                                    <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../icons/out-of-the-basket.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <tooltip>
-                                    <Tooltip text="Delete Selected Ingridients" />
-                                 </tooltip>
-                              </Button>
-                           </children>
-                        </HBox>
                      </children>
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
