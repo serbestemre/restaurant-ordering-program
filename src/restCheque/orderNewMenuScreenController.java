@@ -3,7 +3,10 @@ package restCheque;
 import DataModel.Menu;
 import DataModel.MenuIngredient;
 import DataSource.DataSource;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -29,14 +32,27 @@ public class orderNewMenuScreenController {
     @FXML
     private TableView<MenuIngredient> tableViewIngredients;
 
+    static Menu selectedMenu = new Menu();
+
+
+
     @FXML
     private ProgressBar progressBar;
     public static ObservableList<Menu> listofMenus= FXCollections.observableArrayList();
+    public static ObservableList<MenuIngredient> listOfIngredients= FXCollections.observableArrayList();
 
 
     @FXML
     public void initialize(){
         getAllMenusAndProductsToSell();
+
+        tableViewMenu.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedMenu=newSelection;
+                getSelectedMenuIngredients(newSelection);
+            }
+        });
+
 
     }
 
@@ -94,12 +110,59 @@ public class orderNewMenuScreenController {
         }
     }
 
+    @FXML
+    public void getSelectedMenuIngredients(Menu selectedMenu){
+        Task<ObservableList<MenuIngredient>> taskGetSelectedMenuIngredients = new GetSelectedMenuIngredients();
+        try {
+
+            listOfIngredients.setAll(DataSource.getInstance().getIngredientsOfSelectedMenu(selectedMenu));
+            tableViewIngredients.setItems(listOfIngredients);
+        } catch (SQLException e) {
+            System.out.println("tabloya ingredientslar get edilemedi");
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Database");
+            alert.setHeaderText("Ingredients could not load!!!");
+            alert.setContentText("Ooops, There was something wrong!");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            alert.showAndWait();
+        }
+        new Thread(taskGetSelectedMenuIngredients).start();
+
+        taskGetSelectedMenuIngredients.setOnRunning(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                progressBar.setVisible(true);
+                progressBar.setProgress(taskGetSelectedMenuIngredients.getProgress());
+            }
+        });
+
+        taskGetSelectedMenuIngredients.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                progressBar.setVisible(false);
+                tableViewMenu.refresh();
+            }
+        });
+
+        taskGetSelectedMenuIngredients.setOnFailed(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                progressBar.setVisible(false);
+            }
+        });
 
 
+    }
 
-
-
-
+    class GetSelectedMenuIngredients extends Task{
+        @Override
+        protected Object call() throws Exception {
+            // System.out.println("---- Guiden giden selected menuID>>>" + selectedMenu.getMenuID());
+            return FXCollections.observableArrayList(DataSource.getInstance().getIngredientsOfSelectedMenu(selectedMenu));
+        }
+    }
 
 
 

@@ -54,7 +54,7 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="tableViewExistingIngredients" maxHeight="400.0" prefHeight="183.0" prefWidth="495.0">
+                        <TableView fx:id="tableViewIngredients" maxHeight="400.0" prefHeight="183.0" prefWidth="495.0">
                            <columns>
                               <TableColumn prefWidth="75.0" text="INGREDIENT NAME">
                                  <cellValueFactory>
