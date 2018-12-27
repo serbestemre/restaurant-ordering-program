@@ -135,7 +135,7 @@ public class MainScreenController {
             if (result2.get() == ButtonType.OK){
 
                 DataSource.getInstance().deleteSelectedTable(DeleteTableController.selectedItem.getTag().toString());
-                putTablesIntoGUI(deskDBreturnlist);
+               initialize();
             } else {
             }
         }
@@ -169,7 +169,7 @@ public class MainScreenController {
         firstRow.setPrefWidth(Region.USE_COMPUTED_SIZE);
 
         hBoxes.add(firstRow);
-        int tableNumberInSingleRow =11; // 6 bir satıra yerleştirilmek istenen masa sayısı
+        int tableNumberInSingleRow =6; // 6 bir satıra yerleştirilmek istenen masa sayısı
         int hBoxIterator=0;
 
         for (int i = 0; i<allDesks.size();i++){
@@ -357,8 +357,7 @@ public class MainScreenController {
         Optional<ButtonType> result =dialog2.showAndWait();
     if(result.get()==ButtonType.CLOSE){
 
-
-        putTablesIntoGUI(deskDBreturnlist); // re-put the tables!
+        initialize(); // re-put the tables!
     }
 
     }

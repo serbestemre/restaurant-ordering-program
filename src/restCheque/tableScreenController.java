@@ -99,8 +99,6 @@ public class tableScreenController {
                                 order.setOrderQuantity(amount);
                                 order.setSubTotal(amount*order.getMenuPrice());
 
-
-
                              /** Eğer adisyonda zaten böyle bir sipariş varsa adisyon+=quantity **/
 
                             if(myTable.contains(order)) {
