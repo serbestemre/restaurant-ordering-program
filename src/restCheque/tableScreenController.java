@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Optional;
 
 public class tableScreenController {
@@ -87,37 +88,41 @@ public class tableScreenController {
                         if(result2.get()==ButtonType.OK){
 
                             try {
-                                int amount =Integer.parseInt(AmountDialogPane.getAmountIngredients());
+                                int amount =0;
+                                amount=Integer.parseInt(AmountDialogPane.getAmountIngredients());
                                 dialogLoop=false;
                                 // stock * cost / new amount
 
-                                Product product=IngredientsController.getSelectedProduct();
+                                Menu order=orderNewMenuScreenController.selectedOrder;
                                 MenuIngredient ingredient= new MenuIngredient();
 
-                                int stock = product.getProductAmount();
-                                double cost = product.getProductCost();
-/**
- * UNIT COST CALCULATION
- */
-                                double unitCost =(amount*cost)/stock;
+                                order.setOrderQuantity(amount);
+                                order.setSubTotal(amount*order.getMenuPrice());
 
-                                ingredient.setIngAmount(amount);
-                                ingredient.setIngCost(unitCost);
-                                product.setProductAmount(amount);
-                                product.setProductCost(unitCost);
-                                ingredient.setIngName(product.getProductName());
-                                ingredient.setIngProduct(product.getProductID());
-                                if(!myTable.contains(ingredient)){
-                                  //  myTable.add();
+
+
+                             /** Eğer adisyonda zaten böyle bir sipariş varsa adisyon+=quantity **/
+
+                            if(myTable.contains(order)) {
+                                System.out.println("CONTAINS IF");
+
+                                for (int i = 0; i < myTable.size(); i++) {
+                                Menu existing= myTable.get(i);
+                                if(existing.equals(order)){
+                                    System.out.println(i);
+                                  //  System.out.println("doğru ürünle eşleşme sağlandı");
+                                    existing.setOrderQuantity(order.getOrderQuantity()+existing.getOrderQuantity());
+                                    tableViewTableMenuList.refresh();
                                 }else{
-                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                    alert.setTitle("Information");
-                                    alert.setHeaderText("Already Added!");
-                                    alert.setContentText("You are trying to add existing item!");
-                                    Stage stage2 = (Stage) alert.getDialogPane().getScene().getWindow();
-                                    stage2.getIcons().add(new Image(this.getClass().getResource("/icons/confirmation.png").toString()));
-                                    alert.showAndWait();
+                                 //   System.out.println("yanlış ürün");
                                 }
+
+                                }
+                            }else{
+                              //  System.out.println("dont contains");
+                                myTable.add(order);
+                            }
+
 
                             }catch (NumberFormatException e){
                                 Alert alert = new Alert(Alert.AlertType.ERROR);

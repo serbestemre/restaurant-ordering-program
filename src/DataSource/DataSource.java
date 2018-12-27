@@ -321,7 +321,7 @@ public class DataSource {
         ArrayList<MenuIngredient> allIngredientsOfSelectedProduct = new ArrayList<>();
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(sb.toString());
-        System.out.println("INGREDIENTS SQL>>>>>>>> " + sb.toString());
+    //    System.out.println("INGREDIENTS SQL>>>>>>>> " + sb.toString());
         while (rs.next()) {
             MenuIngredient ingredient = new MenuIngredient();
             ingredient.setIngName(rs.getString(COLUMN_ING_PRODUCT_NAME));
@@ -414,7 +414,7 @@ public class DataSource {
             double stock =(rs.getInt(COLUMN_PRODUCT_AMOUNT));
             double cost=(rs.getDouble(COLUMN_PRODUCT_COST));
             productParseToMenu.setMenuCost(cost/stock);
-            System.out.println("birim maliyeti >>> + " +productParseToMenu.getMenuCost());
+          //  System.out.println("birim maliyeti >>> + " +productParseToMenu.getMenuCost());
             productParseToMenu.setMenuPrice(rs.getDouble(COLUMN_PRODUCT_PRICE));
 
             allMenusAndProductsThatCanBeSell.add(productParseToMenu);

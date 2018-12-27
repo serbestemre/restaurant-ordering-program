@@ -29,11 +29,18 @@
                           </cellValueFactory>
                        </TableColumn>
                        <TableColumn prefWidth="75.0" text="QUANTITY" >
-
+                          <cellValueFactory>
+                             <PropertyValueFactory property="orderQuantity"/>
+                          </cellValueFactory>
                        </TableColumn>
                        <TableColumn prefWidth="75.0" text="PRICE" >
                           <cellValueFactory>
                              <PropertyValueFactory property="menuPrice"/>
+                          </cellValueFactory>
+                       </TableColumn>
+                       <TableColumn prefWidth="75.0" text="SUB TOTAL" >
+                          <cellValueFactory>
+                             <PropertyValueFactory property="subTotal"/>
                           </cellValueFactory>
                        </TableColumn>
                       </columns>

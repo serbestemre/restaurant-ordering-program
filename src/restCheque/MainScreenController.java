@@ -356,6 +356,8 @@ public class MainScreenController {
         //sonuc nesnesini gönderir
         Optional<ButtonType> result =dialog2.showAndWait();
     if(result.get()==ButtonType.CLOSE){
+
+
         putTablesIntoGUI(deskDBreturnlist); // re-put the tables!
     }
 

@@ -32,7 +32,7 @@ public class orderNewMenuScreenController {
     @FXML
     private TableView<MenuIngredient> tableViewIngredients;
 
-    static Menu selectedMenu = new Menu();
+    public static Menu selectedOrder = new Menu();
 
 
 
@@ -48,7 +48,7 @@ public class orderNewMenuScreenController {
 
         tableViewMenu.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                selectedMenu=newSelection;
+                selectedOrder=newSelection;
                 getSelectedMenuIngredients(newSelection);
             }
         });
@@ -160,7 +160,7 @@ public class orderNewMenuScreenController {
         @Override
         protected Object call() throws Exception {
             // System.out.println("---- Guiden giden selected menuID>>>" + selectedMenu.getMenuID());
-            return FXCollections.observableArrayList(DataSource.getInstance().getIngredientsOfSelectedMenu(selectedMenu));
+            return FXCollections.observableArrayList(DataSource.getInstance().getIngredientsOfSelectedMenu(selectedOrder));
         }
     }
 

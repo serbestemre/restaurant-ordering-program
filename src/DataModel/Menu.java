@@ -6,7 +6,24 @@ public class Menu {
     private String menuName;
     private double menuPrice;
     private double menuCost;
+    private int orderQuantity;
+    private double subTotal;
 
+    public double getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(double subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public int getOrderQuantity() {
+        return orderQuantity;
+    }
+
+    public void setOrderQuantity(int orderQuantity) {
+        this.orderQuantity = orderQuantity;
+    }
 
     public int getMenuID() {
         return menuID;
