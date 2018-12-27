@@ -7,14 +7,6 @@
       <change beforePath="$PROJECT_DIR$/out/production/RestCheque/restCheque/ProductScreenController$7.class" afterPath="$PROJECT_DIR$/out/production/RestCheque/restCheque/ProductScreenController$7.class" />
       <change beforePath="$PROJECT_DIR$/out/production/RestCheque/restCheque/ProductScreenController$GetAllProducts.class" afterPath="$PROJECT_DIR$/out/production/RestCheque/restCheque/ProductScreenController$GetAllProducts.class" />
       <change beforePath="$PROJECT_DIR$/out/production/RestCheque/restCheque/ProductScreenController.class" afterPath="$PROJECT_DIR$/out/production/RestCheque/restCheque/ProductScreenController.class" />
-      <change beforePath="$PROJECT_DIR$/resCheque.db" afterPath="$PROJECT_DIR$/resCheque.db" />
-      <change beforePath="$PROJECT_DIR$/src/DataModel/Menu.java" afterPath="$PROJECT_DIR$/src/DataModel/Menu.java" />
-      <change beforePath="$PROJECT_DIR$/src/DataSource/DataSource.java" afterPath="$PROJECT_DIR$/src/DataSource/DataSource.java" />
-      <change beforePath="$PROJECT_DIR$/src/restCheque/MenuScreenController.java" afterPath="$PROJECT_DIR$/src/restCheque/MenuScreenController.java" />
-      <change beforePath="$PROJECT_DIR$/src/restCheque/ProductScreenController.java" afterPath="$PROJECT_DIR$/src/restCheque/ProductScreenController.java" />
-      <change beforePath="$PROJECT_DIR$/src/restCheque/menuScreen.fxml" afterPath="$PROJECT_DIR$/src/restCheque/menuScreen.fxml" />
-      <change beforePath="$PROJECT_DIR$/src/restCheque/orderNewMenuScreen.fxml" afterPath="$PROJECT_DIR$/src/restCheque/orderNewMenuScreen.fxml" />
-      <change beforePath="$PROJECT_DIR$/src/restCheque/orderNewMenuScreenController.java" afterPath="$PROJECT_DIR$/src/restCheque/orderNewMenuScreenController.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -547,7 +539,14 @@
       <option name="project" value="LOCAL" />
       <updated>1545921308366</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="get menusAndProduct into addOrderButton">
+      <created>1545928245035</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1545928245036</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -601,7 +600,8 @@
     <MESSAGE value="Warnings about exceptions or invalid attempts by user specified." />
     <MESSAGE value="Refactoring Product. New attribute defined product class. If the product may sell by itself then user must define its price! (like cola or desert)Those products will be brought into the add order screen" />
     <MESSAGE value="update and delete product error/confirmation diaglog" />
-    <option name="LAST_COMMIT_MESSAGE" value="update and delete product error/confirmation diaglog" />
+    <MESSAGE value="get menusAndProduct into addOrderButton" />
+    <option name="LAST_COMMIT_MESSAGE" value="get menusAndProduct into addOrderButton" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
