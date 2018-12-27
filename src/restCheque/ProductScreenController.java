@@ -291,7 +291,7 @@ public class ProductScreenController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
         alert.setHeaderText("Look, You are doing something risky!");
-        alert.setContentText("Are you sure to delete " + tableViewProduct.getSelectionModel().getSelectedItem()+ " ?" );
+        alert.setContentText("Are you sure to delete " + tableViewProduct.getSelectionModel().getSelectedItem().getProductName()+ " ?" );
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
@@ -300,6 +300,14 @@ public class ProductScreenController {
 
             DataSource.getInstance().deleteProduct(deletingProduct.getProductID());
             listofProducts.remove(deletingProduct);
+            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+            alert2.setTitle("Information Dialog");
+            alert2.setHeaderText(null);
+            alert2.setContentText("The product deleted successfully!");
+            Stage stage = (Stage) alert2.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/checked.png").toString()));
+            alert2.showAndWait();
+
             tableViewProduct.refresh();
         }
     }else{
@@ -402,6 +410,14 @@ public class ProductScreenController {
                         btnCreate.setDisable(false);
                         btnEdit.setDisable(false);
                         btnDelete.setDisable(false);
+
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Dialog");
+                        alert.setHeaderText(null);
+                        alert.setContentText("The product updated successfully!");
+                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                        stage.getIcons().add(new Image(this.getClass().getResource("/icons/checked.png").toString()));
+                        alert.showAndWait();
 
                         tfName.clear();
                         tfCost.clear();
