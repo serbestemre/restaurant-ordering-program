@@ -5,6 +5,15 @@ public class Product {
     private String productName;
     private double productCost;
     private int productAmount;
+    private double productPrice; // it will use when the product wanted to sell by its self alone!
+
+    public double getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(double productPrice) {
+        this.productPrice = productPrice;
+    }
 
     public int getProductID() {
         return productID;
@@ -39,12 +48,10 @@ public class Product {
     }
 
 
-
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof Product)) return false;
         Product product = (Product) obj;
-        return this.getProductID() == product.getProductID();   }
+        return this.getProductID() == product.getProductID(); }
 }

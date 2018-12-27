@@ -25,13 +25,13 @@ public class DataSource {
     private static final String COLUMN_PRODUCT_NAME= "productName";
     private static final String COLUMN_PRODUCT_COST="productCost";
     private static final String COLUMN_PRODUCT_AMOUNT="productAmount";
+    private static final String COLUMN_PRODUCT_PRICE="productPrice";
 
     private static final String TABLE_MENU="Menu";
     private static final String COLUMN_MENUID="menuID";
     private static final String COLUMN_MENU_NAME="menuName";
     private static final String COLUMN_MENU_PRICE="menuPrice";
     private static final String COLUMN_MENU_COST="menuCost";
-    private static final String COLUMN_MENU_VAT="menuVat";
 
     private static final String TABLE_MENU_INGREDIENTS="MenuIngredient";
     private static final String COLUMN_ROWID="rowID";
@@ -40,8 +40,6 @@ public class DataSource {
     private static final String COLUMN_ING_PRODUCTID="ingProductID";
     private static final String COLUMN_ING_PRODUCT_NAME="ingName";
     private static final String COLUMN_ING_AMOUNT="ingAmount";
-
-
 
 
 
@@ -146,10 +144,7 @@ public class DataSource {
 
     public Boolean createNewProduct(Product myNewProduct) throws SQLException {
 
-        try {
-
-
-            StringBuilder sb = new StringBuilder("INSERT INTO ");
+        try {StringBuilder sb = new StringBuilder("INSERT INTO ");
             sb.append(TABLE_PRODUCT);
             sb.append(" ( ");
             sb.append(COLUMN_PRODUCT_NAME);
@@ -157,6 +152,8 @@ public class DataSource {
             sb.append(COLUMN_PRODUCT_COST);
             sb.append(", ");
             sb.append(COLUMN_PRODUCT_AMOUNT);
+            sb.append(", ");
+            sb.append(COLUMN_PRODUCT_PRICE);
             sb.append(" ) ");
             sb.append("VALUES ");
             sb.append(" ( '");
@@ -165,15 +162,21 @@ public class DataSource {
             sb.append(myNewProduct.getProductCost());
             sb.append(", ");
             sb.append(myNewProduct.getProductAmount());
+            sb.append(", ");
+            sb.append(myNewProduct.getProductPrice());
             sb.append(" );");
             Statement statement = connection.createStatement();
             statement.execute(sb.toString());
             return true;
-        }catch (SQLException e){
 
-            e.printStackTrace();
+        }catch (Exception e){
+            System.out.println("BAŞARISIZ EKLEME!!!");
             return false;
         }
+
+
+
+
     }
 
     public ArrayList<Product> getAllProducts() throws SQLException {
@@ -192,6 +195,7 @@ public class DataSource {
                 product.setProductName(rs.getString(COLUMN_PRODUCT_NAME));
                 product.setProductCost(rs.getDouble(COLUMN_PRODUCT_COST));
                 product.setProductAmount(rs.getInt(COLUMN_PRODUCT_AMOUNT));
+                product.setProductPrice(rs.getDouble(COLUMN_PRODUCT_PRICE));
                 allProducts.add(product);
             }
             return allProducts;
@@ -214,7 +218,8 @@ public class DataSource {
     public Boolean updateProduct(Product editingProduct) throws SQLException {
 
             Statement statement = connection.createStatement();
-            int updatedRows=statement.executeUpdate("UPDATE " + TABLE_PRODUCT + " SET "+  COLUMN_PRODUCT_NAME+"='"+editingProduct.getProductName()+"', "+  COLUMN_PRODUCT_COST+"="+editingProduct.getProductCost()+", "+COLUMN_PRODUCT_AMOUNT+"="+editingProduct.getProductAmount()+" WHERE "+ COLUMN_PRODUCTID+"="+editingProduct.getProductID());
+        System.out.println("sql Değiştirildi!");
+            int updatedRows=statement.executeUpdate("UPDATE " + TABLE_PRODUCT + " SET "+  COLUMN_PRODUCT_NAME+"='"+editingProduct.getProductName()+"', "+  COLUMN_PRODUCT_COST+"="+editingProduct.getProductCost()+", "+COLUMN_PRODUCT_AMOUNT+"="+editingProduct.getProductAmount()+", "+COLUMN_PRODUCT_PRICE+"="+editingProduct.getProductPrice()+" WHERE "+ COLUMN_PRODUCTID+"="+editingProduct.getProductID());
             return true;
 
     }
@@ -226,7 +231,6 @@ public class DataSource {
             return true;
             }
 
-
     public Boolean insertMenuIngredientList(ObservableList<MenuIngredient> ingredientsList,int menuID) throws SQLException {
         for(int i =0; i<ingredientsList.size();i++){
             MenuIngredient ingredient= ingredientsList.get(i);
@@ -236,6 +240,7 @@ public class DataSource {
 
         return true;
     }
+
     public Boolean createNewMenuInsertIngredients(Menu menu, ObservableList<MenuIngredient> ingredientsList) throws SQLException {
 
         try {
@@ -249,8 +254,6 @@ public class DataSource {
         sb.append(COLUMN_MENU_COST);
         sb.append(",");
         sb.append(COLUMN_MENU_PRICE);
-        sb.append(",");
-        sb.append(COLUMN_MENU_VAT);
         sb.append(") ");
         sb.append("VALUES ");
         sb.append("('");
@@ -259,10 +262,9 @@ public class DataSource {
         sb.append(menu.getMenuCost());
         sb.append(", ");
         sb.append(menu.getMenuPrice());
-        sb.append(", ");
-        sb.append(menu.getMenuVat());
         sb.append(");");
 
+        System.out.println("SQL değiştirildi :" +sb.toString());
         Statement statement = connection.createStatement();
 
             System.out.println("ing sql " + sb.toString());
@@ -301,15 +303,15 @@ public class DataSource {
             menu.setMenuName(rs.getString(COLUMN_MENU_NAME));
             menu.setMenuCost(rs.getDouble(COLUMN_MENU_COST));
             menu.setMenuPrice(rs.getDouble(COLUMN_MENU_PRICE));
-            menu.setMenuVat(rs.getDouble(COLUMN_MENU_VAT));
             allMenu.add(menu);
         }
         return allMenu;
 
     }
 
-
     public ArrayList<MenuIngredient> getIngredientsOfSelectedMenu(Menu selectedMenu) throws SQLException {
+
+        System.out.println("******-*-*-*-*-* parametre gelen menuID => " + selectedMenu.getMenuID());
 
         StringBuilder sb = new StringBuilder("Select * FROM ");
         sb.append(TABLE_MENU_INGREDIENTS);
@@ -320,9 +322,9 @@ public class DataSource {
         sb.append(";");
 
         ArrayList<MenuIngredient> allIngredientsOfSelectedProduct = new ArrayList<>();
-
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(sb.toString());
+        System.out.println("INGREDIENTS SQL>>>>>>>> " + sb.toString());
         while (rs.next()) {
             MenuIngredient ingredient = new MenuIngredient();
             ingredient.setIngName(rs.getString(COLUMN_ING_PRODUCT_NAME));
@@ -351,7 +353,6 @@ public class DataSource {
 
     }
 
-
     public Boolean updateSelectedMenu(Menu editingMenu) throws SQLException {
 
         StringBuilder sb = new StringBuilder("UPDATE ");
@@ -374,7 +375,6 @@ public class DataSource {
         sb.append(" = ");
         sb.append(editingMenu.getMenuID());
         sb.append(" ;");
-
         Statement statement = connection.createStatement();
         statement.execute(sb.toString());
         return true;

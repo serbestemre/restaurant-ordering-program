@@ -16,7 +16,7 @@
 
 <BorderPane fx:id="mainScreen" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restCheque.MainScreenController">
     <center>
-        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hmax="0.0">
+        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hmax="0.0" pannable="true" vmax="440.0">
             <content>
                 <VBox fx:id="vBox" spacing="10.0" style="-fx-border-color: green;" />
             </content>

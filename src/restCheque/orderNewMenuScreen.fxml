@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<DialogPane fx:id="menuDialogPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restCheque.orderNewMenuScreenController">
+   <content>
+      <BorderPane>
+         <center>
+            <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets left="10.0" />
+               </BorderPane.margin>
+               <children>
+                  <Label alignment="CENTER" text="MENU LIST" textAlignment="CENTER" textFill="RED">
+                     <font>
+                        <Font name="Calibri Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <VBox alignment="CENTER" maxWidth="400.0" spacing="5.0">
+                     <children>
+                        <TableView fx:id="tableViewMenu" maxHeight="400.0" minWidth="500.0" prefHeight="361.0" prefWidth="500.0">
+                          <columns>
+                             <TableColumn prefWidth="75.0" text="MENU NAME">
+                                <cellValueFactory>
+                                   <PropertyValueFactory property="menuName" />
+                                </cellValueFactory>
+                             </TableColumn>
+                             <TableColumn prefWidth="75.0" text="COST">
+                                <cellValueFactory>
+                                   <PropertyValueFactory property="menuCost" />
+                                </cellValueFactory>
+                             </TableColumn>
+      
+                              <TableColumn prefWidth="75.0" text="PRICE">
+                                 <cellValueFactory>
+                                    <PropertyValueFactory property="menuPrice" />
+                                 </cellValueFactory>
+                              </TableColumn>
+
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <Label text="DETAIL OF MENU - (INGREDIENTS)" textFill="#0b00ff">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="tableViewExistingIngredients" maxHeight="400.0" prefHeight="183.0" prefWidth="495.0">
+                           <columns>
+                              <TableColumn prefWidth="75.0" text="INGREDIENT NAME">
+                                 <cellValueFactory>
+                                    <PropertyValueFactory property="ingName" />
+                                 </cellValueFactory>
+                              </TableColumn>
+                              <TableColumn prefWidth="75.0" text="AMOUNT">
+                                 <cellValueFactory>
+                                    <PropertyValueFactory property="ingAmount" />
+                                 </cellValueFactory>
+                              </TableColumn>
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <tooltip>
+                              <Tooltip text="MenuList" />
+                           </tooltip>
+                        </TableView>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </VBox>
+               </children>
+            </VBox>
+         </center>
+      </BorderPane>
+   </content>
+</DialogPane>

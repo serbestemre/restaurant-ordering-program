@@ -13,10 +13,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.sqlite.SQLiteException;
 
 import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.util.Locale;
+import java.util.Optional;
 
 public class ProductScreenController {
 
@@ -50,6 +52,20 @@ public class ProductScreenController {
     @FXML
     private ProgressBar progressBar;
 
+    @FXML
+    private RadioButton radioSell;
+
+    @FXML
+    private ToggleGroup priceChoice;
+
+    @FXML
+    private RadioButton radioDontSell;
+
+    @FXML
+    private TextField tfPrice;
+
+    Product editingProduct;
+
 
     ObservableList<Product> listofProducts =FXCollections.observableArrayList();
 
@@ -57,6 +73,19 @@ public class ProductScreenController {
 @FXML
     public void initialize(){
     getAllProducts();
+
+    priceChoice.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+        @Override
+        public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+            if(radioSell.isSelected()){
+                System.out.println("may sell selected");
+                tfPrice.setDisable(false);
+            }else{
+                System.out.println("will not sell!");
+                tfPrice.setDisable(true);
+            }
+        }
+    });
 
     tableViewProduct.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 
@@ -74,102 +103,136 @@ public class ProductScreenController {
 
 @FXML
     public void createNewProduct(){
+    Product myNewProduct = new Product();
 
-    try{
+    double price=0;
+    boolean validationOk=false;
 
-        int amount = Integer.parseInt(tfAmount.getText().trim());
-        double cost = Double.parseDouble(tfCost.getText().trim());
-        //if we catch NumberFormatException that means user didn't enter valid input for those double variables !
-        //warn the user with an Error Dialog
-        if(!tfName.getText().trim().isEmpty() && tfName.getText()!=null && tfAmount.getText().trim()!=null && !tfAmount.getText().trim().isEmpty() && !tfCost.getText().trim().isEmpty() && tfCost.getText().trim()!=null){
+    /*********REFACTORRRRRRR PRICE AND GET VALID DOUBLE INPUT!!!******///////////////////
+    if(radioSell.isSelected()){
+        try {
 
-            Product myNewProduct = new Product();
-
-            myNewProduct.setProductName(tfName.getText().trim().toUpperCase());
-            myNewProduct.setProductCost(cost);
-            myNewProduct.setProductAmount(amount);
+            price=Double.parseDouble(tfPrice.getText().trim());
+            myNewProduct.setProductPrice(price);
+            validationOk=true;
 
 
-                Task<Boolean> taskAddNewCustomer = new Task() {
-                    @Override
-                    protected Object call() throws Exception {
-
-
-                        return DataSource.getInstance().createNewProduct(myNewProduct);
-
-                    }
-                };
-                new Thread(taskAddNewCustomer).start();
-                taskAddNewCustomer.setOnFailed(new EventHandler<WorkerStateEvent>() {
-                    @Override
-                    public void handle(WorkerStateEvent event) {
-                        progressBar.setVisible(false);
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error Dialog");
-                        alert.setHeaderText("Process Failed!!!");
-                        alert.setContentText("Ooops, There was something wrong!\nThe new product did not add into product database!");
-                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                        stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
-                        alert.showAndWait();
-                    }
-                });
-
-
-                taskAddNewCustomer.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-                    @Override
-                    public void handle(WorkerStateEvent event) {
-                        System.out.println("başarılı şekilde eklendi");
-                        listofProducts.add(myNewProduct);
-                        tableViewProduct.refresh();
-                        progressBar.setVisible(false);
-
-
-                        tfName.clear();
-                        tfCost.clear();
-                        tfAmount.clear();
-
-
-                    }
-                });
-
-                taskAddNewCustomer.setOnRunning(new EventHandler<WorkerStateEvent>() {
-                    @Override
-                    public void handle(WorkerStateEvent event) {
-                        progressBar.setProgress(taskAddNewCustomer.getProgress());
-                        progressBar.setVisible(true);
-
-                    }
-                });
-
-
-
-
-
-
-        }else{
+        }catch (NumberFormatException e) {
+            validationOk=false;
+            //if price will not enter then its exception will get here
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Wrong or Invalid Attempt!");
-            alert.setContentText("Ooops, ALL FIELDS MUST BE FILLED!\n");
+            alert.setContentText("Ooops, It Looks Like You Did not Enter Valid  For Price Field!\n" + "Careful with decimal format for COST\n" + "You must use '.'\nExample:Price=21.35\nExample:Price=2500 ");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
             alert.showAndWait();
 
         }
-
-    }catch (NumberFormatException e){
-
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Wrong or Invalid Attempt!");
-        alert.setContentText("Ooops, It Looks Like You Did not Enter Valid Number!\n" +
-                "Careful with decimal format for COST\n" +
-                "You must use '.'\nExample:COST=21.35\nExample:STOCK=2500 ");
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
-        alert.showAndWait();
-
+    }else{
+        myNewProduct.setProductPrice(0);
+        validationOk=true;
     }
+            if (validationOk==true){
+
+                try {
+                int amount = Integer.parseInt(tfAmount.getText().trim());
+                double cost = Double.parseDouble(tfCost.getText().trim());
+
+
+                //if we catch NumberFormatException that means user didn't enter valid input for those double variables !
+                //warn the user with an Error Dialog
+                if (!tfName.getText().trim().isEmpty() && tfName.getText() != null && tfAmount.getText().trim() != null && !tfAmount.getText().trim().isEmpty() && !tfCost.getText().trim().isEmpty() && tfCost.getText().trim() != null) {
+
+                    myNewProduct.setProductName(tfName.getText().trim().toUpperCase());
+                    myNewProduct.setProductCost(cost);
+                    myNewProduct.setProductAmount(amount);
+                    // normally user will not be able to enter 0 for price!
+
+                    Task<Boolean> taskCreateNewProduct = new Task() {
+                        @Override
+                        protected Object call() throws Exception {
+                            return DataSource.getInstance().createNewProduct(myNewProduct);
+                        }
+                    };
+
+                    new Thread(taskCreateNewProduct).start();
+
+                    taskCreateNewProduct.setOnFailed(new EventHandler<WorkerStateEvent>() {
+                        @Override
+                        public void handle(WorkerStateEvent event) {
+                            progressBar.setVisible(false);
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error Dialog");
+                            alert.setHeaderText("Process Failed!!!");
+                            alert.setContentText("Ooops, There was something wrong!\nThe new product did not add into product database!");
+                            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                            alert.showAndWait();
+                        }
+                    });
+
+                    taskCreateNewProduct.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                        @Override
+                        public void handle(WorkerStateEvent event) {
+                            System.out.println("başarılı şekilde eklendi");
+                            listofProducts.add(myNewProduct);
+                            tableViewProduct.refresh();
+                            progressBar.setVisible(false);
+
+                            tfName.clear();
+                            tfCost.clear();
+                            tfAmount.clear();
+                            tfPrice.clear();
+
+                        }
+                    });
+
+                    taskCreateNewProduct.setOnRunning(new EventHandler<WorkerStateEvent>() {
+                        @Override
+                        public void handle(WorkerStateEvent event) {
+                            progressBar.setProgress(taskCreateNewProduct.getProgress());
+                            progressBar.setVisible(true);
+
+                        }
+                    });
+
+
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Wrong or Invalid Attempt!");
+                    alert.setContentText("Ooops, ALL FIELDS MUST BE FILLED!\n");
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                    alert.showAndWait();
+
+                }
+                            /////
+            } catch (NumberFormatException a) {
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Wrong or Invalid Attempt!");
+                alert.setContentText("Ooops, It Looks Like You Did not Enter Valid Number!\n" + "Careful with decimal format for COST\n" + "You must use '.'\nExample:COST=21.35\nExample:STOCK=2500 ");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                alert.showAndWait();
+
+            }
+
+        }else{
+
+                System.out.println("ürün satılabilir fakat fiyatı girilmedi ? kaydedilemedi hatalı giriş!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Wrong or Invalid Attempt!");
+                alert.setContentText("Ooops, It Looks Like You Did not Enter Valid  For Price Field!\n" + "Careful with decimal format for COST\n" + "You must use '.'\nExample:Price=21.35\nExample:Price=2500 ");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                alert.showAndWait();
+            }
+
 
 
 
@@ -181,17 +244,21 @@ public class ProductScreenController {
     if (tableViewProduct.getSelectionModel().getSelectedItem()!=null){
         btnCancel.setVisible(true);
         btnUpdate.setVisible(true);
-
         btnCreate.setDisable(true);
         btnEdit.setDisable(true);
         btnDelete.setDisable(true);
 
-        Product editingProduct=selectedProduct;
+        if(tableViewProduct.getSelectionModel().getSelectedItem().getProductPrice()!=0){
+            radioSell.setSelected(true);
+            tfPrice.setDisable(false);
+            tfPrice.setText(String.valueOf(selectedProduct.getProductPrice()));
+        }
 
+
+        editingProduct=selectedProduct;
         tfName.setText(editingProduct.getProductName());
         tfCost.setText(String.valueOf(editingProduct.getProductCost()));
         tfAmount.setText(String.valueOf(editingProduct.getProductAmount()));
-
     }else{
         System.out.println("ürün seçilmedi");
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -221,115 +288,175 @@ public class ProductScreenController {
     public void deleteProduct(){
 
     if(tableViewProduct.getSelectionModel().getSelectedItem()!=null){
-        Product deletingProduct =tableViewProduct.getSelectionModel().getSelectedItem();
-        DataSource.getInstance().deleteProduct(deletingProduct.getProductID());
-        listofProducts.remove(deletingProduct);
-        tableViewProduct.refresh();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Look, You are doing something risky!");
+        alert.setContentText("Are you sure to delete " + tableViewProduct.getSelectionModel().getSelectedItem()+ " ?" );
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+
+            Product deletingProduct =tableViewProduct.getSelectionModel().getSelectedItem();
+
+            DataSource.getInstance().deleteProduct(deletingProduct.getProductID());
+            listofProducts.remove(deletingProduct);
+            tableViewProduct.refresh();
+        }
+    }else{
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setHeaderText("Select an item to deleteeeeeee!!!");
+        alert.setContentText("Ooops, There was something wrong!");
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+        alert.showAndWait();
     }
-    Alert alert = new Alert(Alert.AlertType.ERROR);
-    alert.setTitle("Error Dialog");
-    alert.setHeaderText("Select an item to delete!!!");
-    alert.setContentText("Ooops, There was something wrong!");
-    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-    stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
-    alert.showAndWait();
+
 }
 
 @FXML
     public void btnUpdate(){
-    try {
-        Product editingProduct=selectedProduct;
-        int amount = Integer.parseInt(tfAmount.getText().trim());
-        double cost = Double.parseDouble(tfCost.getText().trim());
-        //if we catch NumberFormatException that means user didn't enter valid input for those double variables !
-        //warn the user with an Error Dialog
-        if (!tfName.getText().trim().isEmpty() && tfName.getText() != null && tfAmount.getText().trim() != null && !tfAmount.getText().trim().isEmpty() && !tfCost.getText().trim().isEmpty() && tfCost.getText().trim() != null) {
-            Product myNewProduct = new Product();
-            editingProduct.setProductName(tfName.getText().trim().toUpperCase(Locale.ENGLISH));
-            editingProduct.setProductCost(cost);
-            editingProduct.setProductAmount(amount);
-                Task<Boolean> taskUpdateCustomer = new Task() {
-                    @Override
-                    protected Object call() throws Exception {
+    Product myNewProduct = new Product();
+
+    double price=0;
+    boolean validationOk=false;
+
+    /*********REFACTORRRRRRR PRICE AND GET VALID DOUBLE INPUT!!!******///////////////////
+    if(radioSell.isSelected()){
+        try {
+
+            price=Double.parseDouble(tfPrice.getText().trim());
+            myNewProduct.setProductPrice(price);
+            validationOk=true;
 
 
-                        return DataSource.getInstance().updateProduct(editingProduct);
-
-                    }
-                };
-
-            new Thread(taskUpdateCustomer).start();
-            taskUpdateCustomer.setOnFailed(new EventHandler<WorkerStateEvent>() {
-                @Override
-                public void handle(WorkerStateEvent event) {
-                    progressBar.setVisible(false);
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error Dialog");
-                    alert.setHeaderText("Process Failed!!!");
-                    alert.setContentText("Ooops, There was something wrong!\nThe product could not updated!");
-                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                    stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
-                    alert.showAndWait();
-                }
-            });
-
-
-            taskUpdateCustomer.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-                @Override
-                public void handle(WorkerStateEvent event) {
-                    int index = listofProducts.indexOf(selectedProduct);
-                    listofProducts.remove(index);
-                    listofProducts.add(index,editingProduct);
-                    tableViewProduct.refresh();
-                    progressBar.setVisible(false);
-
-                    btnCancel.setVisible(false);
-                    btnUpdate.setVisible(false);
-
-                    btnCreate.setDisable(false);
-                    btnEdit.setDisable(false);
-                    btnDelete.setDisable(false);
-
-                    tfName.clear();
-                    tfCost.clear();
-                    tfAmount.clear();
-                }
-            });
-
-            taskUpdateCustomer.setOnRunning(new EventHandler<WorkerStateEvent>() {
-                @Override
-                public void handle(WorkerStateEvent event) {
-                    progressBar.setProgress(taskUpdateCustomer.getProgress());
-                    progressBar.setVisible(true);
-
-                }
-            });
-
-
-            tableViewProduct.refresh();
-        }else{
+        }catch (NumberFormatException e) {
+            validationOk=false;
+            //if price will not enter then its exception will get here
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Wrong or Invalid Attempt!");
-            alert.setContentText("Ooops, ALL FIELDS MUST BE FILLED!\n");
+            alert.setContentText("Ooops, It Looks Like You Did not Enter Valid  For Price Field!\n" + "Careful with decimal format for COST\n" + "You must use '.'\nExample:Price=21.35\nExample:Price=2500 ");
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
             alert.showAndWait();
+
+        }
+    }else{
+        myNewProduct.setProductPrice(0);
+        validationOk=true;
+    }
+    if (validationOk==true){
+
+        try {
+            int amount = Integer.parseInt(tfAmount.getText().trim());
+            double cost = Double.parseDouble(tfCost.getText().trim());
+
+
+            //if we catch NumberFormatException that means user didn't enter valid input for those double variables !
+            //warn the user with an Error Dialog
+            if (!tfName.getText().trim().isEmpty() && tfName.getText() != null && tfAmount.getText().trim() != null && !tfAmount.getText().trim().isEmpty() && !tfCost.getText().trim().isEmpty() && tfCost.getText().trim() != null) {
+
+                myNewProduct.setProductName(tfName.getText().trim().toUpperCase());
+                myNewProduct.setProductCost(cost);
+                myNewProduct.setProductAmount(amount);
+                // normally user will not be able to enter 0 for price!
+
+                Task<Boolean> taskUpdateMyProduct = new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        return DataSource.getInstance().createNewProduct(myNewProduct);
+                    }
+                };
+
+                new Thread(taskUpdateMyProduct).start();
+
+                taskUpdateMyProduct.setOnFailed(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent event) {
+                        progressBar.setVisible(false);
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error Dialog");
+                        alert.setHeaderText("Process Failed!!!");
+                        alert.setContentText("Ooops, There was something wrong!\nThe new product did not add into product database!");
+                        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                        stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                        alert.showAndWait();
+                    }
+                });
+
+                taskUpdateMyProduct.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent event) {
+                        int index = listofProducts.indexOf(editingProduct);
+                        System.out.println("update edilen product index="+ index);
+                        listofProducts.remove(index);
+                        listofProducts.add(index,myNewProduct);
+
+                        tableViewProduct.refresh();
+                        progressBar.setVisible(false);
+
+                        btnCancel.setVisible(false);
+                        btnUpdate.setVisible(false);
+
+                        btnCreate.setDisable(false);
+                        btnEdit.setDisable(false);
+                        btnDelete.setDisable(false);
+
+                        tfName.clear();
+                        tfCost.clear();
+                        tfAmount.clear();
+                        tfPrice.clear();
+
+                    }
+                });
+
+                taskUpdateMyProduct.setOnRunning(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent event) {
+                        progressBar.setProgress(taskUpdateMyProduct.getProgress());
+                        progressBar.setVisible(true);
+
+                    }
+                });
+
+
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Wrong or Invalid Attempt!");
+                alert.setContentText("Ooops, ALL FIELDS MUST BE FILLED!\n");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                alert.showAndWait();
+
+            }
+            /////
+        } catch (NumberFormatException a) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Wrong or Invalid Attempt!");
+            alert.setContentText("Ooops, It Looks Like You Did not Enter Valid Number!\n" + "Careful with decimal format for COST\n" + "You must use '.'\nExample:COST=21.35\nExample:STOCK=2500 ");
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            alert.showAndWait();
+
         }
 
-    }catch (NumberFormatException n){
+    }else{
 
+        System.out.println("ürün satılabilir fakat fiyatı girilmedi ? kaydedilemedi hatalı giriş!");
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText("Wrong or Invalid Attempt!");
-        alert.setContentText("Ooops, It looks like you did NOT enter valid number!\n" +
-                "Careful with decimal format\n" +
-                "You must use '.' Example: 21.35 ");
+        alert.setContentText("Ooops, It Looks Like You Did not Enter Valid  For Price Field!\n" + "Careful with decimal format for COST\n" + "You must use '.'\nExample:Price=21.35\nExample:Price=2500 ");
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
         alert.showAndWait();
-
     }
+
+
     }
 
     @FXML

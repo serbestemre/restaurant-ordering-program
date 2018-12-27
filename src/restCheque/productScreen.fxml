@@ -4,9 +4,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
@@ -21,7 +23,7 @@
                <children>
                   <VBox>
                      <children>
-                        <TableView fx:id="tableViewProduct" minHeight="400.0">
+                        <TableView fx:id="tableViewProduct" minHeight="400.0" minWidth="600.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="ID">
                                  <cellValueFactory>
@@ -38,10 +40,15 @@
                                       <PropertyValueFactory property="productCost" />
                                   </cellValueFactory>
                               </TableColumn>
-                              <TableColumn prefWidth="75.0" text="STOCK AMOUNT">
+                              <TableColumn prefWidth="131.0" text="STOCK">
                                  <cellValueFactory>
                                   <PropertyValueFactory property="productAmount" />
                               </cellValueFactory>
+                              </TableColumn>
+                              <TableColumn prefWidth="96.0" text="PRICE">
+                                 <cellValueFactory>
+                                    <PropertyValueFactory property="productPrice" />
+                                 </cellValueFactory>
                               </TableColumn>
                           </columns>
                            <columnResizePolicy>
@@ -58,62 +65,82 @@
                         </ProgressBar>
                      </children>
                   </VBox>
-                  <HBox spacing="5.0">
-                     <children>
-                        <TextField fx:id="tfName" promptText="Enter Name">
-                           <tooltip>
-                              <Tooltip text="Enter Name of Product" />
-                           </tooltip></TextField>
-                        <TextField fx:id="tfCost" layoutX="10.0" layoutY="10.0" promptText="Enter Cost">
-                           <tooltip>
-                              <Tooltip text="Enter Cost Of Product Exp: 3.42" />
-                           </tooltip></TextField>
-                        <TextField fx:id="tfAmount" layoutX="197.0" layoutY="10.0" promptText="Enter Amount (gr/unit)">
-                           <tooltip>
-                              <Tooltip text="Enter Amount Gr / Unit" />
-                           </tooltip></TextField>
-                     </children>
-                  </HBox>
-                  <VBox spacing="5.0">
-                     <children>
-                        <HBox alignment="TOP_RIGHT" spacing="5.0">
-                           <children>
-                              <Button fx:id="btnCreate" mnemonicParsing="false" onAction="#createNewProduct" prefWidth="70.0" text="Create">
-                                 <tooltip>
-                                    <Tooltip text="Create New Product" />
-                                 </tooltip>
-                              </Button>
-                              <Button fx:id="btnEdit" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#editProduct" prefWidth="70.0" text="Edit">
-                                 <tooltip>
-                                    <Tooltip text="Edit Selected Product" />
-                                 </tooltip>
-                              </Button>
-                              <Button fx:id="btnDelete" layoutX="78.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteProduct" prefWidth="70.0" text="Delete">
-                                 <tooltip>
-                                    <Tooltip text="Delete Selected Product" />
-                                 </tooltip>
-                              </Button>
-                           </children>
-                        </HBox>
-                        <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" spacing="5.0">
-                           <children>
-                              <Button fx:id="btnUpdate" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnUpdate" prefWidth="70.0" text="Update" visible="false">
-                                 <tooltip>
-                                    <Tooltip text="Edit Selected Product" />
-                                 </tooltip>
-                              </Button>
-                              <Button fx:id="btnCancel" layoutX="78.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnCancel" prefWidth="70.0" text="Cancel" visible="false">
-                                 <tooltip>
-                                    <Tooltip text="Delete Selected Product" />
-                                 </tooltip>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
+                  <VBox spacing="5.0" />
                </children>
             </VBox>
          </left>
+         <right>
+            <VBox spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextField fx:id="tfName" promptText="Enter Name">
+                     <tooltip>
+                        <Tooltip text="Enter Name of Product" />
+                     </tooltip>
+                  </TextField>
+                  <TextField fx:id="tfCost" promptText="Enter Cost">
+                     <tooltip>
+                        <Tooltip text="Enter Cost Of Product Exp: 3.42" />
+                     </tooltip>
+                  </TextField>
+                  <TextField fx:id="tfAmount" promptText="Enter Stock (gr or unit)">
+                     <tooltip>
+                        <Tooltip text="Enter Amount Gr / Unit" />
+                     </tooltip>
+                  </TextField>
+                  <VBox spacing="5.0">
+                     <children>
+                        <RadioButton fx:id="radioSell" mnemonicParsing="false" text="May Be Sold Alone">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="priceChoice" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="radioDontSell" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" selected="true" text="Not Going To Sell Alone" toggleGroup="$priceChoice" />
+                        <TextField fx:id="tfPrice" disable="true" promptText="Enter Price">
+                           <tooltip>
+                              <Tooltip text="Enter Cost Of Product Exp: 3.42" />
+                           </tooltip>
+                        </TextField>
+                     </children>
+                  </VBox>
+                  <HBox alignment="TOP_RIGHT" spacing="5.0">
+                     <children>
+                        <Button fx:id="btnCreate" mnemonicParsing="false" onAction="#createNewProduct" prefWidth="70.0" text="Create">
+                           <tooltip>
+                              <Tooltip text="Create New Product" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="btnEdit" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#editProduct" prefWidth="70.0" text="Edit">
+                           <tooltip>
+                              <Tooltip text="Edit Selected Product" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="btnDelete" layoutX="78.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteProduct" prefWidth="70.0" text="Delete">
+                           <tooltip>
+                              <Tooltip text="Delete Selected Product" />
+                           </tooltip>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" spacing="5.0">
+                     <children>
+                        <Button fx:id="btnUpdate" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnUpdate" prefWidth="70.0" text="Update" visible="false">
+                           <tooltip>
+                              <Tooltip text="Edit Selected Product" />
+                           </tooltip>
+                        </Button>
+                        <Button fx:id="btnCancel" layoutX="78.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnCancel" prefWidth="70.0" text="Cancel" visible="false">
+                           <tooltip>
+                              <Tooltip text="Delete Selected Product" />
+                           </tooltip>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="5.0" />
+               </BorderPane.margin>
+            </VBox>
+         </right>
       </BorderPane>
    </content>
 </DialogPane>

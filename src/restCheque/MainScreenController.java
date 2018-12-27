@@ -1,12 +1,12 @@
 package restCheque;
 
-
 import DataModel.Desk;
 import DataModel.Menu;
 import DataSource.DataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import sun.security.krb5.internal.crypto.Des;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -24,8 +25,10 @@ import java.util.Optional;
 public class MainScreenController {
     public static ArrayList<Desk> deskDBreturnlist = new ArrayList<Desk>();
     public static Desk selectedDesk = new Desk();
-    public static int tableIndex =0; // it provides to connect with
-    public static ObservableList<ObservableList<Menu>> tablesMenus = FXCollections.observableArrayList();
+    public static int clickedDeskID; // it provides to connect with
+
+    public static ArrayList<ArrayList<Menu>> allCheques = new ArrayList<>();
+    public static ArrayList<DeskButtons> deskButtons = new ArrayList<>();
 
     @FXML
     private BorderPane mainScreen;
@@ -42,21 +45,65 @@ public class MainScreenController {
     @FXML
     private ScrollPane scrollPane;
 
-
-
-
     @FXML
     public void initialize(){
+        getDeskInfo(); // to set the
         vBox.setPadding(new Insets(5));
-        System.out.println("deskDB Returnlist size = " +deskDBreturnlist.size());
-        getTables();
-        if(deskDBreturnlist.size()!=0){
-            buildTables();
+        System.out.println("initialize => dbden dönen masa.size= " +deskDBreturnlist.size());
+
+        putTablesIntoGUI(deskDBreturnlist);
+
+        //DESK Listeners!!!!!
+        for (int i =0; i<deskButtons.size();i++){
+            final int index=i;
+
+            deskButtons.get(i).setOnAction(new EventHandler<ActionEvent>() {
+              @Override
+              public void handle(ActionEvent event) {
+                  System.out.println("BUTTON ACTION LISTENER");
+                  System.out.println("button ID> " + deskButtons.get(index).getDeskID()+"\nTag>> "+ deskButtons.get(index).getText());
+                  selectedDesk.setDeskId(deskButtons.get(index).getDeskID());
+                  selectedDesk.setTag(deskButtons.get(index).getText());
+
+                  try {
+                      Dialog<ButtonType> dialog2 = new Dialog<ButtonType>();
+                      dialog2.initOwner(mainScreen.getScene().getWindow());
+                      FXMLLoader fxmlLoader=new FXMLLoader();
+                      fxmlLoader.setLocation(getClass().getResource("tableScreen.fxml"));
+                      Parent dialogContent = null;
+                      dialogContent = fxmlLoader.load();
+                      dialog2.setTitle(selectedDesk.getTag()+"Table's Cheque");
+                      dialog2.getDialogPane().setContent(dialogContent);
+                      dialog2.getDialogPane().getButtonTypes().add(ButtonType.OK);
+                      dialog2.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+                      //sonuc nesnesini gönderir
+                      Optional<ButtonType> result =dialog2.showAndWait();
+                      if(result.get()==ButtonType.OK) {
+
+
+                      }
+                  }
+                  catch (IOException e) {
+                      e.printStackTrace();
+                  }
+                  catch (IllegalStateException target){
+                      Alert alert = new Alert(Alert.AlertType.ERROR);
+                      alert.setTitle("Error Dialog");
+                      alert.setHeaderText("PAGE NOT FOUND!!!");
+                      alert.setContentText("Ooops, There was something wrong!");
+                      Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                      stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                      alert.showAndWait();
+                  }
+
+
+
+
+
+
+              }
+          });
         }
-
-        final String name="deneme";
-
-        btnEkle.setTooltip(new Tooltip("Masa Ekle"));
 
     }
 
@@ -88,7 +135,7 @@ public class MainScreenController {
             if (result2.get() == ButtonType.OK){
 
                 DataSource.getInstance().deleteSelectedTable(DeleteTableController.selectedItem.getTag().toString());
-                getTables();
+                putTablesIntoGUI(deskDBreturnlist);
             } else {
             }
         }
@@ -107,10 +154,61 @@ public class MainScreenController {
         }
     }
 
-    public void getTables(){
-        deskDBreturnlist=DataSource.getInstance().getAllDeskInfo();
+    public void getDeskInfo(){
+        deskDBreturnlist= DataSource.getInstance().getAllDeskInfo();
+
     }
 
+    public void putTablesIntoGUI(ArrayList<Desk> allDesks) {
+
+        vBox.getChildren().clear();
+        ArrayList<HBox> hBoxes = new ArrayList<>();
+        HBox firstRow = new HBox();
+        firstRow.setSpacing(5);
+        firstRow.setPrefHeight(Region.USE_COMPUTED_SIZE);
+        firstRow.setPrefWidth(Region.USE_COMPUTED_SIZE);
+
+        hBoxes.add(firstRow);
+        int tableNumberInSingleRow =11; // 6 bir satıra yerleştirilmek istenen masa sayısı
+        int hBoxIterator=0;
+
+        for (int i = 0; i<allDesks.size();i++){
+
+            if((i!=0)&&(i%tableNumberInSingleRow==0)){
+            //    System.out.println("********  " +i+"%"+countSize+" = "+i%countSize +  "  *********");
+                HBox hBox = new HBox();
+                hBox.setSpacing(5);
+                hBox.setMinSize(Region.USE_COMPUTED_SIZE,Region.USE_COMPUTED_SIZE);
+                hBox.setHgrow(scrollPane,Priority.ALWAYS);
+                hBox.setMaxSize(Region.USE_COMPUTED_SIZE,Region.USE_COMPUTED_SIZE);
+               // System.out.println("new hbox in IF statement ");
+                hBoxes.add(hBox);
+                hBoxIterator++;
+
+            }
+
+            DeskButtons deskButton = new DeskButtons(allDesks.get(i).getDeskId()); //deskID yi butonID'ye atıyoruz
+            DeskChequeArrayList cheque = new DeskChequeArrayList(allDesks.get(i).getDeskId()); // and we are creating a list to track of cheque of the table!
+            allCheques.add(cheque);
+            deskButton.setMinSize(150,150);
+            deskButton.setMaxSize(150,150);
+
+            deskButtons.add(deskButton);
+            deskButton.setPrefWidth(150);
+            deskButton.setPrefHeight(150);
+          //  System.out.println("hboxes içinde bulunuan "+hBoxIterator+". hbox a eklendi");
+            deskButton.setText(allDesks.get(i).getTag()); //tagi butona yazıyoruz
+            hBoxes.get(hBoxIterator).getChildren().add(deskButton);
+
+        }
+            vBox.getChildren().setAll(hBoxes);
+
+        vBox.setVgrow(scrollPane, Priority.ALWAYS);
+        scrollPane.setContent(vBox);
+
+
+    }
+/** will be deleted!!!!
     public void buildTables(){
 
         vBox.getChildren().clear();
@@ -121,6 +219,9 @@ public class MainScreenController {
             ObservableList<Menu> deskMenu = FXCollections.observableArrayList();
             tablesMenus.add(deskMenu);
             System.out.println(i+". menuListesi yaratıldı");
+
+
+
         }
 
         int columnNumber=11;
@@ -239,7 +340,7 @@ public class MainScreenController {
             });
         }
     }
-
+**/
     @FXML
     public void addNewTable() {
         try {
@@ -255,7 +356,7 @@ public class MainScreenController {
         //sonuc nesnesini gönderir
         Optional<ButtonType> result =dialog2.showAndWait();
     if(result.get()==ButtonType.CLOSE){
-        getTables();
+        putTablesIntoGUI(deskDBreturnlist); // re-put the tables!
     }
 
     }

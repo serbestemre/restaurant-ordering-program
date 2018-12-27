@@ -36,12 +36,7 @@
                              <PropertyValueFactory property="menuPrice"/>
                           </cellValueFactory>
                        </TableColumn>
-                       <TableColumn prefWidth="75.0" text="VAT" >
-                          <cellValueFactory>
-                             <PropertyValueFactory property="menuVat"/>
-                          </cellValueFactory>
-                       </TableColumn>
-                    </columns>
+                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
@@ -55,7 +50,7 @@
          <right>
             <VBox spacing="5.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btnAddOrder" layoutX="10.0" layoutY="75.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="ADD ORDER">
+                  <Button fx:id="btnAddOrder" onAction="#addOrder" layoutX="10.0" layoutY="75.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="ADD ORDER">
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
