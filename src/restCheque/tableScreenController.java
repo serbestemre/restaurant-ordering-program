@@ -122,6 +122,7 @@ public class tableScreenController {
                             }
 
 
+
                             }catch (NumberFormatException e){
                                 Alert alert = new Alert(Alert.AlertType.ERROR);
                                 alert.setTitle("Error");
