@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class DataSource {
 
-
     public static final String DB_NAME = "resCheque.db";
     public static final String CONNECTION_STRING = "jdbc:sqlite:" + DB_NAME;
     private Connection connection;
@@ -40,8 +39,6 @@ public class DataSource {
     private static final String COLUMN_ING_PRODUCTID="ingProductID";
     private static final String COLUMN_ING_PRODUCT_NAME="ingName";
     private static final String COLUMN_ING_AMOUNT="ingAmount";
-
-
 
     private static DataSource instance = new DataSource();
 
@@ -381,4 +378,53 @@ public class DataSource {
 
 
     }
+
+    public ArrayList<Menu> getAllMenusAndProductsThatCanSell() throws SQLException {
+
+        StringBuilder sb = new StringBuilder("Select * FROM ");
+        sb.append(TABLE_MENU);
+
+        ArrayList<Menu> allMenusAndProductsThatCanBeSell = new ArrayList<>();
+
+
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(sb.toString());
+        while (rs.next()) {
+            Menu menu = new Menu();
+            menu.setMenuID(rs.getInt(COLUMN_MENUID));
+            menu.setMenuName(rs.getString(COLUMN_MENU_NAME));
+            menu.setMenuCost(rs.getDouble(COLUMN_MENU_COST));
+            menu.setMenuPrice(rs.getDouble(COLUMN_MENU_PRICE));
+            allMenusAndProductsThatCanBeSell.add(menu);
+        }
+
+        StringBuilder sb2 = new StringBuilder("Select * FROM ");
+        sb2.append(TABLE_PRODUCT);
+        sb2.append(" WHERE ");
+        sb2.append(COLUMN_PRODUCT_PRICE);
+        sb2.append("<>0;");
+
+        Statement statement2 = connection.createStatement();
+        ResultSet rs2 = statement.executeQuery(sb2.toString());
+
+        while (rs.next()) {
+            Menu productParseToMenu = new Menu();
+            productParseToMenu.setMenuID(rs.getInt(COLUMN_PRODUCTID));
+            productParseToMenu.setMenuName(rs.getString(COLUMN_PRODUCT_NAME));
+            double stock =(rs.getInt(COLUMN_PRODUCT_AMOUNT));
+            double cost=(rs.getDouble(COLUMN_PRODUCT_COST));
+            productParseToMenu.setMenuCost(cost/stock);
+            System.out.println("birim maliyeti >>> + " +productParseToMenu.getMenuCost());
+            productParseToMenu.setMenuPrice(rs.getDouble(COLUMN_PRODUCT_PRICE));
+
+            allMenusAndProductsThatCanBeSell.add(productParseToMenu);
+        }
+
+
+
+        return allMenusAndProductsThatCanBeSell;
+
+
+    }
+
 }

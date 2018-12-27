@@ -488,7 +488,7 @@ public class MenuScreenController {
     class GetSelectedMenuIngredients extends Task{
         @Override
         protected Object call() throws Exception {
-            System.out.println("---- Guiden giden selected menuID>>>" + selectedMenu.getMenuID());
+           // System.out.println("---- Guiden giden selected menuID>>>" + selectedMenu.getMenuID());
             return FXCollections.observableArrayList(DataSource.getInstance().getIngredientsOfSelectedMenu(selectedMenu));
         }
     }
@@ -533,8 +533,7 @@ public class MenuScreenController {
 
             btnUpdate.setVisible(true);
             btnCancel.setVisible(true);
-         //   btndeleteExistingIngredients.setVisible(true);
-          //  btnAddExistingIngredienets.setVisible(true);
+
 
 
 

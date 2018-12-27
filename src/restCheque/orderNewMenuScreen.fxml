@@ -3,8 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
@@ -15,16 +17,16 @@
    <content>
       <BorderPane>
          <center>
-            <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_RIGHT" fillWidth="false" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets left="10.0" />
                </BorderPane.margin>
                <children>
-                  <Label alignment="CENTER" text="MENU LIST" textAlignment="CENTER" textFill="RED">
-                     <font>
-                        <Font name="Calibri Bold" size="24.0" />
-                     </font>
-                  </Label>
+                  <TextField prefHeight="31.0" prefWidth="164.0" promptText="Search for a menu..." VBox.vgrow="NEVER">
+                     <VBox.margin>
+                        <Insets right="5.0" />
+                     </VBox.margin>
+                  </TextField>
                   <VBox alignment="CENTER" maxWidth="400.0" spacing="5.0">
                      <children>
                         <TableView fx:id="tableViewMenu" maxHeight="400.0" minWidth="500.0" prefHeight="361.0" prefWidth="500.0">
@@ -32,11 +34,6 @@
                              <TableColumn prefWidth="75.0" text="MENU NAME">
                                 <cellValueFactory>
                                    <PropertyValueFactory property="menuName" />
-                                </cellValueFactory>
-                             </TableColumn>
-                             <TableColumn prefWidth="75.0" text="COST">
-                                <cellValueFactory>
-                                   <PropertyValueFactory property="menuCost" />
                                 </cellValueFactory>
                              </TableColumn>
       
@@ -51,6 +48,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
+                        <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" progress="0.0" visible="false" VBox.vgrow="ALWAYS" />
                         <Label text="DETAIL OF MENU - (INGREDIENTS)" textFill="#0b00ff">
                            <font>
                               <Font name="System Bold" size="15.0" />
@@ -86,4 +84,11 @@
          </center>
       </BorderPane>
    </content>
+   <header>
+      <Label alignment="CENTER" text="MENU LIST" textAlignment="CENTER" textFill="RED">
+         <font>
+            <Font name="Calibri Bold" size="24.0" />
+         </font>
+      </Label>
+   </header>
 </DialogPane>

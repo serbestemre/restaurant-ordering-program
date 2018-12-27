@@ -7,7 +7,6 @@ public class Menu {
     private double menuPrice;
     private double menuCost;
 
-    private int menuIngredientsID;
 
     public int getMenuID() {
         return menuID;
@@ -39,14 +38,6 @@ public class Menu {
 
     public void setMenuCost(double menuCost) {
         this.menuCost = menuCost;
-    }
-
-    public int getMenuIngridientsID() {
-        return menuIngredientsID;
-    }
-
-    public void setMenuIngridientsID(int menuIngridientsID) {
-        this.menuIngredientsID = menuIngridientsID;
     }
 
     @Override
