@@ -2,16 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/restCheque/MainScreenController.java" afterPath="$PROJECT_DIR$/src/restCheque/MainScreenController.java" />
-      <change beforePath="$PROJECT_DIR$/src/restCheque/orderNewMenuScreen.fxml" afterPath="$PROJECT_DIR$/src/restCheque/orderNewMenuScreen.fxml" />
-      <change beforePath="$PROJECT_DIR$/src/restCheque/orderNewMenuScreenController.java" afterPath="$PROJECT_DIR$/src/restCheque/orderNewMenuScreenController.java" />
+      <change beforePath="$PROJECT_DIR$/resCheque.db" beforeDir="false" afterPath="$PROJECT_DIR$/resCheque.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restCheque/MenuScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/restCheque/MenuScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/restCheque/menuScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/restCheque/menuScreen.fxml" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,14 +60,14 @@
     <session id="-329497762">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
-          <entry key="project.open.time.0" value="3" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.closed" value="2" />
+          <entry key="project.open.time.0" value="4" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="fxml" value="1" />
+          <entry key="fxml" value="2" />
           <entry key="java" value="10" />
           <entry key="png" value="2" />
         </counts>
@@ -78,19 +76,19 @@
         <counts>
           <entry key="Image" value="2" />
           <entry key="JAVA" value="10" />
-          <entry key="XML" value="1" />
+          <entry key="XML" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="fxml" value="58" />
-          <entry key="java" value="2004" />
+          <entry key="java" value="2136" />
           <entry key="txt" value="80" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="2004" />
+          <entry key="JAVA" value="2136" />
           <entry key="PLAIN_TEXT" value="80" />
           <entry key="XML" value="58" />
         </counts>
@@ -99,118 +97,126 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MenuScreenController.java" pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/restCheque/MenuScreenController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="133" column="7" lean-forward="true" selection-start-line="133" selection-start-column="7" selection-end-line="138" selection-end-column="11" />
+            <state relative-caret-position="-1429">
+              <caret line="546" column="73" lean-forward="true" selection-start-line="546" selection-start-column="73" selection-end-line="546" selection-end-column="73" />
               <folding>
-                <element signature="e#3252#3455#0" expanded="false" />
-                <element signature="method#showIngredientsDialogPane#0;class#MenuScreenController#0" expanded="false" />
-                <element signature="method#createNewMenu#0;class#MenuScreenController#0" expanded="false" />
-                <element signature="method#deleteIngredients#0;class#MenuScreenController#0" expanded="false" />
-                <element signature="method#getAllMenus#0;class#MenuScreenController#0" expanded="false" />
-                <element signature="class#GetAllMenu#0;class#MenuScreenController#0" expanded="false" />
-                <element signature="method#getSelectedMenuIngredients#0;class#MenuScreenController#0" expanded="false" />
-                <element signature="class#GetSelectedMenuIngredients#0;class#MenuScreenController#0" expanded="false" />
-                <element signature="method#call#0;class#GetSelectedMenuIngredients#0;class#MenuScreenController#0" expanded="false" />
-                <element signature="method#editSelectedMenu#0;class#MenuScreenController#0" expanded="false" />
-                <element signature="method#updateMenu#0;class#MenuScreenController#0" expanded="false" />
-                <element signature="method#cancelButton#0;class#MenuScreenController#0" expanded="false" />
-                <element signature="method#btnDeleteMenu#0;class#MenuScreenController#0" expanded="false" />
-                <element signature="method#deleteSelectedMenu#0;class#MenuScreenController#0" expanded="false" />
+                <element signature="e#3252#3455#0" />
+                <element signature="method#createNewMenu#0;class#MenuScreenController#0" />
+                <element signature="method#getAllMenus#0;class#MenuScreenController#0" />
+                <element signature="class#GetAllMenu#0;class#MenuScreenController#0" />
+                <element signature="method#getSelectedMenuIngredients#0;class#MenuScreenController#0" />
+                <element signature="method#call#0;class#GetSelectedMenuIngredients#0;class#MenuScreenController#0" />
+                <element signature="method#cancelButton#0;class#MenuScreenController#0" />
+                <element signature="method#deleteSelectedMenu#0;class#MenuScreenController#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="orderNewMenuScreenController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/restCheque/orderNewMenuScreenController.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/restCheque/ProductScreenController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="565">
-              <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+            <state relative-caret-position="1360">
+              <caret line="241" column="29" selection-start-line="241" selection-start-column="29" selection-end-line="241" selection-end-column="29" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#initialize#0;class#orderNewMenuScreenController#0" expanded="false" />
-                <element signature="method#getAllMenusAndProductsToSell#0;class#orderNewMenuScreenController#0" expanded="false" />
-                <element signature="e#3272#3273#0" expanded="true" />
-                <element signature="e#3333#3334#0" expanded="true" />
-                <element signature="class#GetAllMenusAndProducts#0;class#orderNewMenuScreenController#0" expanded="false" />
-                <element signature="method#call#0;class#GetAllMenusAndProducts#0;class#orderNewMenuScreenController#0" expanded="false" />
-                <element signature="e#5400#5401#0" expanded="true" />
-                <element signature="e#5461#5462#0" expanded="true" />
+                <element signature="method#initialize#0;class#ProductScreenController#0" />
+                <element signature="class#2082:2407" />
+                <element signature="method#createNewProduct#0;class#ProductScreenController#0" />
+                <element signature="method#editProduct#0;class#ProductScreenController#0" />
+                <element signature="method#btnCancel#0;class#ProductScreenController#0" />
+                <element signature="method#deleteProduct#0;class#ProductScreenController#0" />
+                <element signature="method#btnUpdate#0;class#ProductScreenController#0" />
+                <element signature="method#getAllProducts#0;class#ProductScreenController#0" />
+                <element signature="class#GetAllProducts#0;class#ProductScreenController#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainScreenController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/restCheque/MainScreenController.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/restCheque/menuScreen.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="522">
-              <caret line="475" column="0" lean-forward="true" selection-start-line="475" selection-start-column="0" selection-end-line="475" selection-end-column="0" />
-              <folding>
-                <element signature="method#initialize#0;class#MainScreenController#0" expanded="false" />
-                <element signature="method#masaSil#0;class#MainScreenController#0" expanded="false" />
-                <element signature="method#getDeskInfo#0;class#MainScreenController#0" expanded="false" />
-                <element signature="method#putTablesIntoGUI#0;class#MainScreenController#0" expanded="false" />
-                <element signature="docComment;method#addNewTable#0;class#MainScreenController#0" expanded="false" />
-                <element signature="method#addNewTable#0;class#MainScreenController#0" expanded="false" />
-                <element signature="method#showProductDialogPane#0;class#MainScreenController#0" expanded="false" />
-                <element signature="method#showMenuDialogPane#0;class#MainScreenController#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="-51" />
+          </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/restCheque/productScreen.fxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="833">
+              <caret line="49" column="80" selection-start-line="49" selection-start-column="80" selection-end-line="49" selection-end-column="80" />
+            </state>
+          </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/DataModel/Menu.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tableScreenController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/restCheque/tableScreenController.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/DataModel/Product.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="65" column="0" lean-forward="false" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="221">
+              <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataSource.java" pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/DataModel/MenuIngredient.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="25" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/DataSource/DataSource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="721">
-              <caret line="333" column="46" lean-forward="false" selection-start-line="333" selection-start-column="15" selection-end-line="333" selection-end-column="46" />
+            <state relative-caret-position="-1846">
+              <caret line="144" column="19" selection-start-line="144" selection-start-column="19" selection-end-line="144" selection-end-column="19" />
               <folding>
-                <element signature="method#getInstance#0;class#DataSource#0" expanded="false" />
-                <element signature="method#openDatabase#0;class#DataSource#0" expanded="false" />
-                <element signature="method#closeDatabase#0;class#DataSource#0" expanded="false" />
-                <element signature="method#createNewTable#0;class#DataSource#0" expanded="false" />
-                <element signature="method#getAllDeskInfo#0;class#DataSource#0" expanded="false" />
-                <element signature="method#deleteSelectedTable#0;class#DataSource#0" expanded="false" />
-                <element signature="method#createNewProduct#0;class#DataSource#0" expanded="false" />
-                <element signature="method#getAllProducts#0;class#DataSource#0" expanded="false" />
-                <element signature="method#deleteProduct#0;class#DataSource#0" expanded="false" />
-                <element signature="method#updateProduct#0;class#DataSource#0" expanded="false" />
-                <element signature="method#insertMenuIngredient#0;class#DataSource#0" expanded="false" />
-                <element signature="method#insertMenuIngredientList#0;class#DataSource#0" expanded="false" />
-                <element signature="method#createNewMenuInsertIngredients#0;class#DataSource#0" expanded="false" />
-                <element signature="method#getAllMenus#0;class#DataSource#0" expanded="false" />
-                <element signature="method#deleteSelectedMenu#0;class#DataSource#0" expanded="false" />
-                <element signature="method#updateSelectedMenu#0;class#DataSource#0" expanded="false" />
+                <element signature="method#getInstance#0;class#DataSource#0" />
+                <element signature="method#createNewTable#0;class#DataSource#0" />
+                <element signature="method#getAllDeskInfo#0;class#DataSource#0" />
+                <element signature="method#deleteSelectedTable#0;class#DataSource#0" />
+                <element signature="method#insertMenuIngredient#0;class#DataSource#0" />
+                <element signature="method#createNewMenuInsertIngredients#0;class#DataSource#0" />
+                <element signature="method#deleteSelectedMenu#0;class#DataSource#0" />
+                <element signature="method#updateSelectedMenu#0;class#DataSource#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="orderNewMenuScreen.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/restCheque/orderNewMenuScreen.fxml">
-          <provider editor-type-id="JavaFX-Scene-Builder">
-            <state />
-          </provider>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/DataModel/Desk.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="56" column="62" lean-forward="false" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="62" />
-              <folding />
+            <state relative-caret-position="561">
+              <caret line="33" column="23" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="23" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/restCheque/orderNewMenuScreen.fxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="166" selection-start-line="13" selection-start-column="166" selection-end-line="13" selection-end-column="166" />
+            </state>
+          </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder" />
         </entry>
       </file>
     </leaf>
@@ -249,7 +255,6 @@
       <find>connection</find>
       <find>deletePro</find>
       <find>confirmat</find>
-      <find>tableV</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -259,11 +264,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GradleLocalSettings">
-    <option name="externalProjectsViewState">
-      <projects_view />
-    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -283,24 +283,24 @@
         <option value="$PROJECT_DIR$/src/restCheque/menuScreen.fxml" />
         <option value="$PROJECT_DIR$/src/restCheque/CreateTableController.java" />
         <option value="$PROJECT_DIR$/src/restCheque/IngredientsController.java" />
+        <option value="$PROJECT_DIR$/src/DataModel/Menu.java" />
         <option value="$PROJECT_DIR$/src/restCheque/AmountDialogPane.java" />
         <option value="$PROJECT_DIR$/src/restCheque/DeskButtons.java" />
         <option value="$PROJECT_DIR$/src/restCheque/DeskChequeObservableList.java" />
         <option value="$PROJECT_DIR$/src/restCheque/DeskChequeArrayList.java" />
         <option value="$PROJECT_DIR$/src/restCheque/Main.java" />
+        <option value="$PROJECT_DIR$/src/restCheque/MainScreenController.java" />
         <option value="$PROJECT_DIR$/src/restCheque/tableScreen.fxml" />
         <option value="$PROJECT_DIR$/src/restCheque/addNewMenuScreenController.java" />
         <option value="$PROJECT_DIR$/src/restCheque/tableScreenController.java" />
         <option value="$PROJECT_DIR$/src/restCheque/addMenuScreen.fxml" />
-        <option value="$PROJECT_DIR$/src/DataModel/Product.java" />
-        <option value="$PROJECT_DIR$/src/restCheque/productScreen.fxml" />
-        <option value="$PROJECT_DIR$/src/DataModel/Menu.java" />
-        <option value="$PROJECT_DIR$/src/restCheque/ProductScreenController.java" />
-        <option value="$PROJECT_DIR$/src/restCheque/MenuScreenController.java" />
-        <option value="$PROJECT_DIR$/src/DataSource/DataSource.java" />
         <option value="$PROJECT_DIR$/src/restCheque/orderNewMenuScreen.fxml" />
         <option value="$PROJECT_DIR$/src/restCheque/orderNewMenuScreenController.java" />
-        <option value="$PROJECT_DIR$/src/restCheque/MainScreenController.java" />
+        <option value="$PROJECT_DIR$/src/DataModel/Product.java" />
+        <option value="$PROJECT_DIR$/src/restCheque/productScreen.fxml" />
+        <option value="$PROJECT_DIR$/src/DataSource/DataSource.java" />
+        <option value="$PROJECT_DIR$/src/restCheque/ProductScreenController.java" />
+        <option value="$PROJECT_DIR$/src/restCheque/MenuScreenController.java" />
       </list>
     </option>
   </component>
@@ -312,28 +312,18 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1938" />
-    <option name="height" value="1048" />
+    <option name="x" value="491" />
+    <option name="y" value="171" />
+    <option name="width" value="1361" />
+    <option name="height" value="907" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
+    <navigator proportions="" version="1">
       <showMembers ProjectPane="true" />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -350,18 +340,19 @@
               <item name="se360_restCheque" type="b2602c69:ProjectViewProjectNode" />
               <item name="se360_restCheque" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="DataModel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="se360_restCheque" type="b2602c69:ProjectViewProjectNode" />
-              <item name="se360_restCheque" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="DataSource" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="se360_restCheque" type="b2602c69:ProjectViewProjectNode" />
               <item name="se360_restCheque" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="DataSource" type="462c0819:PsiDirectoryNode" />
+              <item name="DataSource" type="1a9f42e2:ClassTreeNode" />
+            </path>
+            <path>
+              <item name="se360_restCheque" type="b2602c69:ProjectViewProjectNode" />
+              <item name="se360_restCheque" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="restCheque" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -369,30 +360,13 @@
               <item name="se360_restCheque" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="restCheque" type="462c0819:PsiDirectoryNode" />
-              <item name="orderNewMenuScreenController" type="1a9f42e2:ClassTreeNode" />
-            </path>
-            <path>
-              <item name="se360_restCheque" type="b2602c69:ProjectViewProjectNode" />
-              <item name="se360_restCheque" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="restCheque" type="462c0819:PsiDirectoryNode" />
-              <item name="orderNewMenuScreenController" type="1a9f42e2:ClassTreeNode" />
-              <item name="GetAllMenusAndProducts" type="1a9f42e2:ClassTreeNode" />
-            </path>
-            <path>
-              <item name="se360_restCheque" type="b2602c69:ProjectViewProjectNode" />
-              <item name="se360_restCheque" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="restCheque" type="462c0819:PsiDirectoryNode" />
-              <item name="orderNewMenuScreenController" type="1a9f42e2:ClassTreeNode" />
-              <item name="GetSelectedMenuIngredients" type="1a9f42e2:ClassTreeNode" />
+              <item name="MenuScreenController" type="1a9f42e2:ClassTreeNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -421,115 +395,6 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <option name="HEIGHT" value="0" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="WIDTH" value="0" />
-      <module />
-      <method>
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="restCheque.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="restCheque.Main" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="RestCheque" />
-      <envs />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
-      <method>
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JUnit" factoryName="JUnit">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <method>
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <envs />
-      <properties />
-      <listeners />
-      <method>
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
-      <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file id="idea.log" enabled="true" />
-      <method>
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -542,9 +407,67 @@
       <Host>localhost</Host>
       <Port>5050</Port>
     </configuration>
-  </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HEIGHT" value="0" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="WIDTH" value="0" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="restCheque.Main" />
+      <module name="RestCheque" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="restCheque.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="VM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -564,35 +487,7 @@
       <option name="project" value="LOCAL" />
       <updated>1545604407805</updated>
     </task>
-    <task id="LOCAL-00002" summary="Refactoring Product. New attribute defined product class. If the product may sell by itself then user must define its price! (like cola or desert)Those products will be brought into the add order screen">
-      <created>1545919794769</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1545919794770</updated>
-    </task>
-    <task id="LOCAL-00003" summary="update and delete product error/confirmation diaglog">
-      <created>1545921308366</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1545921308366</updated>
-    </task>
-    <task id="LOCAL-00004" summary="get menusAndProduct into addOrderButton">
-      <created>1545928245035</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1545928245036</updated>
-    </task>
-    <task id="LOCAL-00005" summary="get menusAndProduct into addOrderButton">
-      <created>1545928254183</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1545928254183</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -608,35 +503,35 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19840364" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2593985" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3990878" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26226014" />
+      <window_info id="Structure" order="1" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3295325" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.19414316" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3990878" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.3295325" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Maven Projects" order="7" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -645,332 +540,48 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Warnings about exceptions or invalid attempts by user specified." />
     <MESSAGE value="Refactoring Product. New attribute defined product class. If the product may sell by itself then user must define its price! (like cola or desert)Those products will be brought into the add order screen" />
-    <MESSAGE value="update and delete product error/confirmation diaglog" />
-    <MESSAGE value="get menusAndProduct into addOrderButton" />
-    <option name="LAST_COMMIT_MESSAGE" value="get menusAndProduct into addOrderButton" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <option name="time" value="6" />
-    </breakpoint-manager>
-    <watches-manager />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring Product. New attribute defined product class. If the product may sell by itself then user must define its price! (like cola or desert)Those products will be brought into the add order screen" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/scene/control/ProgressBar.java" />
+    <entry file="file://$PROJECT_DIR$/src/restCheque/MenuScreen.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/javafx-src.zip!/javafx/collections/ObservableList.java" />
     <entry file="file://$PROJECT_DIR$/src/restCheque/IngredientsController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="697">
-          <caret line="56" column="18" lean-forward="false" selection-start-line="56" selection-start-column="18" selection-end-line="56" selection-end-column="18" />
+          <caret line="56" column="18" selection-start-line="56" selection-start-column="18" selection-end-line="56" selection-end-column="18" />
           <folding>
-            <element signature="method#getSelectedProduct#0;class#IngredientsController#0" expanded="false" />
-            <element signature="method#setSelectedProduct#0;class#IngredientsController#0" expanded="false" />
-            <element signature="method#initialize#0;class#IngredientsController#0" expanded="false" />
-            <element signature="class#GetAllProducts#0;class#IngredientsController#0" expanded="false" />
-            <element signature="method#call#0;class#GetAllProducts#0;class#IngredientsController#0" expanded="false" />
+            <element signature="method#getSelectedProduct#0;class#IngredientsController#0" />
+            <element signature="method#setSelectedProduct#0;class#IngredientsController#0" />
+            <element signature="method#initialize#0;class#IngredientsController#0" />
+            <element signature="class#GetAllProducts#0;class#IngredientsController#0" />
+            <element signature="method#call#0;class#GetAllProducts#0;class#IngredientsController#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataSource/DataSource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3496">
-          <caret line="311" column="83" lean-forward="false" selection-start-line="311" selection-start-column="83" selection-end-line="311" selection-end-column="83" />
-          <folding>
-            <element signature="method#getInstance#0;class#DataSource#0" expanded="false" />
-            <element signature="method#openDatabase#0;class#DataSource#0" expanded="false" />
-            <element signature="method#closeDatabase#0;class#DataSource#0" expanded="false" />
-            <element signature="method#createNewTable#0;class#DataSource#0" expanded="false" />
-            <element signature="method#getAllDeskInfo#0;class#DataSource#0" expanded="false" />
-            <element signature="method#deleteSelectedTable#0;class#DataSource#0" expanded="false" />
-            <element signature="method#createNewProduct#0;class#DataSource#0" expanded="false" />
-            <element signature="method#getAllProducts#0;class#DataSource#0" expanded="false" />
-            <element signature="method#deleteProduct#0;class#DataSource#0" expanded="false" />
-            <element signature="method#updateProduct#0;class#DataSource#0" expanded="false" />
-            <element signature="method#insertMenuIngredient#0;class#DataSource#0" expanded="false" />
-            <element signature="method#insertMenuIngredientList#0;class#DataSource#0" expanded="false" />
-            <element signature="method#createNewMenuInsertIngredients#0;class#DataSource#0" expanded="false" />
-            <element signature="method#getAllMenus#0;class#DataSource#0" expanded="false" />
-            <element signature="method#deleteSelectedMenu#0;class#DataSource#0" expanded="false" />
-            <element signature="method#updateSelectedMenu#0;class#DataSource#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataModel/MenuIngredient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/restCheque/CreateTableController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="598">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/ProductScreenController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6601">
-          <caret line="325" column="49" lean-forward="false" selection-start-line="325" selection-start-column="49" selection-end-line="325" selection-end-column="49" />
-          <folding>
-            <element signature="class#1559:1998" expanded="false" />
-            <element signature="method#createNewProduct#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#editProduct#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#btnCancel#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#deleteProduct#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#btnUpdate#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#getAllProducts#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="class#GetAllProducts#0;class#ProductScreenController#0" expanded="false" />
-          </folding>
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/restCheque/DeleteTableController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="621">
-          <caret line="36" column="34" lean-forward="false" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataModel/Product.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="736">
-          <caret line="48" column="62" lean-forward="false" selection-start-line="45" selection-start-column="7" selection-end-line="48" selection-end-column="62" />
+          <caret line="36" column="34" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/restCheque/AmountDialogPane.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="529">
-          <caret line="31" column="36" lean-forward="false" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/MenuScreenController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1446">
-          <caret line="110" column="28" lean-forward="false" selection-start-line="110" selection-start-column="28" selection-end-line="110" selection-end-column="28" />
-          <folding>
-            <element signature="class#2726:3171" expanded="false" />
-            <element signature="e#3252#3455#0" expanded="false" />
-            <element signature="method#showIngredientsDialogPane#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#createNewMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#deleteIngredients#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#getAllMenus#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="class#GetAllMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#getSelectedMenuIngredients#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#call#0;class#GetSelectedMenuIngredients#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#editSelectedMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#updateMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#cancelButton#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#btnDeleteMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#deleteSelectedMenu#0;class#MenuScreenController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataModel/Menu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="27" lean-forward="true" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/tableScreenController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="36" column="29" lean-forward="true" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/tableScreen.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="40" column="68" lean-forward="false" selection-start-line="40" selection-start-column="68" selection-end-line="40" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/MainScreenController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-          <folding>
-            <element signature="e#804#810#0" expanded="false" />
-            <element signature="e#2248#2260#0" expanded="false" />
-            <element signature="method#masaSil#0;class#MainScreenController#0" expanded="false" />
-            <element signature="e#3998#4010#0" expanded="false" />
-            <element signature="method#getDeskInfo#0;class#MainScreenController#0" expanded="false" />
-            <element signature="method#putTablesIntoGUI#0;class#MainScreenController#0" expanded="false" />
-            <element signature="e#13729#13741#0" expanded="false" />
-            <element signature="e#15408#15420#0" expanded="false" />
-            <element signature="method#showMenuDialogPane#0;class#MainScreenController#0" expanded="false" />
-            <element signature="e#16860#16872#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/MenuScreenController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="class#2726:3171" expanded="false" />
-            <element signature="e#3252#3455#0" expanded="false" />
-            <element signature="method#showIngredientsDialogPane#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#createNewMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#deleteIngredients#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#getAllMenus#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="class#GetAllMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#getSelectedMenuIngredients#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#call#0;class#GetSelectedMenuIngredients#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#editSelectedMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#updateMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#cancelButton#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#btnDeleteMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#deleteSelectedMenu#0;class#MenuScreenController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataModel/Menu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="805">
-          <caret line="59" column="0" lean-forward="true" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataModel/Product.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="736">
-          <caret line="48" column="62" lean-forward="false" selection-start-line="45" selection-start-column="7" selection-end-line="48" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/CreateTableController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/DeleteTableController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="36" column="34" lean-forward="false" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/AmountDialogPane.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="29" column="36" lean-forward="false" selection-start-line="29" selection-start-column="12" selection-end-line="29" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/ProductScreenController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6601">
-          <caret line="325" column="49" lean-forward="true" selection-start-line="325" selection-start-column="49" selection-end-line="325" selection-end-column="49" />
-          <folding>
-            <element signature="class#1559:1998" expanded="false" />
-            <element signature="method#createNewProduct#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#editProduct#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#btnCancel#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#deleteProduct#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#btnUpdate#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#getAllProducts#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="class#GetAllProducts#0;class#ProductScreenController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/MainScreenController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2231">
-          <caret line="267" column="0" lean-forward="false" selection-start-line="267" selection-start-column="0" selection-end-line="267" selection-end-column="0" />
-          <folding>
-            <element signature="e#804#810#0" expanded="false" />
-            <element signature="e#2248#2260#0" expanded="false" />
-            <element signature="method#masaSil#0;class#MainScreenController#0" expanded="false" />
-            <element signature="e#3998#4010#0" expanded="false" />
-            <element signature="method#getDeskInfo#0;class#MainScreenController#0" expanded="false" />
-            <element signature="method#putTablesIntoGUI#0;class#MainScreenController#0" expanded="false" />
-            <element signature="e#13729#13741#0" expanded="false" />
-            <element signature="e#15408#15420#0" expanded="false" />
-            <element signature="method#showMenuDialogPane#0;class#MainScreenController#0" expanded="false" />
-            <element signature="e#16860#16872#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataSource/DataSource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3496">
-          <caret line="311" column="83" lean-forward="false" selection-start-line="311" selection-start-column="83" selection-end-line="311" selection-end-column="83" />
-          <folding>
-            <element signature="method#getInstance#0;class#DataSource#0" expanded="false" />
-            <element signature="method#openDatabase#0;class#DataSource#0" expanded="false" />
-            <element signature="method#closeDatabase#0;class#DataSource#0" expanded="false" />
-            <element signature="method#createNewTable#0;class#DataSource#0" expanded="false" />
-            <element signature="method#getAllDeskInfo#0;class#DataSource#0" expanded="false" />
-            <element signature="method#deleteSelectedTable#0;class#DataSource#0" expanded="false" />
-            <element signature="method#createNewProduct#0;class#DataSource#0" expanded="false" />
-            <element signature="method#getAllProducts#0;class#DataSource#0" expanded="false" />
-            <element signature="method#deleteProduct#0;class#DataSource#0" expanded="false" />
-            <element signature="method#updateProduct#0;class#DataSource#0" expanded="false" />
-            <element signature="method#insertMenuIngredient#0;class#DataSource#0" expanded="false" />
-            <element signature="method#insertMenuIngredientList#0;class#DataSource#0" expanded="false" />
-            <element signature="method#createNewMenuInsertIngredients#0;class#DataSource#0" expanded="false" />
-            <element signature="method#getAllMenus#0;class#DataSource#0" expanded="false" />
-            <element signature="method#deleteSelectedMenu#0;class#DataSource#0" expanded="false" />
-            <element signature="method#updateSelectedMenu#0;class#DataSource#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataModel/MenuIngredient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/scene/control/ProgressBar.java" />
-    <entry file="file://$PROJECT_DIR$/src/restCheque/MenuScreen.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/javafx-src.zip!/javafx/collections/ObservableList.java" />
-    <entry file="file://$PROJECT_DIR$/src/restCheque/CreateTableController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/DeleteTableController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="36" column="34" lean-forward="false" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/AmountDialogPane.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="31" column="36" lean-forward="false" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="36" />
+          <caret line="31" column="36" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -988,236 +599,157 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/collections/ObservableList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="46" column="7" lean-forward="false" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/collections/ObservableList.java" />
     <entry file="file://$PROJECT_DIR$/src/restCheque/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
-          <caret line="26" column="50" lean-forward="false" selection-start-line="26" selection-start-column="50" selection-end-line="26" selection-end-column="50" />
-          <folding />
+          <caret line="26" column="50" selection-start-line="26" selection-start-column="50" selection-end-line="26" selection-end-column="50" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/restCheque/tableScreen.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
-          <caret line="17" column="83" lean-forward="false" selection-start-line="17" selection-start-column="68" selection-end-line="17" selection-end-column="83" />
+          <caret line="17" column="83" selection-start-line="17" selection-start-column="68" selection-end-line="17" selection-end-column="83" />
         </state>
       </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/productScreen.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/restCheque/MainScreenController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="49" column="80" lean-forward="false" selection-start-line="49" selection-start-column="80" selection-end-line="49" selection-end-column="80" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/concurrent/Task.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="1422" column="0" lean-forward="false" selection-start-line="1422" selection-start-column="0" selection-end-line="1422" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataModel/Product.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="13" column="38" lean-forward="false" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+        <state relative-caret-position="220">
+          <caret line="69" column="69" selection-start-line="69" selection-start-column="69" selection-end-line="69" selection-end-column="69" />
           <folding>
-            <element signature="e#301#302#0" expanded="false" />
-            <element signature="e#336#337#0" expanded="false" />
-            <element signature="e#392#393#0" expanded="false" />
-            <element signature="e#440#441#0" expanded="false" />
+            <element signature="e#804#810#0" />
+            <element signature="e#2248#2260#0" />
+            <element signature="method#masaSil#0;class#MainScreenController#0" />
+            <element signature="e#3998#4010#0" />
+            <element signature="method#getDeskInfo#0;class#MainScreenController#0" />
+            <element signature="method#putTablesIntoGUI#0;class#MainScreenController#0" />
+            <element signature="e#13729#13741#0" />
+            <element signature="e#15408#15420#0" />
+            <element signature="method#showMenuDialogPane#0;class#MainScreenController#0" />
+            <element signature="e#16860#16872#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/beans/value/ChangeListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="62" column="9" lean-forward="false" selection-start-line="62" selection-start-column="9" selection-end-line="62" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/IngredientsController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="55" column="32" lean-forward="false" selection-start-line="55" selection-start-column="32" selection-end-line="55" selection-end-column="32" />
-          <folding>
-            <element signature="method#setSelectedProduct#0;class#IngredientsController#0" expanded="false" />
-            <element signature="method#initialize#0;class#IngredientsController#0" expanded="false" />
-            <element signature="method#getAllProducts#0;class#IngredientsController#0" expanded="false" />
-            <element signature="class#GetAllProducts#0;class#IngredientsController#0" expanded="false" />
-            <element signature="method#call#0;class#GetAllProducts#0;class#IngredientsController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataModel/MenuIngredient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataModel/Menu.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-13">
-          <caret line="10" column="4" lean-forward="false" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/ProductScreenController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="92" column="20" lean-forward="true" selection-start-line="89" selection-start-column="4" selection-end-line="92" selection-end-column="20" />
-          <folding>
-            <element signature="class#1559:1998" expanded="false" />
-            <element signature="method#createNewProduct#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#editProduct#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#btnCancel#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#deleteProduct#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#btnUpdate#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="method#getAllProducts#0;class#ProductScreenController#0" expanded="false" />
-            <element signature="class#GetAllProducts#0;class#ProductScreenController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataModel/Desk.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/menuScreen.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="27" column="38" lean-forward="true" selection-start-line="27" selection-start-column="38" selection-end-line="27" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/orderNewMenuScreen.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="56" column="62" lean-forward="false" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/restCheque/tableScreenController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="65" column="0" lean-forward="false" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataSource/DataSource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="721">
-          <caret line="333" column="46" lean-forward="false" selection-start-line="333" selection-start-column="15" selection-end-line="333" selection-end-column="46" />
-          <folding>
-            <element signature="method#getInstance#0;class#DataSource#0" expanded="false" />
-            <element signature="method#openDatabase#0;class#DataSource#0" expanded="false" />
-            <element signature="method#closeDatabase#0;class#DataSource#0" expanded="false" />
-            <element signature="method#createNewTable#0;class#DataSource#0" expanded="false" />
-            <element signature="method#getAllDeskInfo#0;class#DataSource#0" expanded="false" />
-            <element signature="method#deleteSelectedTable#0;class#DataSource#0" expanded="false" />
-            <element signature="method#createNewProduct#0;class#DataSource#0" expanded="false" />
-            <element signature="method#getAllProducts#0;class#DataSource#0" expanded="false" />
-            <element signature="method#deleteProduct#0;class#DataSource#0" expanded="false" />
-            <element signature="method#updateProduct#0;class#DataSource#0" expanded="false" />
-            <element signature="method#insertMenuIngredient#0;class#DataSource#0" expanded="false" />
-            <element signature="method#insertMenuIngredientList#0;class#DataSource#0" expanded="false" />
-            <element signature="method#createNewMenuInsertIngredients#0;class#DataSource#0" expanded="false" />
-            <element signature="method#getAllMenus#0;class#DataSource#0" expanded="false" />
-            <element signature="method#deleteSelectedMenu#0;class#DataSource#0" expanded="false" />
-            <element signature="method#updateSelectedMenu#0;class#DataSource#0" expanded="false" />
-          </folding>
+        <state>
+          <caret line="58" column="40" lean-forward="true" selection-start-line="58" selection-start-column="40" selection-end-line="58" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/restCheque/orderNewMenuScreenController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="565">
-          <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+        <state relative-caret-position="575">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#initialize#0;class#orderNewMenuScreenController#0" expanded="false" />
-            <element signature="method#getAllMenusAndProductsToSell#0;class#orderNewMenuScreenController#0" expanded="false" />
-            <element signature="e#3272#3273#0" expanded="true" />
-            <element signature="e#3333#3334#0" expanded="true" />
-            <element signature="class#GetAllMenusAndProducts#0;class#orderNewMenuScreenController#0" expanded="false" />
-            <element signature="method#call#0;class#GetAllMenusAndProducts#0;class#orderNewMenuScreenController#0" expanded="false" />
-            <element signature="e#5400#5401#0" expanded="true" />
-            <element signature="e#5461#5462#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/restCheque/MainScreenController.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/concurrent/Task.java" />
+    <entry file="file://$PROJECT_DIR$/src/restCheque/productScreen.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="475" column="0" lean-forward="true" selection-start-line="475" selection-start-column="0" selection-end-line="475" selection-end-column="0" />
+        <state relative-caret-position="833">
+          <caret line="49" column="80" selection-start-line="49" selection-start-column="80" selection-end-line="49" selection-end-column="80" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DataModel/Menu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DataModel/Product.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="38" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DataModel/MenuIngredient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="25" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DataModel/Desk.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="23" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/restCheque/orderNewMenuScreen.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="166" selection-start-line="13" selection-start-column="166" selection-end-line="13" selection-end-column="166" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/restCheque/ProductScreenController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1360">
+          <caret line="241" column="29" selection-start-line="241" selection-start-column="29" selection-end-line="241" selection-end-column="29" />
           <folding>
-            <element signature="method#initialize#0;class#MainScreenController#0" expanded="false" />
-            <element signature="method#masaSil#0;class#MainScreenController#0" expanded="false" />
-            <element signature="method#getDeskInfo#0;class#MainScreenController#0" expanded="false" />
-            <element signature="method#putTablesIntoGUI#0;class#MainScreenController#0" expanded="false" />
-            <element signature="docComment;method#addNewTable#0;class#MainScreenController#0" expanded="false" />
-            <element signature="method#addNewTable#0;class#MainScreenController#0" expanded="false" />
-            <element signature="method#showProductDialogPane#0;class#MainScreenController#0" expanded="false" />
-            <element signature="method#showMenuDialogPane#0;class#MainScreenController#0" expanded="false" />
+            <element signature="method#initialize#0;class#ProductScreenController#0" />
+            <element signature="class#2082:2407" />
+            <element signature="method#createNewProduct#0;class#ProductScreenController#0" />
+            <element signature="method#editProduct#0;class#ProductScreenController#0" />
+            <element signature="method#btnCancel#0;class#ProductScreenController#0" />
+            <element signature="method#deleteProduct#0;class#ProductScreenController#0" />
+            <element signature="method#btnUpdate#0;class#ProductScreenController#0" />
+            <element signature="method#getAllProducts#0;class#ProductScreenController#0" />
+            <element signature="class#GetAllProducts#0;class#ProductScreenController#0" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/restCheque/menuScreen.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-51" />
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/restCheque/MenuScreenController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="133" column="7" lean-forward="true" selection-start-line="133" selection-start-column="7" selection-end-line="138" selection-end-column="11" />
+        <state relative-caret-position="-1429">
+          <caret line="546" column="73" lean-forward="true" selection-start-line="546" selection-start-column="73" selection-end-line="546" selection-end-column="73" />
           <folding>
-            <element signature="e#3252#3455#0" expanded="false" />
-            <element signature="method#showIngredientsDialogPane#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#createNewMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#deleteIngredients#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#getAllMenus#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="class#GetAllMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#getSelectedMenuIngredients#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="class#GetSelectedMenuIngredients#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#call#0;class#GetSelectedMenuIngredients#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#editSelectedMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#updateMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#cancelButton#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#btnDeleteMenu#0;class#MenuScreenController#0" expanded="false" />
-            <element signature="method#deleteSelectedMenu#0;class#MenuScreenController#0" expanded="false" />
+            <element signature="e#3252#3455#0" />
+            <element signature="method#createNewMenu#0;class#MenuScreenController#0" />
+            <element signature="method#getAllMenus#0;class#MenuScreenController#0" />
+            <element signature="class#GetAllMenu#0;class#MenuScreenController#0" />
+            <element signature="method#getSelectedMenuIngredients#0;class#MenuScreenController#0" />
+            <element signature="method#call#0;class#GetSelectedMenuIngredients#0;class#MenuScreenController#0" />
+            <element signature="method#cancelButton#0;class#MenuScreenController#0" />
+            <element signature="method#deleteSelectedMenu#0;class#MenuScreenController#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DataSource/DataSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1846">
+          <caret line="144" column="19" selection-start-line="144" selection-start-column="19" selection-end-line="144" selection-end-column="19" />
+          <folding>
+            <element signature="method#getInstance#0;class#DataSource#0" />
+            <element signature="method#createNewTable#0;class#DataSource#0" />
+            <element signature="method#getAllDeskInfo#0;class#DataSource#0" />
+            <element signature="method#deleteSelectedTable#0;class#DataSource#0" />
+            <element signature="method#insertMenuIngredient#0;class#DataSource#0" />
+            <element signature="method#createNewMenuInsertIngredients#0;class#DataSource#0" />
+            <element signature="method#deleteSelectedMenu#0;class#DataSource#0" />
+            <element signature="method#updateSelectedMenu#0;class#DataSource#0" />
           </folding>
         </state>
       </provider>

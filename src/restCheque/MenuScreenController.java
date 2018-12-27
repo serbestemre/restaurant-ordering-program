@@ -541,7 +541,13 @@ public class MenuScreenController {
 
 
         }else{
-            System.out.println("menu seçilmedi");
+            Alert editMenuAlert = new Alert(Alert.AlertType.ERROR);
+            editMenuAlert.setTitle("Error Dialog");
+            editMenuAlert.setHeaderText("Please select a menu to edit!");
+            editMenuAlert.setContentText("Ooops, There was something wrong!");
+            Stage stageMenu = (Stage) editMenuAlert.getDialogPane().getScene().getWindow();
+            stageMenu.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            editMenuAlert.showAndWait();
         }
 
     }
@@ -788,7 +794,13 @@ public class MenuScreenController {
 
 
         }else{
-            //seçim yapılmadı
+            Alert deleteAlert = new Alert(Alert.AlertType.ERROR);
+            deleteAlert.setTitle("Error Dialog");
+            deleteAlert.setHeaderText("Select a menu to delete!");
+            deleteAlert.setContentText("Ooops, There was something wrong!");
+            Stage stageMenu = (Stage) deleteAlert.getDialogPane().getScene().getWindow();
+            stageMenu.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            deleteAlert.showAndWait();
 
         }
 
