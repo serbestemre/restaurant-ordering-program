@@ -8,6 +8,7 @@ public class Menu {
     private double menuCost;
     private int orderQuantity;
     private double subTotal;
+    private int menu_OrderID;
     private int isItOriginalMenu;  // if its 1 then its original if its 0 then its comes from product table.
     //when add an order into the table, we have to check can we affor with the order. If its Original menu then we have to check its ingredients stock
     //if its comes from product table like a Dessert or any Drink - that we dont store its ingredients or that we store only by unit-
@@ -72,6 +73,14 @@ public class Menu {
 
     public void setMenuCost(double menuCost) {
         this.menuCost = menuCost;
+    }
+
+    public int getMenu_OrderID() {
+        return menu_OrderID;
+    }
+
+    public void setMenu_OrderID(int menu_OrderID) {
+        this.menu_OrderID = menu_OrderID;
     }
 
     @Override

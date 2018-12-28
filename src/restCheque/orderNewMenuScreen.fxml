@@ -22,7 +22,7 @@
                   <Insets left="10.0" />
                </BorderPane.margin>
                <children>
-                  <TextField prefHeight="31.0" prefWidth="164.0" promptText="Search for a menu..." VBox.vgrow="NEVER">
+                  <TextField fx:id="tfSearchMenu" prefHeight="31.0" prefWidth="164.0" promptText="Search for a menu..." VBox.vgrow="NEVER">
                      <VBox.margin>
                         <Insets right="5.0" />
                      </VBox.margin>

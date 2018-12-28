@@ -8,18 +8,19 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.util.Locale;
+import java.util.function.Predicate;
 
 public class orderNewMenuScreenController {
 
@@ -34,14 +35,15 @@ public class orderNewMenuScreenController {
 
     public static Menu selectedOrder = new Menu();
 
-
+    @FXML
+    private TextField tfSearchMenu;
 
     @FXML
     private ProgressBar progressBar;
     public static ObservableList<Menu> listofMenus= FXCollections.observableArrayList();
     public static ObservableList<MenuIngredient> listOfIngredients= FXCollections.observableArrayList();
 
-
+    public SortedList<Menu> sortedList;
     @FXML
     public void initialize(){
         getAllMenusAndProductsToSell();
@@ -53,6 +55,37 @@ public class orderNewMenuScreenController {
                 System.out.println("ORIGINAL ? > " + selectedOrder.getIsItOriginalMenu());
             }
         });
+
+
+
+        FilteredList<Menu> filteredList = new FilteredList<Menu>(listofMenus, e -> true);
+        if (tfSearchMenu != null || !tfSearchMenu.getText().isEmpty()) {
+            tfSearchMenu.setOnKeyPressed(e -> {
+                tfSearchMenu.textProperty().addListener(((observable, oldValue, newValue) -> {
+                    filteredList.setPredicate((Predicate<? super Menu>) menu -> {
+                        if (newValue == null || newValue.isEmpty()) {
+                            return true;
+                        }
+
+                        String upperCaseFilter = newValue.toUpperCase(Locale.ENGLISH);
+                        String menuName = menu.getMenuName().toUpperCase();
+                        if (menuName.contains(upperCaseFilter)) {
+                            return true;
+                        }
+                        return false;
+                    });
+                }));
+                sortedList = new SortedList<Menu>(filteredList);
+                sortedList.comparatorProperty().bind(tableViewMenu.comparatorProperty());
+
+                //  tableProduct.itemsProperty().bind(urunler);
+
+                tableViewMenu.setItems(sortedList);
+
+            });
+        }
+
+
 
 
     }

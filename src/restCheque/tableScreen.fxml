@@ -4,8 +4,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -13,9 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<DialogPane fx:controller="restCheque.tableScreenController" fx:id="dialogPaneTable" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<DialogPane fx:id="dialogPaneTable" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="restCheque.tableScreenController">
    <content>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <center>
@@ -25,22 +25,22 @@
                     <columns>
                        <TableColumn prefWidth="75.0" text="NAME">
                           <cellValueFactory>
-                             <PropertyValueFactory property="menuName"/>
+                             <PropertyValueFactory property="menuName" />
                           </cellValueFactory>
                        </TableColumn>
-                       <TableColumn prefWidth="75.0" text="QUANTITY" >
+                       <TableColumn prefWidth="75.0" text="QUANTITY">
                           <cellValueFactory>
-                             <PropertyValueFactory property="orderQuantity"/>
+                             <PropertyValueFactory property="orderQuantity" />
                           </cellValueFactory>
                        </TableColumn>
-                       <TableColumn prefWidth="75.0" text="PRICE" >
+                       <TableColumn prefWidth="75.0" text="PRICE">
                           <cellValueFactory>
-                             <PropertyValueFactory property="menuPrice"/>
+                             <PropertyValueFactory property="menuPrice" />
                           </cellValueFactory>
                        </TableColumn>
-                       <TableColumn prefWidth="75.0" text="SUB TOTAL" >
+                       <TableColumn prefWidth="75.0" text="SUB TOTAL">
                           <cellValueFactory>
-                             <PropertyValueFactory property="subTotal"/>
+                             <PropertyValueFactory property="subTotal" />
                           </cellValueFactory>
                        </TableColumn>
                       </columns>
@@ -48,6 +48,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
+                  <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" prefWidth="200.0" progress="0.0" visible="false" />
                </children>
                <BorderPane.margin>
                   <Insets top="5.0" />
@@ -57,7 +58,7 @@
          <right>
             <VBox spacing="5.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btnAddOrder" onAction="#addOrder" layoutX="10.0" layoutY="75.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="ADD ORDER">
+                  <Button fx:id="btnAddOrder" layoutX="10.0" layoutY="75.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addOrder" text="ADD ORDER">
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -69,7 +70,7 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnDeleteOrder" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="DELETE ORDER" VBox.vgrow="ALWAYS">
+                  <Button fx:id="btnDeleteOrder" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteOrder" text="DELETE ORDER" VBox.vgrow="ALWAYS">
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>

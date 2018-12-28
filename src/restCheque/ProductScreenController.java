@@ -86,7 +86,6 @@ public class ProductScreenController {
             }
         }
     });
-
     tableViewProduct.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 
         @Override
@@ -99,24 +98,17 @@ public class ProductScreenController {
         }
     });
 }
-
-
 @FXML
     public void createNewProduct(){
     Product myNewProduct = new Product();
-
     double price=0;
     boolean validationOk=false;
-
     /*********REFACTORRRRRRR PRICE AND GET VALID DOUBLE INPUT!!!******///////////////////
     if(radioSell.isSelected()){
         try {
-
             price=Double.parseDouble(tfPrice.getText().trim());
             myNewProduct.setProductPrice(price);
             validationOk=true;
-
-
         }catch (NumberFormatException e) {
             validationOk=false;
             //if price will not enter then its exception will get here
@@ -134,12 +126,9 @@ public class ProductScreenController {
         validationOk=true;
     }
             if (validationOk==true){
-
                 try {
                 int amount = Integer.parseInt(tfAmount.getText().trim());
                 double cost = Double.parseDouble(tfCost.getText().trim());
-
-
                 //if we catch NumberFormatException that means user didn't enter valid input for those double variables !
                 //warn the user with an Error Dialog
                 if (!tfName.getText().trim().isEmpty() && tfName.getText() != null && tfAmount.getText().trim() != null && !tfAmount.getText().trim().isEmpty() && !tfCost.getText().trim().isEmpty() && tfCost.getText().trim() != null) {
@@ -148,7 +137,6 @@ public class ProductScreenController {
                     myNewProduct.setProductCost(cost);
                     myNewProduct.setProductAmount(amount);
                     // normally user will not be able to enter 0 for price!
-
                     Task<Boolean> taskCreateNewProduct = new Task() {
                         @Override
                         protected Object call() throws Exception {

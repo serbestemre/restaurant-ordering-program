@@ -3,6 +3,7 @@ package DataSource;
 import DataModel.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.sqlite.SQLiteException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -479,38 +480,41 @@ public class DataSource {
 
     } // single product
 
-    public Menu getMenuInfo(int menuID) throws SQLException {
+    public Menu getMenuInfo(int menuID) {
 
-        System.out.println("_____________________GET MENU INFO ______________________");
-
-        StringBuilder sb = new StringBuilder("Select * FROM ");
-        sb.append(TABLE_MENU);
-        sb.append(" WHERE ");
-        sb.append(COLUMN_MENUID);
-        sb.append(" = ");
-        sb.append(menuID);
-        sb.append(";");
-
-        Menu menu = new Menu();
-        // System.out.println("getProductInfo() SQL => "+ sb);
-        Statement statement = connection.createStatement();
-        ResultSet rs = null;
         try {
-            rs = statement.executeQuery(sb.toString());
-        } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("_____________________GET MENU INFO ______________________");
+
+            StringBuilder sb = new StringBuilder("Select * FROM ");
+            sb.append(TABLE_MENU);
+            sb.append(" WHERE ");
+            sb.append(COLUMN_MENUID);
+            sb.append(" = ");
+            sb.append(menuID);
+            sb.append(";");
+
+            Menu menu = new Menu();
+            // System.out.println("getProductInfo() SQL => "+ sb);
+            Statement statement = connection.createStatement();
+            ResultSet rs = null;
+            try {
+                rs = statement.executeQuery(sb.toString());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            while (rs.next()) {
+
+                menu.setMenuID(rs.getInt(COLUMN_MENUID));
+                menu.setMenuName(rs.getString(COLUMN_MENU_NAME));
+                menu.setMenuCost(rs.getDouble(COLUMN_MENU_COST));
+                menu.setMenuPrice(rs.getInt(COLUMN_MENU_PRICE));
+
+            }
+            System.out.println("_____________________________getmenüinfo______________________");
+            return menu;
+        }catch (Exception e){
+        return null;
         }
-        while (rs.next()) {
-
-            menu.setMenuID(rs.getInt(COLUMN_MENUID));
-            menu.setMenuName(rs.getString(COLUMN_MENU_NAME));
-            menu.setMenuCost(rs.getDouble(COLUMN_MENU_COST));
-            menu.setMenuPrice(rs.getInt(COLUMN_MENU_PRICE));
-
-        }
-        System.out.println("_____________________________getmenüinfo______________________");
-        return menu;
-
     } //single menu
 
 
@@ -551,68 +555,143 @@ public class DataSource {
 
     }
 
-    public ObservableList<Order> getAllOrders(int deskID) throws SQLException {
+    public ObservableList<Order> getAllOrders(int deskID)  {
 
-        System.out.println("PARAMETRE OLAN desk ID = " +deskID);
+        try {
+            System.out.println("PARAMETRE OLAN desk ID = " + deskID);
 
-        ObservableList<Order> returnList= FXCollections.observableArrayList();
+            ObservableList<Order> returnList = FXCollections.observableArrayList();
 
-        StringBuilder sb = new StringBuilder("Select * FROM ");
-        sb.append(TABLE_ORDER);
-        sb.append(" WHERE ");
-        sb.append(COLUMN_ORDER_DESK_ID);
-        sb.append(" = ");
-        sb.append(deskID);
-        ArrayList<Order> allOrders = new ArrayList<>();
-        Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery(sb.toString());
-        while (rs.next()) {
-            Order order = new Order();
-            order.setMenuID(rs.getInt(COLUMN_ORDER_MENUID));
-            order.setDeskID(rs.getInt(COLUMN_ORDER_DESK_ID));
-            order.setOrderQuantity(rs.getInt(COLUMN_ORDER_QUANTITY));
-            order.setMenuPrice(rs.getDouble(COLUMN_ORDER_MENU_PRICE));
-            order.setIsItOriginalMenu(rs.getInt(COLUMN_ORDER_IS_ORIGINAL));
-            allOrders.add(order);
+            StringBuilder sb = new StringBuilder("Select * FROM ");
+            sb.append(TABLE_ORDER);
+            sb.append(" WHERE ");
+            sb.append(COLUMN_ORDER_DESK_ID);
+            sb.append(" = ");
+            sb.append(deskID);
+            ArrayList<Order> allOrders = new ArrayList<>();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sb.toString());
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderID(rs.getInt(COLUMN_ORDERID));
+                order.setMenuID(rs.getInt(COLUMN_ORDER_MENUID));
+                order.setDeskID(rs.getInt(COLUMN_ORDER_DESK_ID));
+                order.setOrderQuantity(rs.getInt(COLUMN_ORDER_QUANTITY));
+                order.setMenuPrice(rs.getDouble(COLUMN_ORDER_MENU_PRICE));
+                order.setIsItOriginalMenu(rs.getInt(COLUMN_ORDER_IS_ORIGINAL));
+                allOrders.add(order);
+            }
+
+            System.out.println("ALL ORDERS SIZE " + allOrders.size());
+
+
+            for (int i = 0; i < allOrders.size(); i++) {
+
+                Order finalOrder = new Order();
+                finalOrder = allOrders.get(i);
+
+                if (allOrders.get(i).getIsItOriginalMenu() == 0) {
+                    //product sql
+                    Product product = getProductInfo(finalOrder.getMenuID());
+                    finalOrder.setMenuName(product.getProductName());
+                    finalOrder.setMenuPrice(allOrders.get(i).getMenuPrice());
+
+
+                    finalOrder.setSubTotal(finalOrder.getMenuPrice() * finalOrder.getOrderQuantity());
+                    returnList.add(finalOrder);
+
+                } else {            //menu sql;
+                    Menu menu = getMenuInfo(finalOrder.getMenuID());
+                    finalOrder.setMenuName(menu.getMenuName());
+                    finalOrder.setMenuPrice(allOrders.get(i).getMenuPrice());
+                    finalOrder.setSubTotal(finalOrder.getMenuPrice() * finalOrder.getOrderQuantity());
+                    returnList.add(finalOrder);
+                }
+            }
+
+            System.out.println("******** Returned List ***** Will be list for cheque table");
+            for (int i = 0; i < returnList.size(); i++) {
+                System.out.println(returnList.get(i).getMenuID() + "  " + returnList.get(i).getMenuName());
+            }
+            return returnList;
+        }catch (Exception e){
+
+            return null;
         }
-
-        System.out.println("ALL ORDERS SIZE "+ allOrders.size());
-
-
-        for(int i =0;i<allOrders.size();i++){
-
-        Order finalOrder =new  Order();
-        finalOrder=allOrders.get(i);
-
-        if(allOrders.get(i).getIsItOriginalMenu()==0){
-            //product sql
-            Product product= getProductInfo(finalOrder.getMenuID());
-            finalOrder.setMenuName(product.getProductName());
-            finalOrder.setMenuPrice(allOrders.get(i).getMenuPrice());
-
-
-            finalOrder.setSubTotal(finalOrder.getMenuPrice()*finalOrder.getOrderQuantity());
-            returnList.add(finalOrder);
-
-        }else{            //menu sql;
-                Menu menu = getMenuInfo(finalOrder.getMenuID());
-                finalOrder.setMenuName(menu.getMenuName());
-                finalOrder.setMenuPrice(allOrders.get(i).getMenuPrice());
-            finalOrder.setSubTotal(finalOrder.getMenuPrice()*finalOrder.getOrderQuantity());
-            returnList.add(finalOrder);
-             }
-        }
-
-        System.out.println("******** Returned List ***** Will be list for cheque table");
-        for (int i = 0; i<returnList.size();i++){
-            System.out.println(returnList.get(i).getMenuID() + "  " +returnList.get(i).getMenuName());
-        }
-        return returnList;
-
     }
 
 
+    public Boolean deleteSelectedOrder(int orderID) {
+        System.out.println("PARAMETRE DELETING ORDER >> " +orderID);
+
+        try {
+            Statement statement = connection.createStatement();
+            statement.execute("DELETE FROM " + TABLE_ORDER + " WHERE " + COLUMN_ORDERID + "=" + orderID +" ;");
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
 
 
 
+    }
+
+    public Boolean updateFromOrderTable(int orderID, int newQ) {
+
+
+        StringBuilder sb = new StringBuilder("UPDATE ");
+        sb.append(TABLE_ORDER);
+        sb.append(" SET ");
+        sb.append(COLUMN_ORDER_QUANTITY);
+        sb.append(" = ");
+        sb.append("");
+        sb.append(newQ);
+        sb.append(" WHERE ");
+        sb.append(COLUMN_ORDERID);
+        sb.append(" = ");
+        sb.append(orderID);
+        sb.append(";");
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            statement.execute(sb.toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+
+
+
+    }
+
+    public Boolean updateAmountOfProduct(int productID, int amount) {
+
+        StringBuilder sb = new StringBuilder("UPDATE ");
+        sb.append(TABLE_PRODUCT);
+        sb.append(" SET ");
+        sb.append(COLUMN_PRODUCT_AMOUNT);
+        sb.append(" = ");
+        sb.append("");
+        sb.append(amount);
+        sb.append(" WHERE ");
+        sb.append(COLUMN_PRODUCTID);
+        sb.append(" = ");
+        sb.append(productID);
+        sb.append(";");
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            statement.execute(sb.toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+
+
+
+    }
 }

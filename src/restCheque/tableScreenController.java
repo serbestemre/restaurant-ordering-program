@@ -5,8 +5,15 @@ import DataModel.MenuIngredient;
 import DataModel.Order;
 import DataModel.Product;
 import DataSource.DataSource;
+import com.sun.xml.internal.bind.v2.util.TypeCast;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +21,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,6 +40,9 @@ public class tableScreenController {
     private Button btnAddOrder;
 
     @FXML
+    private ProgressBar progressBar;
+
+    @FXML
     private Button btnDeleteOrder;
 
     @FXML
@@ -45,42 +56,99 @@ public class tableScreenController {
 
     public static int myDeskID;
 
+    Order selectedOrder =new Order();
+    int selectedOrderID ;
+
     ObservableList<Menu> myTable = FXCollections.observableArrayList();
-    ObservableList<Order> denemeTable = FXCollections.observableArrayList();
+
     @FXML
     public void initialize(){
-
-        try {
-
-            myTable.setAll(DataSource.getInstance().getAllOrders(MainScreenController.selectedDesk.getDeskId()));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("SQL HATASI");
-        }
 
 
         System.out.println("DETAILS !");
         for (int i =0;i<myTable.size();i++){
             System.out.println(myTable.get(i).getOrderQuantity());
-
-
+            System.out.println("order ID>>>> "+ myTable.get(i));
 
         }
 
+        Task<Boolean> taskGetOrders = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                return myTable.setAll(DataSource.getInstance().getAllOrders(MainScreenController.selectedDesk.getDeskId()));
+
+            }
+        };
+
+        new Thread(taskGetOrders).start();
+
+        taskGetOrders.setOnFailed(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                progressBar.setVisible(false);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setHeaderText("Process Failed!!!");
+                alert.setContentText("Ooops, There was something wrong!\nThe new product did not add into product database!");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                alert.showAndWait();
+            }
+        });
+
+        taskGetOrders.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                System.out.println("başarılı şekilde eklendi");
+
+                tableViewTableMenuList.refresh();
+                progressBar.setVisible(false);
+
+
+            }
+        });
+
+        taskGetOrders.setOnRunning(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                progressBar.setProgress(taskGetOrders.getProgress());
+                progressBar.setVisible(true);
+
+            }
+        });
+
+
+        tableViewTableMenuList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Menu>() {
+            @Override
+            public void changed(ObservableValue<? extends Menu> observable, Menu oldValue, Menu newValue) {
+                try{
+                    selectedOrder= (Order) newValue;
+                    System.out.println("seçilen ORDER =>" + newValue.getMenuID()+ " ORDER ID ?>>" +selectedOrder.getOrderID());
+                }catch (Exception e){
+                    System.out.println("belirlenemeyen bir hata oluştu");
+
+                }
 
 
 
-
-
+            }
+        });
        // myTable.setAll(MainScreenController.allCheques.get(MainScreenController.clickedDeskID));
         labelTableName.setText(MainScreenController.selectedDesk.getTag());
         tableViewTableMenuList.setItems(myTable);
+
+
+
+
+
+
+
+
 
     }
 
     @FXML
     public void addOrder(){
-
         try {
             Dialog<ButtonType> dialog2 = new Dialog<ButtonType>();
             dialog2.initOwner(dialogPaneTable.getScene().getWindow());
@@ -115,33 +183,32 @@ public class tableScreenController {
                         //sonuc nesnesini gönderir
                         Optional<ButtonType> result2 =dialog3.showAndWait();
                         if(result2.get()==ButtonType.OK){
-
                             try {
                                 int amount =0;
                                 amount=Integer.parseInt(AmountDialogPane.getAmountIngredients());
                                 dialogLoop=false;
                                 // stock * cost / new amount
-
                                 Menu order=orderNewMenuScreenController.selectedOrder;
                              //   MenuIngredient ingredient= new MenuIngredient();
 
                                 order.setOrderQuantity(amount);
                                 order.setSubTotal(amount*order.getMenuPrice());
-
                              /** Eğer adisyonda zaten böyle bir sipariş varsa adisyon+=quantity **/
 
+                                Product product = new Product();
+                          if(order.getIsItOriginalMenu()==0) { //SEARCH ON PRODUCT TABLE
 
-                          if(order.getIsItOriginalMenu()==0) {
-                              Product product = new Product();
                               try {
                                   product = DataSource.getInstance().getProductInfo(order.getMenuID());
+
+                                  System.out.println("QUANTITY UPDATE PID???**** "+ product.getProductID());
 
                               } catch (SQLException e) {
                                   System.out.println("GETPRODUCTINFO() SQL HATASI");
                               }
-
-                              System.out.println("___Order Quantity =" +order.getOrderQuantity()+" ** Stock Amount "+ product.getProductAmount());
-                              if (order.getOrderQuantity() < product.getProductAmount()){
+                           //   System.out.println("___Order Quantity =" +order.getOrderQuantity()+" ** Stock Amount "+ product.getProductAmount());
+                              if (order.getOrderQuantity() <= product.getProductAmount()){
+                                  System.out.println("içerde!>");
                                   //orderQ must be less than amount(stock) of the product!
                                   if (myTable.contains(order)) {
                                       for (int i = 0; i < myTable.size(); i++) {
@@ -150,14 +217,27 @@ public class tableScreenController {
                                               System.out.println(i);
                                               //  System.out.println("doğru ürünle eşleşme sağlandı");
                                               existing.setOrderQuantity(order.getOrderQuantity() + existing.getOrderQuantity());
+
+                                                  int newQ=existing.getOrderQuantity();
+  /** EKLENEN ÜRÜN PRODUCT STOKTAN DÜŞÜLÜYOR **/  DataSource.getInstance().updateFromOrderTable(selectedOrderID,newQ);
+                                              int minusAmount=product.getProductAmount()-order.getOrderQuantity();
+                                              System.out.println("UPDATE AMOUNT RUN------>>>>" +product.getProductID()+" "+"new amount "+ minusAmount);
+
+                                              DataSource.getInstance().updateAmountOfProduct(product.getProductID(),minusAmount);
+                                                  System.out.println("order eklendi!");
+
                                               tableViewTableMenuList.refresh();
                                           }
                                       }
                                   } else {
                                       //  System.out.println("dont contains");
                                       myTable.add(order);
+
                                       try {
 
+                                          int minusAmount=product.getProductAmount()-order.getOrderQuantity();
+                                          DataSource.getInstance().updateAmountOfProduct(product.getProductID(),minusAmount);
+                                          System.out.println("UPDATE AMOUNT RUN------>>>>" +product.getProductID()+" "+"new amount "+ minusAmount);
                                           DataSource.getInstance().insertIntoOrderTable(order,myDeskID);
                                           System.out.println("order eklendi!");
                                       } catch (SQLException e) {
@@ -214,11 +294,30 @@ public class tableScreenController {
 
                               }//while ended all ingredients checked
                               System.out.println("__ing checked__");
-                              /** checking sout **/
+                              /** checking sout
                               for (int i =0;i<insufficientCapacity.size();i++){
                                   System.out.println("insf ing??>>"+insufficientCapacity.get(i).getIngName());
-                              }
+                              }**/
+
                               if(insufficient==false){ // it means all ingredients in our stock // then add order into cheque
+
+                                  for (int i =0;i<returnedIngredients.size();i++){
+                                      System.out.println("ING STOCKTAN DÜŞÜYOR>>"+returnedIngredients.get(i).getIngName());
+
+                                      try {
+                                          Product proIng=DataSource.getInstance().getProductInfo(returnedIngredients.get(i).getIngProductID());
+                                          int newAmount=proIng.getProductAmount()-(returnedIngredients.get(i).getIngAmount()*order.getOrderQuantity());
+                                          System.out.println("NEW AMOUNT>>>> "+newAmount);
+                                          proIng.setProductAmount(newAmount);
+
+                                          DataSource.getInstance().updateProduct(proIng);
+                                      } catch (SQLException e) {
+                                          e.printStackTrace();
+                                      }
+
+
+                                  }
+
 
                                   if (myTable.contains(order)) {
                                       for (int i = 0; i < myTable.size(); i++) {
@@ -228,13 +327,20 @@ public class tableScreenController {
                                               //  System.out.println("doğru ürünle eşleşme sağlandı");
                                               existing.setOrderQuantity(order.getOrderQuantity() + existing.getOrderQuantity());
                                               tableViewTableMenuList.refresh();
+/** update existing order **/
+                                              int newQ=existing.getOrderQuantity();
+                                              DataSource.getInstance().updateFromOrderTable(selectedOrderID,newQ);
+/** INGREDIENTS PRODUCT STOKTAN DÜŞÜLÜYOR  **/
                                           }
                                       }
                                   } else {
                                       //  System.out.println("dont contains");
                                       myTable.add(order);
-                                      try {
 
+
+                                      try {
+                                          int minusAmount=product.getProductAmount()-order.getOrderQuantity();
+                                          DataSource.getInstance().updateAmountOfProduct(product.getProductID(),minusAmount);
                                           DataSource.getInstance().insertIntoOrderTable(order,myDeskID);
                                           System.out.println("db order inserted");
                                       } catch (SQLException e) {
@@ -307,6 +413,76 @@ public class tableScreenController {
         }
 
 
+
+    }
+
+    @FXML
+    public void deleteOrder(){
+        if(tableViewTableMenuList.getSelectionModel().getSelectedItem()!=null){
+            Task<Boolean> taskDeleteOrder = new Task() {
+
+                @Override
+                protected Object call() throws Exception {
+                    return DataSource.getInstance().deleteSelectedOrder(selectedOrder.getOrderID());
+                }
+            };
+            new Thread(taskDeleteOrder).start();
+            taskDeleteOrder.setOnFailed(new EventHandler<WorkerStateEvent>() {
+                @Override
+                public void handle(WorkerStateEvent event) {
+                    progressBar.setVisible(false);
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Dialog");
+                    alert.setHeaderText("Process Failed!!!");
+                    alert.setContentText("Ooops, There was something wrong!\nThe order could not deleted product database!");
+                    Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                    stage.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+                    alert.showAndWait();
+                }
+            });
+            taskDeleteOrder.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                @Override
+                public void handle(WorkerStateEvent event) {
+                    System.out.println(" order başarılı silindi!!");
+                    tableViewTableMenuList.refresh();
+                    tableViewTableMenuList.getItems().remove(tableViewTableMenuList.getSelectionModel().getSelectedItem());
+
+                    System.out.println("ÜRÜNLER STOĞA GERİ YÜKLENİYOR!");
+
+                   if(tableViewTableMenuList.getSelectionModel().getSelectedItem().getIsItOriginalMenu()==0){
+                       DataSource.getInstance().updateAmountOfProduct(selectedOrder.getMenuID(),selectedOrder.getOrderQuantity());
+
+                   }else {
+
+                   }
+
+
+                    progressBar.setVisible(false);
+}
+});
+
+taskDeleteOrder.setOnRunning(new EventHandler<WorkerStateEvent>() {
+@Override
+public void handle(WorkerStateEvent event) {
+progressBar.setProgress(taskDeleteOrder.getProgress());
+progressBar.setVisible(true);
+
+}
+});
+
+
+
+
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Wrong or Invalid Attempt!");
+            alert.setContentText("Ooops, Please select an order to delete!");
+            Stage stage2 = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage2.getIcons().add(new Image(this.getClass().getResource("/icons/error.png").toString()));
+            alert.showAndWait();
+
+        }
 
     }
 }
