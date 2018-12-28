@@ -49,11 +49,20 @@ public class orderNewMenuScreenController {
         getAllMenusAndProductsToSell();
 
         tableViewMenu.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                selectedOrder=newSelection;
-                getSelectedMenuIngredients(newSelection);
-                System.out.println("ORIGINAL ? > " + selectedOrder.getIsItOriginalMenu());
-            }
+
+          try {
+              if (newSelection != null) {
+                  selectedOrder=newSelection;
+                  getSelectedMenuIngredients(newSelection);
+                  System.out.println("ORIGINAL ID ???????????????? > " + selectedOrder.getIsItOriginalMenu());
+              }
+          }catch (Exception e){
+              System.out.println("BEKLENMEDİK BİR HATA !");
+          }
+
+
+
+
         });
 
 

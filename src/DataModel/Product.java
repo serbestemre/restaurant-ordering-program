@@ -1,6 +1,6 @@
 package DataModel;
 
-public class Product {
+public class Product  {
     private int productID;
     private String productName;
     private double productCost;

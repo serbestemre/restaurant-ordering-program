@@ -3,6 +3,7 @@ package restCheque;
 import DataModel.Desk;
 import DataModel.Menu;
 import DataSource.DataSource;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 public class MainScreenController {
     public static ArrayList<Desk> deskDBreturnlist = new ArrayList<Desk>();
@@ -172,9 +174,14 @@ public class MainScreenController {
         firstRow.setSpacing(5);
         firstRow.setPrefHeight(Region.USE_COMPUTED_SIZE);
         firstRow.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        ArrayList<ImageView> images= new ArrayList<>();
 
         hBoxes.add(firstRow);
         int tableNumberInSingleRow =6; // 6 bir satıra yerleştirilmek istenen masa sayısı
+
+
+
+
         int hBoxIterator=0;
         for (int i = 0; i<allDesks.size();i++){
             if((i!=0)&&(i%tableNumberInSingleRow==0)){
@@ -199,6 +206,15 @@ public class MainScreenController {
             deskButton.setPrefHeight(150);
           //  System.out.println("hboxes içinde bulunuan "+hBoxIterator+". hbox a eklendi");
             deskButton.setText(allDesks.get(i).getTag()); //tagi butona yazıyoruz
+            ImageView newPicture =new ImageView("/icons/table.png");
+
+            newPicture.setFitWidth(70);
+            newPicture.setFitHeight(70);
+
+            images.add(newPicture);
+            deskButton.setGraphic(newPicture);
+            deskButton.contentDisplayProperty().setValue(ContentDisplay.BOTTOM);
+            deskButton.setGraphic(images.get(i));
             hBoxes.get(hBoxIterator).getChildren().add(deskButton);
 
         }
@@ -473,11 +489,6 @@ public class MainScreenController {
 
 
     }
-
-
-
-
-
 
 
 

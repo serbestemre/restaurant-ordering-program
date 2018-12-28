@@ -48,6 +48,13 @@ public class DataSource {
     private static final String COLUMN_ORDER_DESK_ID="orderDeskID";
 
 
+    private static final String TABLE_SALE="Sale";
+    private static final String COLUMN_SALEID="saleID";
+    private static final String COLUMN_SALE_MENUID="saleMenuID";
+    private static final String COLUMN_SALE_MENU_PRICE="saleMenuPrice";
+    private static final String COLUMN_SALE_MENUQUANTITY="saleMenuQuantity";
+    private static final String COLUMN_SALE_DESKID="saleDeskID";
+
     private static DataSource instance = new DataSource();
 
     public static DataSource getInstance() {
@@ -621,12 +628,12 @@ public class DataSource {
     }
 
 
-    public Boolean deleteSelectedOrder(int orderID) {
-        System.out.println("PARAMETRE DELETING ORDER >> " +orderID);
+    public Boolean deleteSelectedOrder(int deskID, int menuID) {
+        System.out.println("PARAMETRE DELETING DESK ID DELETE ORDER >> " +deskID);
 
         try {
             Statement statement = connection.createStatement();
-            statement.execute("DELETE FROM " + TABLE_ORDER + " WHERE " + COLUMN_ORDERID + "=" + orderID +" ;");
+            statement.execute("DELETE FROM " + TABLE_ORDER + " WHERE " + COLUMN_ORDER_DESK_ID + "=" + deskID + " and "+ COLUMN_ORDER_MENUID+"="+menuID+";");
             return true;
 
         } catch (SQLException e) {
@@ -634,11 +641,9 @@ public class DataSource {
             return false;
         }
 
-
-
     }
 
-    public Boolean updateFromOrderTable(int orderID, int newQ) {
+    public Boolean updateFromOrderTable(int deskID, int newQ, int menuID) {
 
 
         StringBuilder sb = new StringBuilder("UPDATE ");
@@ -649,9 +654,13 @@ public class DataSource {
         sb.append("");
         sb.append(newQ);
         sb.append(" WHERE ");
-        sb.append(COLUMN_ORDERID);
+        sb.append(COLUMN_DESKID);
         sb.append(" = ");
-        sb.append(orderID);
+        sb.append(deskID);
+        sb.append(" and ");
+        sb.append(COLUMN_MENUID);
+        sb.append(" = ");
+        sb.append(menuID);
         sb.append(";");
         Statement statement = null;
         try {
@@ -690,6 +699,43 @@ public class DataSource {
         }
 
         return true;
+
+
+
+    }
+
+    public void insertIntoPayment(Menu menu,int deskID) {
+
+        StringBuilder sb = new StringBuilder("INSERT INTO ");
+        sb.append(TABLE_SALE);
+        sb.append(" (");
+        sb.append(COLUMN_SALE_MENUID);
+        sb.append(", ");
+        sb.append(COLUMN_SALE_MENU_PRICE);
+        sb.append(", ");
+        sb.append(COLUMN_SALE_MENUQUANTITY);
+        sb.append(", ");
+        sb.append(COLUMN_SALE_DESKID);
+        sb.append(") ");
+        sb.append("VALUES ");
+        sb.append(" (");
+        sb.append(menu.getMenuID());
+        sb.append(", ");
+        sb.append(menu.getMenuPrice());
+        sb.append(", ");
+        sb.append(menu.getOrderQuantity());
+        sb.append(", ");
+        sb.append(deskID);
+        sb.append(");");
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            statement.execute(sb.toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("INSERT SALE SQL   "+ sb);
+
 
 
 

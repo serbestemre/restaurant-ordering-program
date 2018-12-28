@@ -56,13 +56,14 @@ public class tableScreenController {
 
     public static int myDeskID;
 
-    Order selectedOrder =new Order();
-    int selectedOrderID ;
+    Menu selectedOrder =new Menu();
+
 
     ObservableList<Menu> myTable = FXCollections.observableArrayList();
 
     @FXML
     public void initialize(){
+
 
 
         System.out.println("DETAILS !");
@@ -121,7 +122,15 @@ public class tableScreenController {
         tableViewTableMenuList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Menu>() {
             @Override
             public void changed(ObservableValue<? extends Menu> observable, Menu oldValue, Menu newValue) {
+
+        selectedOrder=newValue;
+              /**
+               *
+               * it throws null point exception bc when a selected item is not orginal product its not casting to Order! therefore our buttons doesnt works!
+               * we didnt realize a product will be big problem for us, we just realized it while implementing and no time for refactoring.
                 try{
+
+
                     selectedOrder= (Order) newValue;
                     System.out.println("seçilen ORDER =>" + newValue.getMenuID()+ " ORDER ID ?>>" +selectedOrder.getOrderID());
                 }catch (Exception e){
@@ -131,19 +140,13 @@ public class tableScreenController {
 
 
 
+**/
+
             }
         });
        // myTable.setAll(MainScreenController.allCheques.get(MainScreenController.clickedDeskID));
         labelTableName.setText(MainScreenController.selectedDesk.getTag());
         tableViewTableMenuList.setItems(myTable);
-
-
-
-
-
-
-
-
 
     }
 
@@ -219,7 +222,7 @@ public class tableScreenController {
                                               existing.setOrderQuantity(order.getOrderQuantity() + existing.getOrderQuantity());
 
                                                   int newQ=existing.getOrderQuantity();
-  /** EKLENEN ÜRÜN PRODUCT STOKTAN DÜŞÜLÜYOR **/  DataSource.getInstance().updateFromOrderTable(selectedOrderID,newQ);
+  /** EKLENEN ÜRÜN PRODUCT STOKTAN DÜŞÜLÜYOR **/  DataSource.getInstance().updateFromOrderTable(MainScreenController.selectedDesk.getDeskId(),newQ,selectedOrder.getMenuID());
                                               int minusAmount=product.getProductAmount()-order.getOrderQuantity();
                                               System.out.println("UPDATE AMOUNT RUN------>>>>" +product.getProductID()+" "+"new amount "+ minusAmount);
 
@@ -329,7 +332,7 @@ public class tableScreenController {
                                               tableViewTableMenuList.refresh();
 /** update existing order **/
                                               int newQ=existing.getOrderQuantity();
-                                              DataSource.getInstance().updateFromOrderTable(selectedOrderID,newQ);
+                                              DataSource.getInstance().updateFromOrderTable(MainScreenController.selectedDesk.getDeskId(),newQ,existing.getMenuID());
 /** INGREDIENTS PRODUCT STOKTAN DÜŞÜLÜYOR  **/
                                           }
                                       }
@@ -423,7 +426,7 @@ public class tableScreenController {
 
                 @Override
                 protected Object call() throws Exception {
-                    return DataSource.getInstance().deleteSelectedOrder(selectedOrder.getOrderID());
+                    return DataSource.getInstance().deleteSelectedOrder(MainScreenController.selectedDesk.getDeskId(),selectedOrder.getMenuID());
                 }
             };
             new Thread(taskDeleteOrder).start();
@@ -483,6 +486,31 @@ progressBar.setVisible(true);
             alert.showAndWait();
 
         }
+
+    }
+
+    @FXML
+    public void btnPayment(){
+
+
+        int deskID=MainScreenController.selectedDesk.getDeskId();
+        System.out.println("TABLE SIZE>>>>" +myTable.size());
+        for (int i=0;i<myTable.size();i++){
+
+            Menu menu = new Menu();
+            menu.setMenuID(myTable.get(i).getMenuID());
+            menu.setMenuPrice(myTable.get(i).getSubTotal());
+            menu.setOrderQuantity(myTable.get(i).getOrderQuantity());
+
+            DataSource.getInstance().insertIntoPayment(menu,deskID);
+            DataSource.getInstance().deleteSelectedOrder(deskID,menu.getMenuID());
+            tableViewTableMenuList.getItems().clear();
+            tableViewTableMenuList.refresh();
+        }
+
+
+
+
 
     }
 }

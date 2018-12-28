@@ -84,7 +84,7 @@
                   </Button>
                   <VBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button fx:id="btnPayment" alignment="BOTTOM_CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="PAYMENT">
+                        <Button fx:id="btnPayment" onAction="#btnPayment" alignment="BOTTOM_CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="PAYMENT">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
