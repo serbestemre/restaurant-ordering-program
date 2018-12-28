@@ -4,7 +4,7 @@ public class MenuIngredient {
     private int rowID;
     private int menuID;
     private double ingCost;
-    private int ingProduct;
+    private int ingProductID;
     private String ingName;
     private int ingAmount;
 
@@ -40,12 +40,12 @@ public class MenuIngredient {
         this.ingCost = ingCost;
     }
 
-    public int getIngProduct() {
-        return ingProduct;
+    public int getIngProductID() {
+        return ingProductID;
     }
 
-    public void setIngProduct(int ingProduct) {
-        this.ingProduct = ingProduct;
+    public void setIngProductID(int ingProductID) {
+        this.ingProductID = ingProductID;
     }
 
     public int getIngAmount() {
@@ -56,14 +56,16 @@ public class MenuIngredient {
         this.ingAmount = ingAmount;
     }
 
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof MenuIngredient)) return false;
         MenuIngredient ingredient = (MenuIngredient) obj;
-        return this.getIngProduct() == ingredient.getIngProduct();
+        return this.getIngProductID() == ingredient.getIngProductID();
     }
+
+
+
 
 }
 

@@ -144,7 +144,7 @@ public class ProductScreenController {
                 //warn the user with an Error Dialog
                 if (!tfName.getText().trim().isEmpty() && tfName.getText() != null && tfAmount.getText().trim() != null && !tfAmount.getText().trim().isEmpty() && !tfCost.getText().trim().isEmpty() && tfCost.getText().trim() != null) {
 
-                    myNewProduct.setProductName(tfName.getText().trim().toUpperCase());
+                    myNewProduct.setProductName(tfName.getText().trim().toUpperCase(Locale.ENGLISH));
                     myNewProduct.setProductCost(cost);
                     myNewProduct.setProductAmount(amount);
                     // normally user will not be able to enter 0 for price!
@@ -335,6 +335,7 @@ public class ProductScreenController {
 
             price=Double.parseDouble(tfPrice.getText().trim());
             myNewProduct.setProductPrice(price);
+            myNewProduct.setProductID(editingProduct.getProductID());
             validationOk=true;
 
 
@@ -368,12 +369,13 @@ public class ProductScreenController {
                 myNewProduct.setProductName(tfName.getText().trim().toUpperCase());
                 myNewProduct.setProductCost(cost);
                 myNewProduct.setProductAmount(amount);
+                myNewProduct.setProductID(editingProduct.getProductID());
                 // normally user will not be able to enter 0 for price!
 
                 Task<Boolean> taskUpdateMyProduct = new Task() {
                     @Override
                     protected Object call() throws Exception {
-                        return DataSource.getInstance().createNewProduct(myNewProduct);
+                        return DataSource.getInstance().updateProduct(myNewProduct);
                     }
                 };
 
@@ -410,6 +412,7 @@ public class ProductScreenController {
                         btnCreate.setDisable(false);
                         btnEdit.setDisable(false);
                         btnDelete.setDisable(false);
+
 
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Information Dialog");

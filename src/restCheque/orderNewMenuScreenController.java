@@ -50,6 +50,7 @@ public class orderNewMenuScreenController {
             if (newSelection != null) {
                 selectedOrder=newSelection;
                 getSelectedMenuIngredients(newSelection);
+                System.out.println("ORIGINAL ? > " + selectedOrder.getIsItOriginalMenu());
             }
         });
 

@@ -2,10 +2,9 @@ package restCheque;
 
 import DataModel.Menu;
 import DataModel.MenuIngredient;
+import DataModel.Order;
 import DataModel.Product;
 import DataSource.DataSource;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -21,7 +20,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -91,6 +89,8 @@ public class MenuScreenController {
 
 
 
+
+
     ObservableList<MenuIngredient> listIngredients= FXCollections.observableArrayList();
     ObservableList<Menu> listMenu= FXCollections.observableArrayList();
     ObservableList<MenuIngredient> existingIngredientsList= FXCollections.observableArrayList();
@@ -116,6 +116,9 @@ public class MenuScreenController {
         getSelectedMenuIngredients(tempMenu);
     }
 **/
+
+
+
     tableViewMenu.setItems(listMenu);
 
         listIngredients.addListener(new ListChangeListener<MenuIngredient>() {
@@ -196,7 +199,7 @@ public class MenuScreenController {
                             product.setProductAmount(amount);
                             product.setProductCost(unitCost);
                             ingredient.setIngName(product.getProductName());
-                            ingredient.setIngProduct(product.getProductID());
+                            ingredient.setIngProductID(product.getProductID());
                             if(!listIngredients.contains(ingredient)){
                                 listIngredients.add(ingredient);
                             }else{

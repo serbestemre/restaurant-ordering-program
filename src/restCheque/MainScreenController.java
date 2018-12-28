@@ -20,6 +20,7 @@ import sun.security.krb5.internal.crypto.Des;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 public class MainScreenController {
@@ -49,6 +50,7 @@ public class MainScreenController {
     public void initialize(){
         getDeskInfo(); // to set the
         vBox.setPadding(new Insets(5));
+
         System.out.println("initialize => dbden dönen masa.size= " +deskDBreturnlist.size());
 
         putTablesIntoGUI(deskDBreturnlist);
@@ -64,6 +66,9 @@ public class MainScreenController {
                   System.out.println("button ID> " + deskButtons.get(index).getDeskID()+"\nTag>> "+ deskButtons.get(index).getText());
                   selectedDesk.setDeskId(deskButtons.get(index).getDeskID());
                   selectedDesk.setTag(deskButtons.get(index).getText());
+
+                  tableScreenController.myDeskID=deskButtons.get(index).getDeskID();
+
 
                   try {
                       Dialog<ButtonType> dialog2 = new Dialog<ButtonType>();
@@ -171,9 +176,7 @@ public class MainScreenController {
         hBoxes.add(firstRow);
         int tableNumberInSingleRow =6; // 6 bir satıra yerleştirilmek istenen masa sayısı
         int hBoxIterator=0;
-
         for (int i = 0; i<allDesks.size();i++){
-
             if((i!=0)&&(i%tableNumberInSingleRow==0)){
             //    System.out.println("********  " +i+"%"+countSize+" = "+i%countSize +  "  *********");
                 HBox hBox = new HBox();
@@ -184,9 +187,7 @@ public class MainScreenController {
                // System.out.println("new hbox in IF statement ");
                 hBoxes.add(hBox);
                 hBoxIterator++;
-
             }
-
             DeskButtons deskButton = new DeskButtons(allDesks.get(i).getDeskId()); //deskID yi butonID'ye atıyoruz
             DeskChequeArrayList cheque = new DeskChequeArrayList(allDesks.get(i).getDeskId()); // and we are creating a list to track of cheque of the table!
             allCheques.add(cheque);
