@@ -9,6 +9,7 @@ import com.sun.xml.internal.bind.v2.util.TypeCast;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.concurrent.Task;
@@ -49,7 +50,7 @@ public class tableScreenController {
     private Button btnPayment;
 
     @FXML
-    private Label btnTotalCost;
+    private Label labelTotalCost;
 
     @FXML
     private Label labelTableName;
@@ -57,12 +58,27 @@ public class tableScreenController {
     public static int myDeskID;
 
     Menu selectedOrder =new Menu();
-
+    private double totalCost=0;
 
     ObservableList<Menu> myTable = FXCollections.observableArrayList();
 
     @FXML
     public void initialize(){
+
+
+        myTable.addListener(new ListChangeListener<Menu>() {
+            @Override
+            public void onChanged(Change<? extends Menu> c) {
+                totalCost=0;
+                for(int i =0;i<myTable.size();i++){
+                    totalCost+=myTable.get(i).getMenuPrice()*myTable.get(i).getOrderQuantity();
+                }
+                labelTotalCost.setText(String.valueOf(totalCost));
+
+
+            }
+        });
+
 
 
 
@@ -73,6 +89,8 @@ public class tableScreenController {
 
         }
 
+
+        //getting old orders of table... if user close the app not on purpose we save cheques informations
         Task<Boolean> taskGetOrders = new Task() {
             @Override
             protected Object call() throws Exception {
@@ -317,11 +335,7 @@ public class tableScreenController {
                                       } catch (SQLException e) {
                                           e.printStackTrace();
                                       }
-
-
                                   }
-
-
                                   if (myTable.contains(order)) {
                                       for (int i = 0; i < myTable.size(); i++) {
                                           Menu existing = myTable.get(i);
@@ -364,11 +378,7 @@ public class tableScreenController {
 
                               }
 
-
-
                           }// ing checked
-
-
 
                             }catch (NumberFormatException e){
                                 Alert alert = new Alert(Alert.AlertType.ERROR);

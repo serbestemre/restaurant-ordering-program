@@ -28,6 +28,8 @@ public class MenuScreenController {
     @FXML
     private DialogPane menuDialogPane;
 
+
+
     @FXML
     private TextField tfMenuName;
 
@@ -103,6 +105,8 @@ public class MenuScreenController {
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
+
+
 
     @FXML
     public void initialize(){
@@ -268,20 +272,12 @@ public class MenuScreenController {
                 Menu menu = new Menu();
                 double price = Double.parseDouble(tfPrice.getText());
                 double cost = Double.parseDouble(tfCost.getText());
-                double vat=0;
+
 
                 if (!tfMenuName.getText().trim().isEmpty()) {
                     menu.setMenuName(tfMenuName.getText().trim().toUpperCase(Locale.ENGLISH));
                     menu.setMenuCost(cost);
                     menu.setMenuPrice(price);
-
-
-                    System.out.println("menu name: " + menu.getMenuName());
-                    System.out.println("menu cost: " + menu.getMenuCost());
-                    System.out.println("menu price: " + menu.getMenuPrice());
-
-
-
                     Task<Boolean> taskCreateNewMenu = new Task() {
                         @Override
                         protected Object call() throws Exception {
@@ -305,8 +301,6 @@ public class MenuScreenController {
                             alert.showAndWait();
                         }
                     });
-
-
                     taskCreateNewMenu.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
                         @Override
                         public void handle(WorkerStateEvent event) {
@@ -329,14 +323,8 @@ public class MenuScreenController {
 
                         }
                     });
-                    System.out.println("____Ingredients____");
-                    for (int i = 0; i < listIngredients.size(); i++) {
-                        System.out.println("ingredients: " + listIngredients.get(i).getIngName());
-                    }
-
-
-                } else {
-                    System.out.println("menü ismi boş bırakılamaz!");
+                    } else {
+                   // System.out.println("menü ismi boş bırakılamaz!");
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Dialog");
                     alert.setHeaderText("Menu name can not be empty!!!");

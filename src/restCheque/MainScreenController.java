@@ -71,7 +71,6 @@ public class MainScreenController {
 
                   tableScreenController.myDeskID=deskButtons.get(index).getDeskID();
 
-
                   try {
                       Dialog<ButtonType> dialog2 = new Dialog<ButtonType>();
                       dialog2.initOwner(mainScreen.getScene().getWindow());

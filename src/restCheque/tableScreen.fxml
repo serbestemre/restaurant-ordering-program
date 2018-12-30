@@ -84,7 +84,7 @@
                   </Button>
                   <VBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button fx:id="btnPayment" onAction="#btnPayment" alignment="BOTTOM_CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="PAYMENT">
+                        <Button fx:id="btnPayment" alignment="BOTTOM_CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnPayment" text="PAYMENT">
                            <graphic>
                               <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -103,7 +103,7 @@
                                     <Font name="Calibri Bold" size="24.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="btnTotalCost" layoutX="10.0" layoutY="10.0" text="00:00" textFill="#e40000">
+                              <Label fx:id="labelTotalCost" layoutX="10.0" layoutY="10.0" text="00:00" textFill="#e40000">
                                  <font>
                                     <Font name="Calibri Bold" size="24.0" />
                                  </font>

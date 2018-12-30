@@ -654,11 +654,11 @@ public class DataSource {
         sb.append("");
         sb.append(newQ);
         sb.append(" WHERE ");
-        sb.append(COLUMN_DESKID);
+        sb.append(COLUMN_ORDER_DESK_ID);
         sb.append(" = ");
         sb.append(deskID);
         sb.append(" and ");
-        sb.append(COLUMN_MENUID);
+        sb.append(COLUMN_ORDER_MENUID);
         sb.append(" = ");
         sb.append(menuID);
         sb.append(";");
