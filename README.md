@@ -2,6 +2,7 @@
 
 1 Objectives of the Software
 
+
 The owner shall be able to determine the capacity of the restaurant(cafe,bar,
 etc.), and then, by creating new tables, the user will be able to take the orders
 from separate tables. Also, the user can delete the table. The user will be
@@ -13,6 +14,7 @@ stock of those products will be decreasing according to the order.
 
 
 2 Tools
+
 For the design of GUI, we used JavaFX. With the help visual layout tool(SceneBuilder),
 we design our application interface. In the database part SQLite used. Also, for
 visual changes DB Browser made us clear. As an IDE, we used IntelliJ IDEA
