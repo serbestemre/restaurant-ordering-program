@@ -18,3 +18,5 @@ stock of those products will be decreasing according to the order.
 For the design of GUI, we used JavaFX. With the help visual layout tool(SceneBuilder),
 we design our application interface. In the database part SQLite used. Also, for
 visual changes DB Browser made us clear. As an IDE, we used IntelliJ IDEA
+
+You can find detailed explanation in readme_manual.pdf and design document.pdf
